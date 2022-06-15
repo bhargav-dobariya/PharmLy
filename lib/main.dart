@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pharmly/home_screen-1.dart';
+import 'package:pharmly/home_screen.dart';
 
 void main() {
   runApp(const MyApp());
