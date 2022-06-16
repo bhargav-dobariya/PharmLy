@@ -54,13 +54,13 @@ class LoginScreenState extends State<LoginScreen> {
                 height: _deviceHeight * 0.2,
               )),
 
-          _buildUi()
+          _formFieldUi()
         ],
       ),
     ));
   }
 
-  Form _buildUi() {
+  Form _formFieldUi() {
     return Form(
       autovalidateMode: AutovalidateMode.onUserInteraction,
       key: _formKey,
@@ -111,6 +111,7 @@ class LoginScreenState extends State<LoginScreen> {
           ),
           //Forgot password
           GestureDetector(
+            onTap: () {},
             child: Container(
               margin: EdgeInsets.only(
                   right: _deviceWidth * 0.09, bottom: _deviceHeight * 0.05),
@@ -123,33 +124,43 @@ class LoginScreenState extends State<LoginScreen> {
           ),
 
           // Signin Button
-          Container(
-              margin: EdgeInsets.only(left: _deviceWidth * 0.39),
-              width: _deviceWidth * 0.46,
-              height: _deviceHeight * 0.062,
-              decoration: BoxDecoration(
-                  gradient: LinearGradient(colors: [
-                    AppColor.lightBlueColor2,
-                    AppColor.lightBlueColor
-                  ]),
-                  borderRadius: const BorderRadius.all(Radius.circular(50))),
-              alignment: Alignment.center,
-              child: Text(
-                AppString.txtSignIn,
-                style: TextStyle(
-                  fontSize: 19,
-                  color: AppColor.whitecolor,
-                  fontWeight: FontWeight.w700,
-                ),
-              )),
-          Container(
-            margin: EdgeInsets.only(
-                left: _deviceWidth * 0.45, top: _deviceHeight * 0.025),
-            child: Text(AppString.txtDontHaveAnAccountSignup,
-                style: TextStyle(
-                    fontSize: _deviceHeight * 0.018,
-                    fontWeight: FontWeight.w500,
-                    color: AppColor.purpleButton)),
+          GestureDetector(
+            onTap: () {
+              if (_formKey.currentState!.validate()) {}
+            },
+            child: Container(
+                margin: EdgeInsets.only(left: _deviceWidth * 0.39),
+                width: _deviceWidth * 0.46,
+                height: _deviceHeight * 0.062,
+                decoration: BoxDecoration(
+                    gradient: LinearGradient(colors: [
+                      AppColor.lightBlueColor2,
+                      AppColor.lightBlueColor
+                    ]),
+                    borderRadius: const BorderRadius.all(Radius.circular(50))),
+                alignment: Alignment.center,
+                child: Text(
+                  AppString.txtSignIn,
+                  style: TextStyle(
+                    fontSize: 19,
+                    color: AppColor.whitecolor,
+                    fontWeight: FontWeight.w700,
+                  ),
+                )),
+          ),
+          GestureDetector(
+            onTap: () {
+              Navigator.pushReplacementNamed(context, '/');
+            },
+            child: Container(
+              margin: EdgeInsets.only(
+                  left: _deviceWidth * 0.45, top: _deviceHeight * 0.025),
+              child: Text(AppString.txtDontHaveAnAccountSignup,
+                  style: TextStyle(
+                      fontSize: _deviceHeight * 0.018,
+                      fontWeight: FontWeight.w500,
+                      color: AppColor.purpleButton)),
+            ),
           )
         ],
       ),

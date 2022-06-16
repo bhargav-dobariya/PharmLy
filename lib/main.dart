@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:pharmly/screen/signUp_screen.dart';
+import 'package:pharmly/screen/login_screen.dart';
+import 'package:pharmly/screen/signup_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,6 +17,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => const SignUpScreen(),
         '/signUp_screen': (context) => const SignUpScreen(),
+        '/login_screen': (context) => const LoginScreen(),
       },
     );
   }

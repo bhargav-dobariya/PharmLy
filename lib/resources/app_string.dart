@@ -1,6 +1,6 @@
 class AppString {
-  static String txtfirstname = "Firstname";
-  static String txtlastname = "Lastname";
+  static String txtfirstname = "First name";
+  static String txtlastname = "Last name";
   static String txtWelcome = "Welcome!";
   static String connectivityTask = "Connectivity Animation Task";
   static String txtLocation = "location";
@@ -144,5 +144,5 @@ class AppString {
   static String txtYou = "You";
   static String txtEnterValidUsername = "Enter Valid Username";
   static String txtDontHaveAnAccountSignup = "Don't have an account? Sign up";
-  static String txtAlreadyhaveAnAccount = "Already Have An Account? Sing in";
+  static String txtAlreadyhaveAnAccount = "Already Have An Account? Sign in";
 }
