@@ -26,21 +26,19 @@ class LoginScreenState extends State<LoginScreen> {
       resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
+          //Background Design
           Positioned(
               bottom: _deviceHeight * 0.76,
-              left: 0,
               child: Image.asset(
                 "assets/images/top1.png",
               )),
           Positioned(
               bottom: _deviceHeight * 0.7,
-              right: 0,
               child: Image.asset(
                 "assets/images/top2.png",
               )),
           Positioned(
               top: _deviceHeight * 0.64,
-              right: 0,
               child: Image.asset(
                 "assets/images/bottom1.png",
               )),
@@ -49,6 +47,13 @@ class LoginScreenState extends State<LoginScreen> {
               child: Image.asset(
                 "assets/images/bottom2.png",
               )),
+          Positioned(
+              top: _deviceHeight * 0.02,
+              child: Image.asset(
+                "assets/images/Logo3.png",
+                height: _deviceHeight * 0.2,
+              )),
+
           _buildUi()
         ],
       ),
@@ -77,7 +82,6 @@ class LoginScreenState extends State<LoginScreen> {
           ),
 
           //Email TextField
-
           Container(
               alignment: Alignment.center,
               margin: EdgeInsets.only(
@@ -93,7 +97,6 @@ class LoginScreenState extends State<LoginScreen> {
                           : null)),
 
           //Password TextField
-
           Container(
             alignment: Alignment.center,
             margin: EdgeInsets.only(
@@ -120,7 +123,6 @@ class LoginScreenState extends State<LoginScreen> {
           ),
 
           // Signin Button
-
           Container(
               margin: EdgeInsets.only(left: _deviceWidth * 0.39),
               width: _deviceWidth * 0.46,
