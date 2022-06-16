@@ -16,16 +16,18 @@ class _CategoryState extends State<Category> {
         // crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Container(
-            padding: EdgeInsets.all(10),
-            margin: EdgeInsets.only(bottom: 5),
-            decoration: BoxDecoration(
-              border: Border.all(color: AppColors.colorGrey),
-              borderRadius: BorderRadius.all(Radius.circular(5))
+          Expanded(
+            child: Container(
+              padding: EdgeInsets.all(10),
+              margin: EdgeInsets.only(bottom: 5),
+              decoration: BoxDecoration(
+                border: Border.all(color: AppColors.colorGrey.withAlpha(50)),
+                borderRadius: BorderRadius.all(Radius.circular(5))
+              ),
+              child: Image.asset('assets/images/carousel1.jpg',fit: BoxFit.cover,),
             ),
-            child: Image.asset('assets/images/carousel1.jpg',fit: BoxFit.cover,),
           ),
-          FittedBox(child: Text("Beauty products",style: TextStyle(fontSize: 10,color: AppColors.colorBlack),))
+          Text("Beauty products",style: TextStyle(fontSize: 10,color: AppColors.colorBlack),textAlign: TextAlign.center,)
         ],
       ),
     );

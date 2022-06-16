@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pharmly/res/colors/app_colors.dart';
 import 'package:pharmly/screens/home_screen.dart';
+import 'package:pharmly/screens/profile_screen.dart';
 
 class BottomNavBar extends StatefulWidget {
   BottomNavBar({Key? key}) : super(key: key);
@@ -39,7 +40,7 @@ class BottomNavBarState extends State<BottomNavBar> {
 
     ///Add post/story screen
       case 3:
-        return HomeScreen();
+        return ProfileScreen();
 
 
       default:

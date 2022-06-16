@@ -23,58 +23,37 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        resizeToAvoidBottomInset: false,
+        // resizeToAvoidBottomInset: false,
+        backgroundColor: AppColors.colorWhite,
         body: NestedScrollView(
           controller: scrollController,
           headerSliverBuilder: (BuildContext context,bool innerBoxIsSelected){
             return <Widget>[
               SliverAppBar(
                 backgroundColor: AppColors.colorWhite,
-                expandedHeight: 100,
+                // expandedHeight: 20,
                 flexibleSpace: FlexibleSpaceBar(
                   background: Column(
                       children: [
                         Container(
                           padding: EdgeInsets.symmetric(horizontal: 15),
-                          margin: EdgeInsets.symmetric(vertical: 5),
+                          margin: EdgeInsets.only(top: 10),
                           child: Row(
                             children: [
                               Container(
                                 height: 15,
                                 width: 15,
-                                decoration: BoxDecoration(
-                                  color: AppColors.colorRed,
+                                decoration: const BoxDecoration(
                                   borderRadius: BorderRadius.all(Radius.circular(15))
                                 ),
+                                child: Image.asset('assets/images/pharmly_logo.png',fit: BoxFit.cover,),
                               ),
-                              Text(AppStrings.txtPharmly,style: TextStyle(fontSize: 15,color: AppColors.colorLightGreen,fontWeight: FontWeight.bold),),
+                              Text(AppStrings.txtPharmly,style: TextStyle(fontSize: 23,color: AppColors.colorLightGreen,fontWeight: FontWeight.bold),),
                               Padding(
-                                padding: EdgeInsets.only(left: 240),
+                                padding: EdgeInsets.only(left: 190),
                                 child: Icon(Icons.shopping_cart_sharp,size: 20,color: AppColors.colorBlack.withAlpha(90))
                               )
                             ],
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: (){},
-                          child: Container(
-                            height: 40,
-                            width: (MediaQuery.of(context).size.width)-30,
-                            margin: EdgeInsets.symmetric(horizontal: 15,vertical: 5),
-                            padding: EdgeInsets.symmetric(horizontal: 15),
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: AppColors.colorGrey.withAlpha(110)
-                              ),
-                              borderRadius: BorderRadius.all(Radius.circular(5))
-                            ),
-                            child: Row(
-                              children: [
-                                Icon(Icons.search_outlined,size: 20,color: AppColors.colorBlack.withAlpha(54),),
-                                Text(AppStrings.txtSearchText,style: TextStyle(fontSize: 15,color: AppColors.colorGrey),)
-                              ],
-                            ),
                           ),
                         ),
                     ]
@@ -83,46 +62,71 @@ class _HomeScreenState extends State<HomeScreen> {
               )
             ];
           },
-          body: Expanded(
-            child: Column(
-              children: [
-              Container(
-                    margin: EdgeInsets.only(top: 5,bottom: 10),
-                    height: MediaQuery.of(context).size.height/3.5,
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
-                      children: [
-                        Container(
-                          width: MediaQuery.of(context).size.width,
-                          height: MediaQuery.of(context).size.height/3.5,
-                          child: Image.asset('assets/images/carousel1.jpg',fit: BoxFit.cover,),
-                        ),
-                        Container(
-                          width: MediaQuery.of(context).size.width,
-                          height: MediaQuery.of(context).size.height/3.5,
-                          child: Image.asset('assets/images/carousel2.jpg',fit: BoxFit.cover),
-                        ),
-                        Container(
-                          width: MediaQuery.of(context).size.width,
-                          height: MediaQuery.of(context).size.height/3.5,
-                          child: Image.asset('assets/images/carousel3.jpg',fit: BoxFit.cover),
-                        ),
-                      ],
-                    ),
+          body: Column(
+            children: [
+              GestureDetector(
+                onTap: (){},
+                child: Container(
+                  height: MediaQuery.of(context).size.height/21.1,
+                  width: (MediaQuery.of(context).size.width)-30,
+                  margin: EdgeInsets.symmetric(horizontal: 15,vertical: 5),
+                  padding: EdgeInsets.symmetric(horizontal: 15),
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: AppColors.colorWhite,
+                      border: Border.all(
+                          color: AppColors.colorGrey.withAlpha(110)
+                      ),
+                      borderRadius: BorderRadius.all(Radius.circular(5))
                   ),
-                  Divider(
-                    thickness: 12,
-                    color: AppColors.colorBlue.withAlpha(30),
+                  child: Row(
+                    children: [
+                      Icon(Icons.search_outlined,size: 20,color: AppColors.colorBlack.withAlpha(54),),
+                      Text(AppStrings.txtSearchText,style: TextStyle(fontSize: 15,color: AppColors.colorGrey),)
+                    ],
                   ),
-                  SizedBox(
+                ),
+              ),
+            Container(
+                  margin: EdgeInsets.only(top: 5,bottom: 10),
+                  height: MediaQuery.of(context).size.height/3.5,
+                  child: ListView(
+                    scrollDirection: Axis.horizontal,
+                    children: [
+                      Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height/3.5,
+                        child: Image.asset('assets/images/carousel1.jpg',fit: BoxFit.cover,),
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height/3.5,
+                        child: Image.asset('assets/images/carousel2.jpg',fit: BoxFit.cover),
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height/3.5,
+                        child: Image.asset('assets/images/carousel3.jpg',fit: BoxFit.cover),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(bottom: 10),
+                  height: 12,
+                  color: AppColors.colorBlue.withAlpha(30),
+                ),
+                Expanded(
+                  child: SizedBox(
                     width: MediaQuery.of(context).size.width,
                     height: MediaQuery.of(context).size.height/2,
                     child: GridView.count(
-                      crossAxisCount: 4,
+                      crossAxisCount: 3,
+                      physics: NeverScrollableScrollPhysics(),
                       childAspectRatio: 0.7,
-                      padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.height*0.01),
-                      crossAxisSpacing: MediaQuery.of(context).size.height*0.003,
-                      // mainAxisSpacing: 40,
+                      padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.height*0.02),
+                      crossAxisSpacing: MediaQuery.of(context).size.height*0.015,
+                      mainAxisSpacing: 20,
                       children: [
                         Category(),
                         Category(),
@@ -137,9 +141,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         Category(),
                       ],
                     ),
-                  )
-              ],
-            ),
+                  ),
+                )
+            ],
           )
         ),
         // body: Column(
