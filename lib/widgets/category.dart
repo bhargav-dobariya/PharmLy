@@ -18,14 +18,14 @@ class _CategoryState extends State<Category> {
         children: [
           Container(
             padding: EdgeInsets.all(10),
-            margin: EdgeInsets.only(bottom: 10),
+            margin: EdgeInsets.only(bottom: 5),
             decoration: BoxDecoration(
               border: Border.all(color: AppColors.colorGrey),
               borderRadius: BorderRadius.all(Radius.circular(5))
             ),
             child: Image.asset('assets/images/carousel1.jpg',fit: BoxFit.cover,),
           ),
-          Text("Beauty products",style: TextStyle(fontSize: 10,color: AppColors.colorBlack),)
+          FittedBox(child: Text("Beauty products",style: TextStyle(fontSize: 10,color: AppColors.colorBlack),))
         ],
       ),
     );
