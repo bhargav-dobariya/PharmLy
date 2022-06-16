@@ -36,21 +36,21 @@ class _HomeScreenState extends State<HomeScreen> {
                   background: Column(
                       children: [
                         Container(
-                          padding: EdgeInsets.symmetric(horizontal: 15),
-                          margin: EdgeInsets.only(top: 10),
+                          padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width/26.13),
+                          margin: EdgeInsets.only(top: MediaQuery.of(context).size.height/84.4),
                           child: Row(
                             children: [
                               Container(
-                                height: 15,
-                                width: 15,
+                                height: 30,
+                                width: 30,
                                 decoration: const BoxDecoration(
-                                  borderRadius: BorderRadius.all(Radius.circular(15))
+                                  borderRadius: BorderRadius.all(Radius.circular(30))
                                 ),
                                 child: Image.asset('assets/images/pharmly_logo.png',fit: BoxFit.cover,),
                               ),
                               Text(AppStrings.txtPharmly,style: TextStyle(fontSize: 23,color: AppColors.colorLightGreen,fontWeight: FontWeight.bold),),
                               Padding(
-                                padding: EdgeInsets.only(left: 190),
+                                padding: EdgeInsets.only(left: MediaQuery.of(context).size.width/2.17),
                                 child: Icon(Icons.shopping_cart_sharp,size: 20,color: AppColors.colorBlack.withAlpha(90))
                               )
                             ],
@@ -69,8 +69,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Container(
                   height: MediaQuery.of(context).size.height/21.1,
                   width: (MediaQuery.of(context).size.width)-30,
-                  margin: EdgeInsets.symmetric(horizontal: 15,vertical: 5),
-                  padding: EdgeInsets.symmetric(horizontal: 15),
+                  margin: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width/26.13,vertical: 5),
+                  padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width/26.13),
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                     color: AppColors.colorWhite,
@@ -88,7 +88,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             Container(
-                  margin: EdgeInsets.only(top: 5,bottom: 10),
+                  margin: EdgeInsets.only(top: 5,bottom: MediaQuery.of(context).size.height/84.4),
                   height: MediaQuery.of(context).size.height/3.5,
                   child: ListView(
                     scrollDirection: Axis.horizontal,
@@ -112,8 +112,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.only(bottom: 10),
-                  height: 12,
+                  margin: EdgeInsets.only(bottom: MediaQuery.of(context).size.height/84.4),
+                  height: 8,
                   color: AppColors.colorBlue.withAlpha(30),
                 ),
                 Expanded(
@@ -126,7 +126,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       childAspectRatio: 0.7,
                       padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.height*0.02),
                       crossAxisSpacing: MediaQuery.of(context).size.height*0.015,
-                      mainAxisSpacing: 20,
+                      mainAxisSpacing: MediaQuery.of(context).size.width/19.6,
                       children: [
                         Category(),
                         Category(),
