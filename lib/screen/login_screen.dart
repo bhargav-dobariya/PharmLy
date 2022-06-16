@@ -150,7 +150,7 @@ class LoginScreenState extends State<LoginScreen> {
           ),
           GestureDetector(
             onTap: () {
-              Navigator.pushReplacementNamed(context, '/');
+              Navigator.pushReplacementNamed(context, '/signup_screen');
             },
             child: Container(
               margin: EdgeInsets.only(
