@@ -24,7 +24,7 @@ class LoginScreenState extends State<LoginScreen> {
     return Scaffold(
         body: SafeArea(
       child: SingleChildScrollView(
-        // reverse: true,
+        reverse: true,
         child: Stack(
           children: [
             SizedBox(
