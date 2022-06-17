@@ -1,8 +1,10 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:pharmly/networking/api_service.dart';
 import 'package:pharmly/resources/app_color.dart';
 import 'package:pharmly/resources/app_string.dart';
+import 'package:pharmly/utils/network_connection.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -69,7 +71,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     controller: _firstNameValidator,
                     decoration:
                         InputDecoration(labelText: AppString.txtfirstname),
-                    obscureText: true,
                     validator: (value) {
                       if (value == null) {
                         return "Enter a valid firstname";
@@ -89,7 +90,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     controller: _lastNameValidator,
                     decoration:
                         InputDecoration(labelText: AppString.txtlastname),
-                    obscureText: true,
+                    // obscureText: true,
                     validator: (value) {
                       if (value == null) {
                         return "Enter a valid firstname";
@@ -109,7 +110,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   controller: _phoneNumber,
                   decoration:
                       InputDecoration(labelText: AppString.txtPhoneNumber),
-                  obscureText: true,
+                  // obscureText: true,
                   validator: (value) {
                     if (value!.isEmpty ||
                         !RegExp(r"^[0-9]{10}$").hasMatch(value)) {
@@ -162,14 +163,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
               // Signup Button
               GestureDetector(
-                onTap: () {
+                onTap: () async {
+                  final result = await Connectivity().checkConnectivity();
+                  showConnectivityToast(result);
                   if (_formKey.currentState!.validate()) {
-                    ApiService.userRegistration(
-                        firstName: _firstNameValidator.text,
-                        lastName: _lastNameValidator.text,
-                        contactNo: _phoneNumber.text,
-                        email: _emailValidator.text,
-                        password: _passwordValidator.text);
+                    ApiService()
+                        .userRegistration(
+                            firstName: _firstNameValidator.text,
+                            lastName: _lastNameValidator.text,
+                            contactNo: _phoneNumber.text,
+                            email: _emailValidator.text,
+                            password: _passwordValidator.text)
+                        .then((res) {
+                      print(res.code);
+                    });
                     print("workin");
                   }
                 },

@@ -1,5 +1,5 @@
 class ApiUtils {
-  static const String baseUrl = "https://695b-103-240-35-190.in.ngrok.io/";
+  static const String baseUrl = "https://e7ef-103-240-35-190.in.ngrok.io/";
   static const String users = "users/";
   static const String login = "login/";
 
