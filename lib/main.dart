@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pharmly/res/colors/app_colors.dart';
 import 'package:pharmly/screens/home_screen.dart';
+import 'package:pharmly/screens/splash_screen.dart';
 import 'package:pharmly/widgets/bottom_nav_bar.dart';
 
 void main() {
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'PharmLy',
-      home: BottomNavBar(),
+      home: SplashScreen(),
     );
   }
 }

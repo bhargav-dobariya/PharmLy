@@ -34,6 +34,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
         title: Text(AppStrings.txtProfile),
         centerTitle: true,
         backgroundColor: AppColors.colorBlue.withAlpha(60),
+        actions: [
+          TextButton(
+            onPressed: (){
+              //sign out method
+            },
+            child: Text(AppStrings.txtSignOut,style: TextStyle(color: AppColors.colorRed,fontSize: 10),)
+          )
+        ],
       ),
       body: SingleChildScrollView(
         child: Form(
@@ -56,7 +64,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         decoration: InputDecoration(
                           hintText: "Neh",
                           labelText: AppStrings.txtFirstName,
-                          // alignLabelWithHint: true
+                          alignLabelWithHint: true
                         ),
                       ),
                     ),
@@ -180,6 +188,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 GestureDetector(
                   onTap: (){
+                    setState(() {
+                      firstNameEnabled=false;
+                      lastNameEnabled=false;
+                      contactEnabled=false;
+                    });
                     //update account in db
                   },
                   child: Container(

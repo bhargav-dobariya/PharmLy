@@ -8,4 +8,5 @@ class AppStrings{
   static String txtDeleteAccount="Delete account";
   static String txtUpdateDetails="Update details";
   static String txtCannotChangeEmail="You can not edit your email address.";
+  static String txtSignOut="Sign Out";
 }

@@ -48,9 +48,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                                 child: Image.asset('assets/images/pharmly_logo.png',fit: BoxFit.cover,),
                               ),
-                              Text(AppStrings.txtPharmly,style: TextStyle(fontSize: 23,color: AppColors.colorLightGreen,fontWeight: FontWeight.bold),),
+                              Text(AppStrings.txtPharmly,style: TextStyle(fontSize: 22,color: AppColors.colorBlue.withAlpha(120),fontWeight: FontWeight.w600,fontFamily: 'Mali'),),
                               Padding(
-                                padding: EdgeInsets.only(left: MediaQuery.of(context).size.width/2.17),
+                                padding: EdgeInsets.only(left: MediaQuery.of(context).size.width/2.20),
                                 child: Icon(Icons.shopping_cart_sharp,size: 20,color: AppColors.colorBlack.withAlpha(90))
                               )
                             ],
