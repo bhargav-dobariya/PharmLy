@@ -32,7 +32,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     return SingleChildScrollView(
       reverse: true,
       child: Form(
-          autovalidateMode: AutovalidateMode.onUserInteraction,
+          // autovalidateMode: AutovalidateMode.onUserInteraction,e
           key: _formKey,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -65,6 +65,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     right: _deviceWidth * 0.1,
                     bottom: _deviceHeight * 0.01),
                 child: TextFormField(
+                    autovalidateMode: AutovalidateMode.always,
                     controller: _firstNameValidator,
                     decoration:
                         InputDecoration(labelText: AppString.txtfirstname),
@@ -84,6 +85,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     right: _deviceWidth * 0.1,
                     bottom: _deviceHeight * 0.01),
                 child: TextFormField(
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
                     controller: _lastNameValidator,
                     decoration:
                         InputDecoration(labelText: AppString.txtlastname),
@@ -103,6 +105,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     right: _deviceWidth * 0.1,
                     bottom: _deviceHeight * 0.01),
                 child: TextFormField(
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   controller: _phoneNumber,
                   decoration:
                       InputDecoration(labelText: AppString.txtPhoneNumber),
@@ -126,6 +129,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       right: _deviceWidth * 0.1,
                       bottom: _deviceHeight * 0.01),
                   child: TextFormField(
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
                       controller: _emailValidator,
                       decoration:
                           InputDecoration(labelText: AppString.txtEmailAddress),
@@ -142,6 +146,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     right: _deviceWidth * 0.1,
                     bottom: _deviceHeight * 0.04),
                 child: TextFormField(
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   controller: _passwordValidator,
                   decoration: InputDecoration(labelText: AppString.txtPassword),
                   obscureText: true,

@@ -26,27 +26,31 @@ class LoginScreenState extends State<LoginScreen> {
       resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
+          Positioned(
+              child: Image.asset(
+            "assets/images/bg_image.png",
+          )),
           //Background Design
-          Positioned(
-              bottom: _deviceHeight * 0.76,
-              child: Image.asset(
-                "assets/images/top1.png",
-              )),
-          Positioned(
-              bottom: _deviceHeight * 0.7,
-              child: Image.asset(
-                "assets/images/top2.png",
-              )),
-          Positioned(
-              top: _deviceHeight * 0.64,
-              child: Image.asset(
-                "assets/images/bottom1.png",
-              )),
-          Positioned(
-              bottom: _deviceHeight * 0.0,
-              child: Image.asset(
-                "assets/images/bottom2.png",
-              )),
+          // Positioned(
+          //     bottom: _deviceHeight * 0.76,
+          //     child: Image.asset(
+          //       "assets/images/top1.png",
+          //     )),
+          // Positioned(
+          //     bottom: _deviceHeight * 0.7,
+          //     child: Image.asset(
+          //       "assets/images/top2.png",
+          //     )),
+          // Positioned(
+          //     top: _deviceHeight * 0.64,
+          //     child: Image.asset(
+          //       "assets/images/bottom1.png",
+          //     )),
+          // Positioned(
+          //     bottom: _deviceHeight * 0.0,
+          //     child: Image.asset(
+          //       "assets/images/bottom2.png",
+          //     )),
           Positioned(
               top: _deviceHeight * 0.02,
               child: Image.asset(
