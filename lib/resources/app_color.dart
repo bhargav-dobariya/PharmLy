@@ -1,11 +1,45 @@
 import 'package:flutter/material.dart';
 
 class AppColor {
-  static Color greenColor = const Color(0xff156612);
+  static Color colorSignInToContinue = const Color(0xFFaeaeae);
+  static Color colorForgotPassword = const Color(0xFFaeaeae);
+  static Color colorHintText = const Color(0xFFaeaeae);
+  static Color colorSignInButton = const Color(0xFF8e35ff);
+  static Color colorBlack = const Color(0xFF000000);
+  static Color colorBlack38 = const Color(0x61000000);
+  static Color colorWhite = const Color(0xFFffffff);
+  static Color colorLetsGetStarted = const Color(0xFF101c3d);
+  static Color colorCreateAccountToConnect = const Color(0xFFaeaeae);
+  static Color colorBackgroundColor = const Color(0xFFfdfdff);
+  static Color colorSkipforNow = const Color(0xFFE5E5E5);
+  static Color colorTimeOfPost = const Color(0xFFc4c4c4);
+  static Color colorSearchIconInChat = const Color(0xFFc4c4c4);
+  static Color colorSelectedItemNavBar = const Color(0xFF465782);
+
+  static Shader colorMateVibes =
+      const LinearGradient(colors: [Color(0xFF8e35ff), Color(0xFFffa030)])
+          .createShader(const Rect.fromLTWH(0, 0, 400, 70));
+  static Color colorNotifacations = const Color(0xFF101c3d);
+  static Color colorMarkAllAsRead = const Color(0xFFBABABA);
+  static Color colorToday = const Color(0xFFBABABA);
+  static Color chatName = const Color(0xFF101C3D);
+  static Color chatDateColor = const Color(0xFFC4C4C4);
+  static List<Color> colorsOfStories = [
+    const Color(0xFF982282),
+    const Color(0xFFEEA863)
+  ];
+  static Color greenColor = const Color(0xFF3FC23F);
+  static Color colorIcon = const Color(0xFFe5d0ff);
+  static Color colorBgIconOfCreateProfile = const Color(0xFFf0e3ff);
+  static Color greyColor = const Color(0xFF535252);
+  static Color lightgreyColor = const Color(0xFFBEBEBE);
+  static Color purpleColor = const Color(0xFF8e35ff);
+  static Color sendMessageIcon = const Color(0xFF2CD8AA);
   static Color cyanColor = const Color(0xff89dbe0);
-  static Color blueColor = const Color.fromARGB(255, 45, 74, 194);
+  static Color blueColor = const Color(0xFF2D4AC2);
   static Color lightBlueColor = const Color(0xFF314CB8);
   static Color lightBlueColor2 = const Color(0xFF8096F0);
+  static Color lightBlueColor3 = const Color(0xFF375AE4);
 
   static Color purpleButton = const Color(0xffb743fa);
   static Color cadetButton = const Color(0xff2dfce1);

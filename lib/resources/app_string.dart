@@ -35,6 +35,8 @@ class AppString {
       "We’ll send a link to reset password over\n below entered email address or phone number.";
   static String txtOR = "OR";
   static String txtContinue = "continue";
+  static String txtVerify = "Verify";
+
   static String txtPassworddontmatch = "Password don't match";
   static String txtLetsCompleteProfile = "Let's Complete Profile";
   static String txtWhatDescribesYouBetter = "What describes you better?";

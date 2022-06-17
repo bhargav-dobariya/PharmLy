@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:pharmly/screen/forgot_password.dart';
 import 'package:pharmly/screen/login_screen.dart';
+import 'package:pharmly/screen/otp_verification_screen.dart';
 import 'package:pharmly/screen/signup_screen.dart';
 
 void main() {
@@ -18,6 +20,8 @@ class MyApp extends StatelessWidget {
         '/': (context) => const LoginScreen(),
         '/signup_screen': (context) => const SignUpScreen(),
         '/login_screen': (context) => const LoginScreen(),
+        '/forgot_password': (context) => const ForgotPassword(),
+        '/otp_verification': (context) => const OtpVerificationScreen(),
       },
     );
   }

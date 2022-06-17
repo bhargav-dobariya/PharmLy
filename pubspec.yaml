@@ -30,7 +30,9 @@ dependencies:
   flutter:
     sdk: flutter
   email_validator: ^2.0.1
+  connectivity_plus: ^2.2.2
   http: ^0.13.4
+  fluttertoast: ^8.0.9
 
 
 

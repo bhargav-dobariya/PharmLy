@@ -122,7 +122,9 @@ class LoginScreenState extends State<LoginScreen> {
           ),
           //Forgot password
           GestureDetector(
-            onTap: () {},
+            onTap: () {
+              Navigator.pushNamed(context, '/forgot_password');
+            },
             child: Container(
               margin: EdgeInsets.only(
                   right: _deviceWidth * 0.09, bottom: _deviceHeight * 0.05),
