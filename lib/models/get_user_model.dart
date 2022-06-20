@@ -1,11 +1,15 @@
+// To parse this JSON data, do
+//
+//     final userProfile = userProfileFromJson(jsonString);
+
 import 'dart:convert';
 
-Welcome welcomeFromJson(String str) => Welcome.fromJson(json.decode(str));
+UserProfile userProfileFromJson(String str) => UserProfile.fromJson(json.decode(str));
 
-String welcomeToJson(Welcome data) => json.encode(data.toJson());
+String userProfileToJson(UserProfile data) => json.encode(data.toJson());
 
-class Welcome {
-  Welcome({
+class UserProfile {
+  UserProfile({
     this.code,
     this.data,
     this.success,
@@ -15,7 +19,7 @@ class Welcome {
   Data? data;
   bool? success;
 
-  factory Welcome.fromJson(Map<String, dynamic> json) => Welcome(
+  factory UserProfile.fromJson(Map<String, dynamic> json) => UserProfile(
     code: json["code"],
     data: Data.fromJson(json["data"]),
     success: json["success"],

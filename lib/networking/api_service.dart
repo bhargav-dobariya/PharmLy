@@ -47,18 +47,19 @@ class ApiService{
   //   Map<String,dynamic> mapResponse = json.decode(response.body);
   //   return Data.fromJson(mapResponse);
   // }
-  Future<Data?> getUserDetails() async{
+  Future<UserProfile?> getUserDetails() async{
     try{
       final response=await http.get(Uri.parse(getUserUrl));
       if (response.statusCode == 200) {
         Map<String,dynamic> mapResponse = json.decode(response.body);
-        return Data.fromJson(mapResponse);
+        return UserProfile.fromJson(mapResponse);
         // Data dataModel = Data.fromJson(mapResponse);
         // return dataModel;
         }
       }
       catch(e){
         // print(e.toString());
+        return UserProfile();
     }
   }
 }

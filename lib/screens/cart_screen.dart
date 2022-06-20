@@ -34,9 +34,6 @@ class _CartScreenState extends State<CartScreen> {
           },
           body: Stack(
             children: [
-              Positioned(
-                
-              ),
               Expanded(
                 child: ListView.separated(
                   itemBuilder: (context,index){

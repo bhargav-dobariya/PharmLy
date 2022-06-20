@@ -25,7 +25,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   TextEditingController contactController=TextEditingController();
   late StreamSubscription subscription;
   // late var userDetails;
-  var dataModel;
+  // var dataModel;
+  var userData;
 
   String userFirstName="";
   String userLastName="";
@@ -40,7 +41,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Future getData() async{
-    Data userData=await ApiService.
+    UserProfile? userData=await ApiService().getUserDetails();
+    return userData;
   }
 
   @override
@@ -48,9 +50,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
     // var userDetails;
     getData();
     // firstNameController.text=dataModel!.firstName.toString();
-    firstNameController.text=dataModel["firstName"] ?? "Neh";
-    lastNameController.text=dataModel["lastName"] ?? "Majmudar";
-    contactController.text=dataModel["contactNo"] ?? "9900990099";
+    firstNameController.text=userData?.firstName ?? "Neh";
+    lastNameController.text=userData?.lastName ?? "Majmudar";
+    contactController.text=userData?.contactNo ?? "9900990099";
     super.initState();
     subscription=Connectivity().onConnectivityChanged.listen(showConnectivityToast);
     // userDetails=ApiService.getUserDetails();
