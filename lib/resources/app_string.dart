@@ -1,5 +1,8 @@
 class AppString {
   static String txtfirstname = "First name";
+  static String allYouNeedis = "All You Need";
+  static String txtIsStayHome = "Is Stay At Home.";
+
   static String txtlastname = "Last name";
   static String txtWelcome = "Welcome!";
   static String connectivityTask = "Connectivity Animation Task";

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:pharmly/resources/app_color.dart';
+import 'package:pharmly/resources/app_string.dart';
 
 class DeseaseScreen extends StatefulWidget {
   const DeseaseScreen({Key? key}) : super(key: key);
@@ -27,25 +28,47 @@ class _DeseaseScreenState extends State<DeseaseScreen> {
                 shadowColor: AppColor.darkgreycolor,
                 child: Container(
                   height: _deviceHeight * 0.25,
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.only(
+                  decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.only(
                         bottomLeft: Radius.circular(30),
                         bottomRight: Radius.circular(30)),
-                    // gradient: LinearGradient(
-                    //   colors: [
-                    //     AppColor.lightBlueColor2,
-                    //     AppColor.lightBlueColor
-                    //   ],
-                    // ),
+                    gradient: LinearGradient(
+                      colors: [
+                        AppColor.lightBlueColor2,
+                        AppColor.lightBlueColor
+                      ],
+                    ),
                   ),
                   child: Stack(
                     fit: StackFit.expand,
                     children: [
-                      Center(
+                      Container(
+                        child: Image.asset("assets/images/virus.png"),
+                      ),
+                      Container(
+                        height: _deviceHeight * 2,
+                        margin: EdgeInsets.only(
+                          right: _deviceWidth * 0.65,
+                          top: _deviceHeight * 0.01,
+                        ),
                         child: SvgPicture.asset(
                           "assets/icons/Dr.svg",
-                          fit: BoxFit.cover,
+                          height: _deviceHeight * 2,
+                          width: _deviceWidth * 2,
                         ),
+                      ),
+                      Positioned(
+                        top: _deviceHeight * 0.07,
+                        left: _deviceWidth * 0.44,
+                        child: SizedBox(
+                            width: _deviceWidth * 0.9,
+                            child: Text(
+                              "${AppString.allYouNeedis}\n${AppString.txtIsStayHome}",
+                              style: TextStyle(
+                                  fontSize: _deviceHeight * 0.03,
+                                  fontWeight: FontWeight.w600,
+                                  color: AppColor.whitecolor),
+                            )),
                       )
                     ],
                   ),
@@ -61,16 +84,20 @@ class _DeseaseScreenState extends State<DeseaseScreen> {
               //     );
               //   },
               // ),
+
               DeseaseCard(
-                title: "Headache",
+                title: "Fever",
                 text:
                     "Working good ok then bye and do your work order that does  ok",
               ),
-              SvgPicture.asset(
-                "assets/icons/Dr.svg",
-                height: 50.0,
-                width: 40.0,
-              )
+              DeseaseCard(
+                title: "Fever",
+                text: "Working good ok ",
+              ),
+              DeseaseCard(
+                title: "Fever",
+                text: "Working good ok ",
+              ),
             ],
           ),
         ),
@@ -118,7 +145,7 @@ class DeseaseCard extends StatelessWidget {
           Container(
               alignment: Alignment.bottomLeft,
               child: Image.asset("assets/images/Logo3.png",
-                  height: _deviceHeight * 0.17)),
+                  height: _deviceHeight * 0.15)),
           Container(
             margin: EdgeInsets.only(
                 left: _deviceWidth * 0.32, top: _deviceHeight * 0.02),
@@ -127,6 +154,7 @@ class DeseaseCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
                       title!,
@@ -136,14 +164,10 @@ class DeseaseCard extends StatelessWidget {
                         fontSize: 19,
                       ),
                     ),
-                    Container(
-                        margin: EdgeInsets.only(
-                          left: _deviceWidth * 0.34,
-                        ),
-                        child: Icon(
-                          Icons.arrow_forward_ios_outlined,
-                          color: AppColor.blueColor,
-                        )),
+                    Icon(
+                      Icons.arrow_forward_ios_outlined,
+                      color: AppColor.blueColor,
+                    ),
                   ],
                 ),
                 SizedBox(
@@ -152,7 +176,7 @@ class DeseaseCard extends StatelessWidget {
                 Container(
                   child: Text(
                     text!,
-                    maxLines: 7,
+                    maxLines: 3,
                     style: TextStyle(
                         fontWeight: FontWeight.w700,
                         fontSize: _deviceHeight * 0.02,
