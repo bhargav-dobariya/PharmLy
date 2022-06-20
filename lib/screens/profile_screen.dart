@@ -1,7 +1,13 @@
+import 'dart:async';
+
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:pharmly/res/colors/app_colors.dart';
-import 'package:pharmly/res/strings/app_strings.dart';
+import 'package:pharmly/methods/checkInternetConnectivity.dart';
+import 'package:pharmly/models/get_user_model.dart';
+import 'package:pharmly/networking/api_service.dart';
+import 'package:pharmly/resources/app_color.dart';
+import 'package:pharmly/resources/app_string.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -17,6 +23,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
   TextEditingController firstNameController=TextEditingController();
   TextEditingController lastNameController=TextEditingController();
   TextEditingController contactController=TextEditingController();
+  late StreamSubscription subscription;
+  // late var userDetails;
+  var dataModel;
+
+  String userFirstName="";
+  String userLastName="";
+  String userContactNo="";
 
   @override
   void dispose() {
@@ -26,20 +39,47 @@ class _ProfileScreenState extends State<ProfileScreen> {
     super.dispose();
   }
 
+  Future getData() async{
+    Data userData=await ApiService.
+  }
+
+  @override
+  void initState() {
+    // var userDetails;
+    getData();
+    // firstNameController.text=dataModel!.firstName.toString();
+    firstNameController.text=dataModel["firstName"] ?? "Neh";
+    lastNameController.text=dataModel["lastName"] ?? "Majmudar";
+    contactController.text=dataModel["contactNo"] ?? "9900990099";
+    super.initState();
+    subscription=Connectivity().onConnectivityChanged.listen(showConnectivityToast);
+    // userDetails=ApiService.getUserDetails();
+  }
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: Text(AppStrings.txtProfile),
+        title: Text(AppString.txtProfile,style: TextStyle(fontFamily: 'Mali')),
         centerTitle: true,
-        backgroundColor: AppColors.colorBlue.withAlpha(60),
+        backgroundColor: AppColor.colorTheme,
+        elevation: 1,
         actions: [
           TextButton(
             onPressed: (){
               //sign out method
             },
-            child: Text(AppStrings.txtSignOut,style: TextStyle(color: AppColors.colorRed,fontSize: 10),)
+            child: Container(
+              width: MediaQuery.of(context).size.width/4.9,
+              height: MediaQuery.of(context).size.height/28.13,
+              alignment: Alignment.center,
+              child: Text(AppString.txtSignOut,style: TextStyle(color: AppColor.colorWhite,fontSize: 10),),
+              decoration: BoxDecoration(
+                color: AppColor.colorRedAccent,
+                borderRadius: BorderRadius.all(Radius.circular(20))
+              ),
+            )
           )
         ],
       ),
@@ -62,8 +102,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         controller: firstNameController,
                         enabled: firstNameEnabled,
                         decoration: InputDecoration(
-                          hintText: "Neh",
-                          labelText: AppStrings.txtFirstName,
+                          labelText: AppString.txtFirstName,
                           alignLabelWithHint: true
                         ),
                       ),
@@ -78,10 +117,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       child: Container(
                         width: 30,
                         height: 30,
-                        child: firstNameEnabled?Icon(Icons.check_rounded,color: AppColors.colorWhite,size: 20,):Icon(Icons.edit,color: AppColors.colorWhite,size: 20,),
+                        child: firstNameEnabled?Icon(Icons.check_rounded,color: AppColor.colorWhite,size: 20,):Icon(Icons.edit,color: AppColor.colorWhite,size: 20,),
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
-                          color: firstNameEnabled?AppColors.colorLightGreen:AppColors.colorBlue,
+                          color: firstNameEnabled?AppColor.colorLightGreen:AppColor.colorBlue,
                           borderRadius: BorderRadius.all(Radius.circular(5))
                         ),
                       ),
@@ -100,9 +139,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         controller: lastNameController,
                         enabled: lastNameEnabled,
                         decoration: InputDecoration(
-                          hintText: "Majmudar",
-                          labelText: AppStrings.txtLastName,
-                          // alignLabelWithHint: true
+                          labelText: AppString.txtLastName,
+                          alignLabelWithHint: true
                         ),
                       ),
                     ),
@@ -116,10 +154,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       child: Container(
                         width: 30,
                         height: 30,
-                        child: lastNameEnabled?Icon(Icons.check_rounded,color: AppColors.colorWhite,size: 20,):Icon(Icons.edit,color: AppColors.colorWhite,size: 20,),
+                        child: lastNameEnabled?Icon(Icons.check_rounded,color: AppColor.colorWhite,size: 20,):Icon(Icons.edit,color: AppColor.colorWhite,size: 20,),
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
-                          color: lastNameEnabled?AppColors.colorLightGreen:AppColors.colorBlue,
+                          color: lastNameEnabled?AppColor.colorLightGreen:AppColor.colorBlue,
                           borderRadius: BorderRadius.all(Radius.circular(5))
                         ),
                       ),
@@ -128,10 +166,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 GestureDetector(
                   onTap: (){
-                    Fluttertoast.showToast(
-                      gravity: ToastGravity.CENTER,
-                      msg: AppStrings.txtCannotChangeEmail,
-                    );
+                    Fluttertoast.showToast(msg: AppString.txtCannotChangeEmail);
                     print("toast?");
                   },
                   child: Container(
@@ -160,9 +195,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         controller: contactController,
                         enabled: contactEnabled,
                         decoration: InputDecoration(
-                          hintText: "9900990099",
-                          labelText: AppStrings.txtContact,
-                          // alignLabelWithHint: true
+                          fillColor: AppColor.colorRed,
+                          labelText: AppString.txtContact,
+                          alignLabelWithHint: true
                         ),
                       ),
                     ),
@@ -176,10 +211,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       child: Container(
                         width: 30,
                         height: 30,
-                        child: contactEnabled?Icon(Icons.check_rounded,color: AppColors.colorWhite,size: 20,):Icon(Icons.edit,color: AppColors.colorWhite,size: 20,),
+                        child: contactEnabled?Icon(Icons.check_rounded,color: AppColor.colorWhite,size: 20,):Icon(Icons.edit,color: AppColor.colorWhite,size: 20,),
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
-                          color: contactEnabled?AppColors.colorLightGreen:AppColors.colorBlue,
+                          color: contactEnabled?AppColor.colorLightGreen:AppColor.colorBlue,
                           borderRadius: BorderRadius.all(Radius.circular(5))
                         ),
                       ),
@@ -188,36 +223,47 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 GestureDetector(
                   onTap: (){
-                    setState(() {
-                      firstNameEnabled=false;
-                      lastNameEnabled=false;
-                      contactEnabled=false;
-                    });
-                    //update account in db
+                    if(ConnectivityResult.none != true){
+                      setState(() {
+                        firstNameEnabled=false;
+                        lastNameEnabled=false;
+                        contactEnabled=false;
+                      });
+                      //update account in db
+                    }
+                    else{
+                      Fluttertoast.showToast(msg: AppString.txtInternetIsRequired);
+                    }
                   },
+
                   child: Container(
                     alignment: Alignment.center,
                     margin: EdgeInsets.only(top: MediaQuery.of(context).size.height/28.13),
                     width: MediaQuery.of(context).size.width / 1.68,
                     height: MediaQuery.of(context).size.height / 18.75,
-                    child: Text(AppStrings.txtUpdateDetails.toUpperCase(),style: TextStyle(fontSize: 14,color: AppColors.colorWhite),),
+                    child: Text(AppString.txtUpdateDetails.toUpperCase(),style: TextStyle(fontSize: 14,color: AppColor.colorWhite,fontWeight: FontWeight.bold),),
                     decoration: BoxDecoration(
-                        color: AppColors.colorLightGreen,
+                        color: AppColor.colorTheme,
                         borderRadius: BorderRadius.all(Radius.circular(10))),
                   ),
                 ),
                 GestureDetector(
                   onTap: (){
-                    //delete account from db
+                    if(ConnectivityResult.none != true){
+                      //delete account from db
+                    }
+                    else{
+                      Fluttertoast.showToast(msg: AppString.txtInternetIsRequired);
+                    }
                   },
                   child: Container(
                     alignment: Alignment.center,
                     margin: EdgeInsets.only(top: MediaQuery.of(context).size.height/28.13),
                     width: MediaQuery.of(context).size.width / 1.68,
                     height: MediaQuery.of(context).size.height / 18.75,
-                    child: Text(AppStrings.txtDeleteAccount.toUpperCase(),style: TextStyle(fontSize: 14,color: AppColors.colorWhite),),
+                    child: Text(AppString.txtDeleteAccount.toUpperCase(),style: TextStyle(fontSize: 14,color: AppColor.colorWhite,fontWeight: FontWeight.bold),),
                     decoration: BoxDecoration(
-                      color: AppColors.colorRed,
+                      color: AppColor.colorTheme,
                       borderRadius: BorderRadius.all(Radius.circular(10))),
                     ),
                   ),

@@ -1,7 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
-import 'package:pharmly/res/colors/app_colors.dart';
-import 'package:pharmly/res/strings/app_strings.dart';
+import 'package:pharmly/methods/checkInternetConnectivity.dart';
+import 'package:pharmly/resources/app_color.dart';
+import 'package:pharmly/resources/app_string.dart';
+
 import 'package:pharmly/widgets/category.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -14,6 +19,14 @@ class _HomeScreenState extends State<HomeScreen> {
 
   ScrollController scrollController=ScrollController();
 
+  late StreamSubscription subscription;
+
+  @override
+  void initState() {
+    super.initState();
+    subscription=Connectivity().onConnectivityChanged.listen(showConnectivityToast);
+  }
+
   @override
   void dispose() {
     scrollController.dispose();
@@ -24,13 +37,13 @@ class _HomeScreenState extends State<HomeScreen> {
     return SafeArea(
       child: Scaffold(
         // resizeToAvoidBottomInset: false,
-        backgroundColor: AppColors.colorWhite,
+        backgroundColor: AppColor.colorWhite,
         body: NestedScrollView(
           controller: scrollController,
           headerSliverBuilder: (BuildContext context,bool innerBoxIsSelected){
             return <Widget>[
               SliverAppBar(
-                backgroundColor: AppColors.colorWhite,
+                backgroundColor: AppColor.colorWhite,
                 // expandedHeight: 20,
                 flexibleSpace: FlexibleSpaceBar(
                   background: Column(
@@ -48,10 +61,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                                 child: Image.asset('assets/images/pharmly_logo.png',fit: BoxFit.cover,),
                               ),
-                              Text(AppStrings.txtPharmly,style: TextStyle(fontSize: 22,color: AppColors.colorBlue.withAlpha(120),fontWeight: FontWeight.w600,fontFamily: 'Mali'),),
+                              Text(AppString.txtPharmly,style: TextStyle(fontSize: 22,color: AppColor.colorTheme,fontWeight: FontWeight.w600,fontFamily: 'Mali'),),
                               Padding(
                                 padding: EdgeInsets.only(left: MediaQuery.of(context).size.width/2.20),
-                                child: Icon(Icons.shopping_cart_sharp,size: 20,color: AppColors.colorBlack.withAlpha(90))
+                                child: Icon(Icons.shopping_cart_sharp,size: 20,color: AppColor.colorBlack.withAlpha(90))
                               )
                             ],
                           ),
@@ -73,16 +86,16 @@ class _HomeScreenState extends State<HomeScreen> {
                   padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width/26.13),
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                    color: AppColors.colorWhite,
+                    color: AppColor.colorWhite,
                       border: Border.all(
-                          color: AppColors.colorGrey.withAlpha(110)
+                          color: AppColor.colorGrey.withAlpha(110)
                       ),
                       borderRadius: BorderRadius.all(Radius.circular(5))
                   ),
                   child: Row(
                     children: [
-                      Icon(Icons.search_outlined,size: 20,color: AppColors.colorBlack.withAlpha(54),),
-                      Text(AppStrings.txtSearchText,style: TextStyle(fontSize: 15,color: AppColors.colorGrey),)
+                      Icon(Icons.search_outlined,size: 20,color: AppColor.colorBlack.withAlpha(54),),
+                      Text(AppString.txtSearchText,style: TextStyle(fontSize: 15,color: AppColor.colorGrey),)
                     ],
                   ),
                 ),
@@ -114,7 +127,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Container(
                   margin: EdgeInsets.only(bottom: MediaQuery.of(context).size.height/84.4),
                   height: 8,
-                  color: AppColors.colorBlue.withAlpha(30),
+                  color: AppColor.colorBlue.withAlpha(30),
                 ),
                 Expanded(
                   child: SizedBox(
@@ -157,14 +170,14 @@ class _HomeScreenState extends State<HomeScreen> {
         //             height: 15,
         //             width: 15,
         //             decoration: BoxDecoration(
-        //               color: AppColors.colorRed,
+        //               color: AppColor.colorRed,
         //               borderRadius: BorderRadius.all(Radius.circular(15))
         //             ),
         //           ),
-        //           Text(AppStrings.txtPharmly,style: TextStyle(fontSize: 15,color: AppColors.colorLightGreen,fontWeight: FontWeight.bold),),
+        //           Text(AppString.txtPharmly,style: TextStyle(fontSize: 15,color: AppColor.colorLightGreen,fontWeight: FontWeight.bold),),
         //           Padding(
         //             padding: EdgeInsets.only(left: 240),
-        //             child: Icon(Icons.shopping_cart_sharp,size: 20,color: AppColors.colorBlack.withAlpha(90))
+        //             child: Icon(Icons.shopping_cart_sharp,size: 20,color: AppColor.colorBlack.withAlpha(90))
         //           )
         //         ],
         //       ),
@@ -179,14 +192,14 @@ class _HomeScreenState extends State<HomeScreen> {
         //         alignment: Alignment.center,
         //         decoration: BoxDecoration(
         //           border: Border.all(
-        //             color: AppColors.colorGrey.withAlpha(110)
+        //             color: AppColor.colorGrey.withAlpha(110)
         //           ),
         //           borderRadius: BorderRadius.all(Radius.circular(5))
         //         ),
         //         child: Row(
         //           children: [
-        //             Icon(Icons.search_outlined,size: 20,color: AppColors.colorBlack.withAlpha(54),),
-        //             Text(AppStrings.txtSearchText,style: TextStyle(fontSize: 15,color: AppColors.colorGrey),)
+        //             Icon(Icons.search_outlined,size: 20,color: AppColor.colorBlack.withAlpha(54),),
+        //             Text(AppString.txtSearchText,style: TextStyle(fontSize: 15,color: AppColor.colorGrey),)
         //           ],
         //         ),
         //       ),
@@ -217,7 +230,7 @@ class _HomeScreenState extends State<HomeScreen> {
         //     ),
         //     Divider(
         //       thickness: 12,
-        //       color: AppColors.colorBlue.withAlpha(30),
+        //       color: AppColor.colorBlue.withAlpha(30),
         //     ),
         //     SizedBox(
         //       width: MediaQuery.of(context).size.width,

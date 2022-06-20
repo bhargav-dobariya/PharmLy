@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:pharmly/res/colors/app_colors.dart';
-import 'package:pharmly/res/strings/app_strings.dart';
+import 'package:pharmly/resources/app_color.dart';
+import 'package:pharmly/resources/app_string.dart';
 import 'package:pharmly/screens/home_screen.dart';
 import 'package:pharmly/widgets/bottom_nav_bar.dart';
 
@@ -42,7 +42,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   child: Image.asset('assets/images/pharmly_logo.png',fit: BoxFit.cover,)
                 ),
                 Container(
-                  child: Text(AppStrings.txtPharmly,style: TextStyle(fontSize: 36,fontFamily: 'Mali',color: AppColors.colorWhite),),
+                  child: Text(AppString.txtPharmly,style: TextStyle(fontSize: 36,fontFamily: 'Mali',color: AppColor.colorWhite),),
                 )
               ],
             ),
@@ -51,7 +51,7 @@ class _SplashScreenState extends State<SplashScreen> {
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
-              colors: [AppColors.colorBlue.withAlpha(100),AppColors.colorGreen.withAlpha(100)]
+              colors: [AppColor.colorLightBlue.withAlpha(100),AppColor.colorLightGreen.withAlpha(100)]
             )
           ),
         ),

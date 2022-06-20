@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 
-class AppColors{
+class AppColor{
+  static Color colorTheme=Color(0xFF314CB8);
+  static Color colorTheme1=Color(0xFF8096F0);
   static Color colorSky=Color(0xFFccffff);
   static Color colorSkyBright=Color(0xFFb3ffff);
   static Color colorRed=Color(0xFFff0000);
+  static Color colorRedAccent=Colors.redAccent;
   static Color colorWhite=Color(0xFFffffff);
   static Color colorBlue=Color(0xFF0000ff);
+  static Color colorLightBlue=Color(0xFF03a9f4);
   static Color colorGreen=Color(0xFF00ff00);
   static Color colorBlack=Color(0xFF000000);
   static Color colorGrey=Color(0xFF808080);

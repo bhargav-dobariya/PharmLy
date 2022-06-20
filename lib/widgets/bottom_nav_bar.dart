@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:pharmly/res/colors/app_colors.dart';
+import 'package:pharmly/resources/app_color.dart';
+import 'package:pharmly/screens/cart_screen.dart';
 import 'package:pharmly/screens/home_screen.dart';
 import 'package:pharmly/screens/profile_screen.dart';
 
@@ -32,7 +33,7 @@ class BottomNavBarState extends State<BottomNavBar> {
 
     ///Home screen
       case 1:
-        return HomeScreen();
+        return CartScreen();
 
     ///Notification screen
       case 2:
@@ -57,17 +58,17 @@ class BottomNavBarState extends State<BottomNavBar> {
             borderRadius: BorderRadius.only(
                 topRight: Radius.circular(30), topLeft: Radius.circular(30)),
             boxShadow: [
-              BoxShadow(color: AppColors.colorGrey, blurRadius: 10)
+              BoxShadow(color: AppColor.colorGrey, blurRadius: 10)
             ]),
         child: ClipRRect(
           borderRadius: BorderRadius.only(
               topRight: Radius.circular(30), topLeft: Radius.circular(30)),
           child: BottomNavigationBar(
             type: BottomNavigationBarType.fixed,
-            backgroundColor: AppColors.colorWhite,
+            backgroundColor: AppColor.colorWhite,
             showUnselectedLabels: false,
-            selectedItemColor: AppColors.colorLightGreen,
-            unselectedItemColor: AppColors.colorGrey,
+            selectedItemColor: AppColor.colorTheme,
+            unselectedItemColor: AppColor.colorGrey,
             selectedLabelStyle: TextStyle(fontWeight: FontWeight.bold),
             items: [
               BottomNavigationBarItem(
