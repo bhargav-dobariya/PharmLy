@@ -12,9 +12,6 @@ class AppString {
   static String txtSignIn = "SIGN IN";
   static String txtDontHaveAnAccount = "Don't have an account?";
   static String txtSignUp = "Sign Up";
-  static String txtLetsGetStarted = "Let's Get Started!";
-  static String txtCreateAccountToConnect =
-      "Create account to connect with people";
   static String txtUsername = "Username";
   static String txtPhoneNumber = "Phone number";
   static String txtConfirmPassword = "Confirm Password";
@@ -25,34 +22,13 @@ class AppString {
   static String txtCreateAccount = "Create account";
   static String txtContinueTo = "Continue to ";
   static String txtPleaseEnterSomeText = "Please enter some text ";
-  static String txtEnterValidEmailId = "Enter valid Email id";
-  static String txtPasswordLengthMoreThan6 =
-      "Password length should be more than 6 characters";
+  static String txtEnterValidEmailId = "Enter Valid Email";
   static String txtEnterValidPhoneNo = "Enter valid phone number";
-  static String txtPleaseSelectCheckBox = "Please select the checkbox.";
-  static String txtMateVibes = "MateVibes";
-  static String txtForgotPasswordText =
-      "We’ll send a link to reset password over\n below entered email address or phone number.";
   static String txtOR = "OR";
   static String txtContinue = "continue";
   static String txtVerify = "Verify";
-
   static String txtPassworddontmatch = "Password don't match";
-  static String txtLetsCompleteProfile = "Let's Complete Profile";
-  static String txtWhatDescribesYouBetter = "What describes you better?";
-  static String txtGender = "Gender";
   static String txtSkipForNow = "Skip For Now";
-  static String txtDisplayName = "Display name";
-  static String txtEnterValidDisplayName = "Display name can't be empty";
-  static String txtEnterValidGender = "Gender can't be empty";
-  static String txtTimeExample = "2 hours ago";
-  static String txtLoremIpsum =
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut pulvinar dapibus pulvinar. Suspendisse potenti. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Duis rutrum interdum orci, sit amet viverra enim tincidunt sit amet. Etiam nec enim   ...read more";
-  static String txtNotifaications = "Notifications";
-  static String txtMarkAllAsRead = "Mark All As Read";
-  static String txtToday = "Today";
-  static String txtDaveGamache = "Dave Gamache";
-  static String txtDesignerOnMedium = "Designer on Medium Obvious";
   static String txtPost = "Posts";
   static String txtCollection = "Collections";
   static String txtDiana = "@diana";
@@ -60,32 +36,7 @@ class AppString {
   static String txtChat = "Chats";
   static String txtDevices = "Devices";
   static String txtScenes = "Scenes";
-  static String txtSettings = "Settings";
-  static String txtFamily = "Family";
-
-  static String txtSearch = "Search";
-  static String txtLoginWithGoogle = "Login With Google";
-  static String txtLoginWithFb = "Login With Facebook";
-  static String txtloggedinfb =
-      "Congratulations! You're Successfully Logged In through Facebook Account";
-  static String txtSuccessfullyLoggedIn =
-      "Congratulations! You're Successfully Logged In";
-  static String txt25 = "25";
-  static String txtHello = "Hello,";
-  static String txtDaniela = " Daniela!";
-  static String txtWelcomeToYourSmartHome = "Welcome to your smart home.";
-  static String txtRooms = "Rooms";
-  static String txtBedroom = "Bedroom";
-  static String txtLivingRoom = "LivingRoom";
-  static String txt3by10 = "3/10";
-  static String txt5by13 = "5/13";
-  static String txt3by12 = "3/12";
-  static String txtfamily = "Family";
-  static String txtdevices = "Devices";
-  static String txtscenes = "Scenes";
-  static String txtsettings = "Settings";
   static String txtlogin = "Login";
-
   static String txtPickImageFromGallery = "Pick image from gallery";
   static String txtPickImageFromCamera = "Pick image from camera";
   static String txtWhatIsInYourMind = "What's in your mind?";
@@ -133,7 +84,6 @@ class AppString {
   static String txtConnectedinternetToast = "You're connected with internet.";
   static String txtnoInternetToast =
       "You're not connected with internet,please check your network connections";
-
   static String userIDKey = "USER_ID";
   static String typeYourMessage = 'Type your message...';
   static String txtUnFollowAlert = "You have unfollowed ";
@@ -147,4 +97,7 @@ class AppString {
   static String txtEnterValidUsername = "Enter Valid Username";
   static String txtDontHaveAnAccountSignup = "Don't have an account? Sign up";
   static String txtAlreadyhaveAnAccount = "Already Have An Account? Sign in";
+  static String txtEnterYourOtpHere = "Enter Your OTP Here";
+  static String txtPleaseEnterCorrectEmailAndPassword =
+      "Please enter correct email and password details";
 }

@@ -43,31 +43,37 @@ class _ForgotPasswordState extends State<ForgotPassword> {
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
-          margin: EdgeInsets.only(
-            // bottom: _deviceHeight * ,
-            left: _deviceWidth * 0.1,
-            right: _deviceWidth * 0.1,
-          ),
+          width: double.infinity,
+          margin: const EdgeInsets.only(
+              // bottom: _deviceHeight * ,
+
+              ),
           child: Column(
             children: [
-              Container(
-                alignment: Alignment.topCenter,
-                width: _deviceWidth * 1.2,
-                height: _deviceHeight * 0.251,
-                margin: EdgeInsets.only(
-                  top: _deviceHeight * 0.10,
+              Material(
+                elevation: 2,
+                shadowColor: AppColor.greyColor,
+                child: Container(
+                  alignment: Alignment.topCenter,
+                  height: _deviceHeight * 0.251,
+                  margin: EdgeInsets.only(
+                    top: _deviceHeight * 0.10,
+                  ),
+                  decoration: const BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage(
+                            'assets/images/forgot_password_img.png',
+                          ),
+                          fit: BoxFit.cover)),
                 ),
-                decoration: const BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage(
-                          'assets/images/forgot_password_img.png',
-                        ),
-                        fit: BoxFit.cover)),
               ),
               Container(
                   alignment: Alignment.center,
                   margin: EdgeInsets.only(
-                      bottom: _deviceHeight * 0.04, top: _deviceHeight * 0.08),
+                      bottom: _deviceHeight * 0.04,
+                      left: _deviceWidth * 0.1,
+                      right: _deviceWidth * 0.1,
+                      top: _deviceHeight * 0.08),
                   child: TextFormField(
                       controller: _emailValidator,
                       decoration:
@@ -77,33 +83,36 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                               ? 'Enter A Valid Email'
                               : null)),
               GestureDetector(
-                  child: Container(
-                    margin: EdgeInsets.only(top: _deviceHeight * 0.1),
-                    alignment: Alignment.center,
-                    width: _deviceWidth * 0.5,
-                    height: _deviceHeight * 0.06,
-                    decoration: BoxDecoration(
-                        color: AppColor.lightBlueColor,
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(50)),
-                        gradient: LinearGradient(colors: [
-                          AppColor.lightBlueColor3,
-                          AppColor.lightBlueColor
-                        ])),
-                    child: Text(
-                      AppString.txtVerify.toUpperCase(),
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: AppColor.colorWhite,
-                        fontWeight: FontWeight.w800,
-                      ),
+                child: Container(
+                  margin: EdgeInsets.only(top: _deviceHeight * 0.1),
+                  alignment: Alignment.center,
+                  width: _deviceWidth * 0.5,
+                  height: _deviceHeight * 0.06,
+                  decoration: BoxDecoration(
+                    color: AppColor.lightBlueColor,
+                    borderRadius: const BorderRadius.all(Radius.circular(50)),
+                    gradient: LinearGradient(
+                      colors: [
+                        AppColor.lightBlueColor3,
+                        AppColor.lightBlueColor
+                      ],
                     ),
                   ),
-                  onTap: () async {
-                    final result = await Connectivity().checkConnectivity();
-                    showConnectivityToast(result);
-                    Navigator.pushNamed(context, '/otp_verification');
-                  }),
+                  child: Text(
+                    AppString.txtVerify.toUpperCase(),
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: AppColor.colorWhite,
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
+                ),
+                onTap: () async {
+                  final result = await Connectivity().checkConnectivity();
+                  showConnectivityToast(result);
+                  Navigator.pushNamed(context, '/otp_verification');
+                },
+              ),
             ],
           ),
         ),

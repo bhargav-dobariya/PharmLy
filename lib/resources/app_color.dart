@@ -15,6 +15,7 @@ class AppColor {
   static Color colorTimeOfPost = const Color(0xFFc4c4c4);
   static Color colorSearchIconInChat = const Color(0xFFc4c4c4);
   static Color colorSelectedItemNavBar = const Color(0xFF465782);
+  static Color shadowColor = const Color(0xFFB7B7B7).withOpacity(.16);
 
   static Shader colorMateVibes =
       const LinearGradient(colors: [Color(0xFF8e35ff), Color(0xFFffa030)])

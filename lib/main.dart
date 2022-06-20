@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pharmly/screen/desease_screen.dart';
 import 'package:pharmly/screen/forgot_password.dart';
 import 'package:pharmly/screen/login_screen.dart';
 import 'package:pharmly/screen/otp_verification_screen.dart';
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       routes: {
-        '/': (context) => const OtpVerificationScreen(),
+        '/': (context) => const DeseaseScreen(),
         '/signup_screen': (context) => const SignUpScreen(),
         '/login_screen': (context) => const LoginScreen(),
         '/forgot_password': (context) => const ForgotPassword(),
