@@ -2,6 +2,8 @@ class ApiUtils{
   static const String baseUrl="https://10c1-103-85-10-87.in.ngrok.io/";
   static const String users = "users/";
   static const String login = "login/";
+  static const String logout = "logout/";
+  static const String category = "category/";
 
   static const firstName = "firstName";
   static const lastName = "lastName";

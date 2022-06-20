@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:pharmly/models/get_user_model.dart';
+import 'package:pharmly/models/update_user_profile.dart';
+import 'package:pharmly/models/view_category.dart';
 import 'package:pharmly/utils/api_utils.dart';
 import 'package:http/http.dart' as http;
 
@@ -62,7 +64,7 @@ class ApiService{
     }
   }
 
-  Future<UserProfile?> updateUserDetails({
+  Future<UpdateProfile?> updateUserDetails({
     String? firstName,
     String? lastName,
     String? contactNo,
@@ -80,11 +82,32 @@ class ApiService{
       http.Response response=await http.put(Uri.parse(getUserUrl),headers:header,body: body);
 
       if(response.statusCode==200){
-        return UserProfile.fromJson(jsonDecode(response.body));
+        return UpdateProfile.fromJson(jsonDecode(response.body));
       }
     }catch(e){
       print(e.toString());
-      // return UserProfile();
+      return UpdateProfile();
+    }
+  }
+
+
+  static const categoryUrl=ApiUtils.baseUrl+ApiUtils.category;
+  Future<ViewCategory?> viewCategories()async{
+    try{
+      Map<String,String> header = {
+        ApiUtils.authorization : 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijg5OTk0ZmNjLThhMGYtNGU4YS1hYjAyLWRmNmViZTAzZTRlZiIsImVtYWlsIjoiYXBleGEzcGF0ZWxAZ21haWwuY29tIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTY1NTcyNDAwNiwiZXhwIjoxNjU1ODEwNDA2fQ.LiC6cVDo89Ik9vi_QoF_l5xAIl8VhF0mB6Z1vn-nSXc'
+      };
+      final response = await http.get(Uri.parse(categoryUrl),headers: header);
+      print(response.statusCode);
+      if (response.statusCode == 200) {
+        Map<String,dynamic> mapResponse = json.decode(response.body);
+        return ViewCategory.fromJson(mapResponse);
+        // Data dataModel = Data.fromJson(mapResponse);
+        // return dataModel;
+      }
+    }catch(e){
+      print(e.toString());
+      return ViewCategory();
     }
   }
 }

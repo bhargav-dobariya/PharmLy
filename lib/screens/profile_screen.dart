@@ -50,6 +50,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     contactController.text=userData?.data?.contactNo ?? "9900990099";
     firstNameController.text=userData?.data?.firstName ?? "NEh";
     emailText=userData?.data?.email ?? "NEh";
+    setState(() {});
   }
 
   updateData(String newFirstName,String newLastName,String newContactNo) async{
@@ -65,7 +66,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
   @override
   Widget build(BuildContext context) {
-    print(emailText);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
