@@ -42,24 +42,49 @@ class ApiService{
 
 
   static const String getUserUrl = ApiUtils.baseUrl + ApiUtils.users + "89994fcc-8a0f-4e8a-ab02-df6ebe03e4ef";    //take id from shared preferences
-  // static getUserDetails()async{
-  //   final response=await http.get(Uri.parse(getUserUrl));
-  //   Map<String,dynamic> mapResponse = json.decode(response.body);
-  //   return Data.fromJson(mapResponse);
-  // }
   Future<UserProfile?> getUserDetails() async{
     try{
-      final response=await http.get(Uri.parse(getUserUrl));
+      Map<String,String> header = {
+        ApiUtils.authorization : 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijg5OTk0ZmNjLThhMGYtNGU4YS1hYjAyLWRmNmViZTAzZTRlZiIsImVtYWlsIjoiYXBleGEzcGF0ZWxAZ21haWwuY29tIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTY1NTcwNDk4MCwiZXhwIjoxNjU1NzkxMzgwfQ.dzBnm-dRAl2msLFLZd8gKyNmlhxthGAFlATuDhvvafk'
+      };
+      final response = await http.get(Uri.parse(getUserUrl),headers: header);
+      print(response.statusCode);
       if (response.statusCode == 200) {
         Map<String,dynamic> mapResponse = json.decode(response.body);
         return UserProfile.fromJson(mapResponse);
         // Data dataModel = Data.fromJson(mapResponse);
         // return dataModel;
-        }
       }
-      catch(e){
-        // print(e.toString());
-        return UserProfile();
+    }
+    catch(e){
+      // print(e.toString());
+      return UserProfile();
+    }
+  }
+
+  Future<UserProfile?> updateUserDetails({
+    String? firstName,
+    String? lastName,
+    String? contactNo,
+  })async{
+    Map<String,dynamic> body={
+      ApiUtils.firstName: firstName,
+      ApiUtils.lastName: lastName,
+      ApiUtils.contactNo: contactNo,
+    };
+
+    try{
+      Map<String,String> header = {
+        ApiUtils.authorization : 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijg5OTk0ZmNjLThhMGYtNGU4YS1hYjAyLWRmNmViZTAzZTRlZiIsImVtYWlsIjoiYXBleGEzcGF0ZWxAZ21haWwuY29tIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTY1NTcwNDk4MCwiZXhwIjoxNjU1NzkxMzgwfQ.dzBnm-dRAl2msLFLZd8gKyNmlhxthGAFlATuDhvvafk'
+      };
+      http.Response response=await http.put(Uri.parse(getUserUrl),headers:header,body: body);
+
+      if(response.statusCode==200){
+        return UserProfile.fromJson(jsonDecode(response.body));
+      }
+    }catch(e){
+      print(e.toString());
+      // return UserProfile();
     }
   }
 }

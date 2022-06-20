@@ -20,13 +20,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
   bool firstNameEnabled=false;
   bool lastNameEnabled=false;
   bool contactEnabled=false;
+  bool emailEnabled=false;
   TextEditingController firstNameController=TextEditingController();
   TextEditingController lastNameController=TextEditingController();
   TextEditingController contactController=TextEditingController();
+  String? emailText;
   late StreamSubscription subscription;
   // late var userDetails;
   // var dataModel;
   var userData;
+  var updateUserData;
 
   String userFirstName="";
   String userLastName="";
@@ -40,26 +43,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
     super.dispose();
   }
 
-  Future getData() async{
+  getData() async{
     UserProfile? userData=await ApiService().getUserDetails();
-    return userData;
+    // firstNameController.text=userData.da.firstName ?? "Neh";
+    lastNameController.text=userData?.data?.lastName ?? "Majmudar";
+    contactController.text=userData?.data?.contactNo ?? "9900990099";
+    firstNameController.text=userData?.data?.firstName ?? "NEh";
+    emailText=userData?.data?.email ?? "NEh";
+  }
+
+  updateData(String newFirstName,String newLastName,String newContactNo) async{
+    await ApiService().updateUserDetails(firstName: newFirstName,lastName: newLastName,contactNo: newContactNo);
   }
 
   @override
   void initState() {
-    // var userDetails;
     getData();
-    // firstNameController.text=dataModel!.firstName.toString();
-    firstNameController.text=userData?.firstName ?? "Neh";
-    lastNameController.text=userData?.lastName ?? "Majmudar";
-    contactController.text=userData?.contactNo ?? "9900990099";
     super.initState();
     subscription=Connectivity().onConnectivityChanged.listen(showConnectivityToast);
     // userDetails=ApiService.getUserDetails();
   }
   @override
   Widget build(BuildContext context) {
-
+    print(emailText);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -177,9 +183,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     width: MediaQuery.of(context).size.width/1.568,
                     height: MediaQuery.of(context).size.height/11.25,
                     child: TextFormField(
-                      enabled: false,
+                      enabled: emailEnabled,
                       decoration: InputDecoration(
-                        hintText: "neh@neh.com",
+                        hintText: emailText,
                         // alignLabelWithHint: true
                       ),
                     ),
@@ -230,6 +236,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         firstNameEnabled=false;
                         lastNameEnabled=false;
                         contactEnabled=false;
+                        updateData(firstNameController.text,lastNameController.text,contactController.text);
                       });
                       //update account in db
                     }
