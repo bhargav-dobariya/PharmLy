@@ -91,7 +91,7 @@ class AppString {
   static String txtConnectedinternetToast = "You're connected with internet.";
   static String txtnoInternetToast =
       "You're not connected with internet,please check your network connections";
-  static String userIDKey = "USER_ID";
+  static String userToken = "User_Token";
   static String typeYourMessage = 'Type your message...';
   static String txtUnFollowAlert = "You have unfollowed ";
   static String txtFollowAlert = "You are now following ";

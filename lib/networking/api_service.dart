@@ -43,18 +43,18 @@ class ApiService {
     return LoginModel.fromJson(mapResponse);
   }
 
-  static const String _allDesease = ApiUtils.baseUrl + ApiUtils.users;
-  Future<DeseaseModel> getAllDesease() async {
+  static const String _allDisease = ApiUtils.baseUrl + ApiUtils.users;
+  Future<diseaseModel> getAllDisease() async {
     Map<String, String> header = {
       ApiUtils.authorization:
           'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijg5OTk0ZmNjLThhMGYtNGU4YS1hYjAyLWRmNmViZTAzZTRlZiIsImVtYWlsIjoiYXBleGEzcGF0ZWxAZ21haWwuY29tIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTY1NTcwNDk4MCwiZXhwIjoxNjU1NzkxMzgwfQ.dzBnm-dRAl2msLFLZd8gKyNmlhxthGAFlATuDhvvafk'
     };
     http.Response response = await http.get(
-      Uri.parse(_allDesease),
+      Uri.parse(_allDisease),
       headers: header,
     );
     Map<String, dynamic> mapResponse = json.decode(response.body);
 
-    return DeseaseModel.fromJson(mapResponse);
+    return diseaseModel.fromJson(mapResponse);
   }
 }

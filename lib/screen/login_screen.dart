@@ -6,6 +6,7 @@ import 'package:pharmly/resources/app_color.dart';
 import 'package:pharmly/resources/app_string.dart';
 import 'package:pharmly/shared/validator.dart';
 import 'package:pharmly/utils/network_connection.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -15,12 +16,22 @@ class LoginScreen extends StatefulWidget {
 }
 
 class LoginScreenState extends State<LoginScreen> {
+  late SharedPreferences _prefs;
+
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passworController = TextEditingController();
 
   late double _deviceHeight;
   late double _deviceWidth;
+  @override
+  void initState() {
+    // TODO: implement initState
+    SharedPreferences.getInstance().then((sharedPref) {
+      _prefs = sharedPref;
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -145,7 +156,9 @@ class LoginScreenState extends State<LoginScreen> {
                     .then(
                   (res) async {
                     if (res.code == 200) {
+                      await _prefs.setString(AppString.userToken, res.data!);
                       Navigator.pushNamed(context, '/otp_verification');
+                      getUserToke();
                     } else {
                       _emailController.clear();
                       _passworController.clear();
@@ -199,5 +212,14 @@ class LoginScreenState extends State<LoginScreen> {
         ],
       ),
     );
+  }
+
+  void getUserToke() {
+    SharedPreferences.getInstance().then((sharedPref) async {
+      _prefs = sharedPref;
+
+      var userId = _prefs.getString(AppString.userToken);
+      print(userId);
+    });
   }
 }

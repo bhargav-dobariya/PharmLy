@@ -4,14 +4,14 @@ import 'package:pharmly/networking/api_service.dart';
 import 'package:pharmly/resources/app_color.dart';
 import 'package:pharmly/resources/app_string.dart';
 
-class DeseaseScreen extends StatefulWidget {
-  const DeseaseScreen({Key? key}) : super(key: key);
+class DiseaseScreen extends StatefulWidget {
+  const DiseaseScreen({Key? key}) : super(key: key);
 
   @override
-  State<DeseaseScreen> createState() => _DeseaseScreenState();
+  State<DiseaseScreen> createState() => _DiseaseScreenState();
 }
 
-class _DeseaseScreenState extends State<DeseaseScreen> {
+class _DiseaseScreenState extends State<DiseaseScreen> {
   late double _deviceHeight;
   late double _deviceWidth;
   String? diseaseName;
@@ -20,7 +20,7 @@ class _DeseaseScreenState extends State<DeseaseScreen> {
   var items;
 
   getData() async {
-    allDiseaseData = await ApiService().getAllDesease();
+    allDiseaseData = await ApiService().getAllDisease();
     items = allDiseaseData.data;
   }
 
