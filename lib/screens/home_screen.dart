@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:pharmly/methods/checkInternetConnectivity.dart';
+import 'package:pharmly/models/view_category.dart';
+import 'package:pharmly/networking/api_service.dart';
 import 'package:pharmly/resources/app_color.dart';
 import 'package:pharmly/resources/app_string.dart';
 
@@ -20,9 +22,15 @@ class _HomeScreenState extends State<HomeScreen> {
   ScrollController scrollController=ScrollController();
 
   late StreamSubscription subscription;
+  var viewCategory;
+
+  getCategory()async{
+    ViewCategory? viewCategory=await ApiService().viewCategories();
+  }
 
   @override
   void initState() {
+    getCategory();
     super.initState();
     subscription=Connectivity().onConnectivityChanged.listen(showConnectivityToast);
   }
@@ -129,33 +137,55 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: 8,
                   color: AppColor.colorBlue.withAlpha(30),
                 ),
-                Expanded(
-                  child: SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height/2,
-                    child: GridView.count(
+              Expanded(
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height/2,
+                  child: GridView.builder(
+                    padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.height*0.02),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 3,
-                      physics: NeverScrollableScrollPhysics(),
                       childAspectRatio: 0.7,
-                      padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.height*0.02),
                       crossAxisSpacing: MediaQuery.of(context).size.height*0.015,
                       mainAxisSpacing: MediaQuery.of(context).size.width/19.6,
-                      children: [
-                        Category(),
-                        Category(),
-                        Category(),
-                        Category(),
-                        Category(),
-                        Category(),
-                        Category(),
-                        Category(),
-                        Category(),
-                        Category(),
-                        Category(),
-                      ],
                     ),
-                  ),
-                )
+                    itemCount: ,
+                    itemBuilder: (ctx,index){
+                      return Category(imageUrl: , categoryTitle: )
+                    }
+                  )
+                ),
+              )
+                // Expanded(
+                //   child: SizedBox(
+                //     width: MediaQuery.of(context).size.width,
+                //     height: MediaQuery.of(context).size.height/2,
+                //     child: GridView.count(
+                //       crossAxisCount: 3,
+                //       physics: NeverScrollableScrollPhysics(),
+                //       childAspectRatio: 0.7,
+                //       padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.height*0.02),
+                //       crossAxisSpacing: MediaQuery.of(context).size.height*0.015,
+                //       mainAxisSpacing: MediaQuery.of(context).size.width/19.6,
+                //       children: [
+                //         Category(imageUrl: 'assets/images/pharmly_logo.png',categoryTitle: "Beautry products",),
+                //         Category(imageUrl: 'assets/images/pharmly_logo.png',categoryTitle: "Beautry products",),
+                //         Category(imageUrl: 'assets/images/pharmly_logo.png',categoryTitle: "Beautry products",),
+                //         Category(imageUrl: 'assets/images/pharmly_logo.png',categoryTitle: "Beautry products",),
+                //         Category(imageUrl: 'assets/images/pharmly_logo.png',categoryTitle: "Beautry products",),
+                //         Category(imageUrl: 'assets/images/pharmly_logo.png',categoryTitle: "Beautry products",),
+                //         Category(imageUrl: 'assets/images/pharmly_logo.png',categoryTitle: "Beautry products",),
+                //         Category(imageUrl: 'assets/images/pharmly_logo.png',categoryTitle: "Beautry products",),
+                //         Category(imageUrl: 'assets/images/pharmly_logo.png',categoryTitle: "Beautry products",),
+                //         Category(imageUrl: 'assets/images/pharmly_logo.png',categoryTitle: "Beautry products",),
+                //         Category(imageUrl: 'assets/images/pharmly_logo.png',categoryTitle: "Beautry products",),
+                //         Category(imageUrl: 'assets/images/pharmly_logo.png',categoryTitle: "Beautry products",),
+                //         Category(imageUrl: 'assets/images/pharmly_logo.png',categoryTitle: "Beautry products",),
+                //         Category(imageUrl: 'assets/images/pharmly_logo.png',categoryTitle: "Beautry products",),
+                //       ],
+                //     ),
+                //   ),
+                // )
             ],
           )
         ),

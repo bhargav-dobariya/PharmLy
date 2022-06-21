@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:pharmly/resources/app_color.dart';
 
 class Category extends StatefulWidget {
-  const Category({Key? key}) : super(key: key);
+  final String imageUrl;
+  final String categoryTitle;
+  const Category({Key? key,required this.imageUrl,required this.categoryTitle}) : super(key: key);
 
   @override
   _CategoryState createState() => _CategoryState();
@@ -24,10 +26,10 @@ class _CategoryState extends State<Category> {
                 border: Border.all(color: AppColor.colorGrey.withAlpha(50)),
                 borderRadius: BorderRadius.all(Radius.circular(5))
               ),
-              child: Image.asset('assets/images/carousel1.jpg',fit: BoxFit.cover,),
+              child: Image.asset(widget.imageUrl,fit: BoxFit.cover,),
             ),
           ),
-          Text("Beauty products",style: TextStyle(fontSize: 10,color: AppColor.colorBlack),textAlign: TextAlign.center,)
+          Text(widget.categoryTitle,style: TextStyle(fontSize: 10,color: AppColor.colorBlack),textAlign: TextAlign.center,)
         ],
       ),
     );
