@@ -4,6 +4,9 @@ import 'package:pharmly/screen/forgot_password.dart';
 import 'package:pharmly/screen/login_screen.dart';
 import 'package:pharmly/screen/otp_verification_screen.dart';
 import 'package:pharmly/screen/signup_screen.dart';
+import 'package:pharmly/screens/home_screen.dart';
+import 'package:pharmly/screens/splash_screen.dart';
+import 'package:pharmly/widgets/bottom_nav_bar.dart';
 
 void main() {
   runApp(const MyApp());
