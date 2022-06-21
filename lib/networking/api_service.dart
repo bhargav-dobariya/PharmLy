@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 import 'package:pharmly/models/all_desease_model.dart';
 import 'package:pharmly/models/login_model.dart';
