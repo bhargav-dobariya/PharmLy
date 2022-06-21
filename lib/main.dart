@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:pharmly/screen/disease_screen.dart';
-import 'package:pharmly/screen/forgot_password.dart';
-import 'package:pharmly/screen/login_screen.dart';
-import 'package:pharmly/screen/otp_verification_screen.dart';
-import 'package:pharmly/screen/signup_screen.dart';
+import 'package:pharmly/screens/disease_screen.dart';
+import 'package:pharmly/screens/forgot_password.dart';
+import 'package:pharmly/screens/login_screen.dart';
+import 'package:pharmly/screens/otp_verification_screen.dart';
+import 'package:pharmly/screens/signup_screen.dart';
 import 'package:pharmly/screens/home_screen.dart';
+import 'package:pharmly/screens/profile_screen.dart';
 import 'package:pharmly/screens/splash_screen.dart';
 import 'package:pharmly/widgets/bottom_nav_bar.dart';
 
@@ -21,12 +22,17 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       routes: {
-        '/': (context) => const LoginScreen(),
+        '/': (context) => const SplashScreen(),
         '/signup_screen': (context) => const SignUpScreen(),
         '/login_screen': (context) => const LoginScreen(),
         '/forgot_password': (context) => const ForgotPassword(),
         '/otp_verification': (context) => const OtpVerificationScreen(),
-        '/disease_screen': (context) => const DiseaseScreen()
+        '/disease_screen': (context) => const DiseaseScreen(),
+        '/bottom_navbar': (context) =>  BottomNavBar(),
+        '/home_screen' : (context) => HomeScreen(),
+        '/profile_screen': (context) =>  ProfileScreen(),
+
+
       },
     );
   }

@@ -157,7 +157,7 @@ class LoginScreenState extends State<LoginScreen> {
                   (res) async {
                     if (res.code == 200) {
                       await _prefs.setString(AppString.userToken, res.data!);
-                      Navigator.pushNamed(context, '/disease_screen');
+                      Navigator.pushNamed(context, '/bo');
                     } else {
                       _emailController.clear();
                       _passworController.clear();
