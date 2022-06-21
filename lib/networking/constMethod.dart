@@ -3,12 +3,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../resources/app_string.dart';
 
 class ConstantMethod {
+  static late SharedPreferences prefs;
   static getUserAccessToken() {
-    SharedPreferences.getInstance().then((sharedPref) async {
-      var _prefs = sharedPref;
+    return prefs.getString(AppString.userToken);
+  }
 
-      var userToken = _prefs.getString(AppString.userToken);
-      return userToken;
-    });
+  static initPreference() async {
+    prefs = await SharedPreferences.getInstance();
   }
 }

@@ -54,6 +54,7 @@ class ApiService {
     http.Response response =
         await http.post(Uri.parse(_userLoginUrl), body: body);
     Map<String, dynamic> mapResponse = json.decode(response.body);
+    print(response.statusCode);
     return LoginModel.fromJson(mapResponse);
   }
 
@@ -74,7 +75,7 @@ class ApiService {
   Future<UserProfile?> getUserDetails() async{
     try{
       Map<String,String> header = {
-        ApiUtils.authorization : 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijg5OTk0ZmNjLThhMGYtNGU4YS1hYjAyLWRmNmViZTAzZTRlZiIsImVtYWlsIjoiYXBleGEzcGF0ZWxAZ21haWwuY29tIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTY1NTc4NDg1MCwiZXhwIjoxNjU1ODcxMjUwfQ.OmUQ4Iljk0_Ok1xoO68C--6dPKrDc4G1tlpAcpJaVso'
+        ApiUtils.authorization : 'Bearer ' + userToken
       };
       final response = await http.get(Uri.parse(getUserUrl),headers: header);
       print(response.statusCode);
@@ -104,7 +105,7 @@ class ApiService {
 
     try{
       Map<String,String> header = {
-        ApiUtils.authorization : 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijg5OTk0ZmNjLThhMGYtNGU4YS1hYjAyLWRmNmViZTAzZTRlZiIsImVtYWlsIjoiYXBleGEzcGF0ZWxAZ21haWwuY29tIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTY1NTc4NDg1MCwiZXhwIjoxNjU1ODcxMjUwfQ.OmUQ4Iljk0_Ok1xoO68C--6dPKrDc4G1tlpAcpJaVso'
+        ApiUtils.authorization : 'Bearer ' + userToken
       };
       http.Response response=await http.put(Uri.parse(getUserUrl),headers:header,body: body);
 
@@ -121,7 +122,7 @@ class ApiService {
   Future<ViewCategory?> viewCategories()async{
     try{
       Map<String,String> header = {
-        ApiUtils.authorization : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijg5OTk0ZmNjLThhMGYtNGU4YS1hYjAyLWRmNmViZTAzZTRlZiIsImVtYWlsIjoiYXBleGEzcGF0ZWxAZ21haWwuY29tIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTY1NTc4NDc1NiwiZXhwIjoxNjU1ODcxMTU2fQ.WltUbVOFK9gYJG1xUl2otGKYGQfu9nqw99EqIhbalBU'
+        ApiUtils.authorization : 'Bearer ' + userToken
       };
       final response = await http.get(Uri.parse(categoryUrl),headers: header);
       print(response.statusCode);

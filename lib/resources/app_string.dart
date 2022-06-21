@@ -121,4 +121,5 @@ class AppString {
   static String txtCheckYourInternetConnection = "Check your internet connection";
   static String txtInternetIsRequired = "Internet connection is required for this activity";
   static String txtCart = "Cart";
+  static String txtCategoryName = "Category name";
 }

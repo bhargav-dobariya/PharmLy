@@ -2,6 +2,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pharmly/networking/api_service.dart';
+import 'package:pharmly/networking/constMethod.dart';
 import 'package:pharmly/resources/app_color.dart';
 import 'package:pharmly/resources/app_string.dart';
 import 'package:pharmly/shared/validator.dart';
@@ -26,10 +27,7 @@ class LoginScreenState extends State<LoginScreen> {
   late double _deviceWidth;
   @override
   void initState() {
-    // TODO: implement initState
-    SharedPreferences.getInstance().then((sharedPref) {
-      _prefs = sharedPref;
-    });
+    ConstantMethod.initPreference();
     super.initState();
   }
 
@@ -156,7 +154,7 @@ class LoginScreenState extends State<LoginScreen> {
                     .then(
                   (res) async {
                     if (res.code == 200) {
-                      await _prefs.setString(AppString.userToken, res.data!);
+                      ConstantMethod.prefs.setString(AppString.userToken, 'Bearer ' + res.data!);
                       Navigator.pushNamed(context, '/bottom_navbar');
                     } else {
                       _emailController.clear();
