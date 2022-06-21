@@ -18,10 +18,8 @@ class _ProductsScreenState extends State<ProductsScreen> {
         centerTitle: true,
       ),
       body: GridView.count(
-        crossAxisCount: 3,
-        padding: EdgeInsets.all(5),
-        mainAxisSpacing: 5,
-        crossAxisSpacing: 5,
+        crossAxisCount: 2,
+        padding: EdgeInsets.symmetric(vertical: 5),
         children: [
           Product(),
           Product(),
