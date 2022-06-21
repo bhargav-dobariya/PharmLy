@@ -4,6 +4,8 @@ import 'package:otp_text_field/style.dart';
 import 'package:pharmly/resources/app_color.dart';
 import 'package:pharmly/resources/app_string.dart';
 
+import '../networking/constMethod.dart';
+
 class OtpVerificationScreen extends StatefulWidget {
   const OtpVerificationScreen({Key? key}) : super(key: key);
 
@@ -15,6 +17,15 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
   late double _deviceHeight;
   late double _deviceWidth;
   OtpFieldController otpController = OtpFieldController();
+  late String token;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    token = ConstantMethod.getUserAccessToken();
+  }
+
   @override
   Widget build(BuildContext context) {
     _deviceHeight = MediaQuery.of(context).size.height;

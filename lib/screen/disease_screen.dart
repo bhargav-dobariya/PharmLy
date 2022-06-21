@@ -93,7 +93,7 @@ class _DiseaseScreenState extends State<DiseaseScreen> {
                 color: Colors.white,
               ),
               ListView.builder(
-                itemCount: allDiseaseData.data.length,
+                itemCount: allDiseaseData.data.length(),
                 itemBuilder: (context, index) {
                   return DeseaseCard(
                     title: items[index][diseaseName],

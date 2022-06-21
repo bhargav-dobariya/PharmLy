@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pharmly/screen/disease_screen.dart';
 import 'package:pharmly/screen/forgot_password.dart';
 import 'package:pharmly/screen/login_screen.dart';
 import 'package:pharmly/screen/otp_verification_screen.dart';
@@ -22,6 +23,7 @@ class MyApp extends StatelessWidget {
         '/login_screen': (context) => const LoginScreen(),
         '/forgot_password': (context) => const ForgotPassword(),
         '/otp_verification': (context) => const OtpVerificationScreen(),
+        '/disease_screen': (context) => const DiseaseScreen()
       },
     );
   }

@@ -157,8 +157,7 @@ class LoginScreenState extends State<LoginScreen> {
                   (res) async {
                     if (res.code == 200) {
                       await _prefs.setString(AppString.userToken, res.data!);
-                      Navigator.pushNamed(context, '/otp_verification');
-                      getUserToke();
+                      Navigator.pushNamed(context, '/disease_screen');
                     } else {
                       _emailController.clear();
                       _passworController.clear();
@@ -212,14 +211,5 @@ class LoginScreenState extends State<LoginScreen> {
         ],
       ),
     );
-  }
-
-  void getUserToke() {
-    SharedPreferences.getInstance().then((sharedPref) async {
-      _prefs = sharedPref;
-
-      var userId = _prefs.getString(AppString.userToken);
-      print(userId);
-    });
   }
 }
