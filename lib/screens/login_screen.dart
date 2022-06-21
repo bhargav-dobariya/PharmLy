@@ -154,7 +154,7 @@ class LoginScreenState extends State<LoginScreen> {
                     .then(
                   (res) async {
                     if (res.code == 200) {
-                      ConstantMethod.prefs.setString(AppString.userToken, 'Bearer ' + res.data!);
+                      ConstantMethod.prefs.setString(AppString.userToken,res.data!);
                       Navigator.pushNamed(context, '/bottom_navbar');
                     } else {
                       _emailController.clear();

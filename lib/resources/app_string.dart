@@ -122,4 +122,5 @@ class AppString {
   static String txtInternetIsRequired = "Internet connection is required for this activity";
   static String txtCart = "Cart";
   static String txtCategoryName = "Category name";
+  static String txtAddToCart = "Add to cart";
 }

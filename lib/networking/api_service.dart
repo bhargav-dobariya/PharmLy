@@ -1,8 +1,10 @@
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:pharmly/models/all_desease_model.dart';
 import 'package:pharmly/models/login_model.dart';
+import 'package:pharmly/models/logout_user_model.dart';
 import 'package:pharmly/models/signup_model.dart';
 import 'package:pharmly/networking/constMethod.dart';
 import 'package:pharmly/utils/api_utils.dart';
@@ -20,6 +22,8 @@ class ApiService {
   static const String _allDisease = ApiUtils.baseUrl + ApiUtils.users;
   static const String getUserUrl = ApiUtils.baseUrl + ApiUtils.users + "89994fcc-8a0f-4e8a-ab02-df6ebe03e4ef";    //take id from shared preferences
   static const categoryUrl=ApiUtils.baseUrl+ApiUtils.category;
+  static const logOutUrl=ApiUtils.baseUrl+ApiUtils.logout;
+
 
 
   //user registration url
@@ -125,6 +129,7 @@ class ApiService {
         ApiUtils.authorization : 'Bearer ' + userToken
       };
       final response = await http.get(Uri.parse(categoryUrl),headers: header);
+      print(userToken);
       print(response.statusCode);
       if (response.statusCode == 200) {
         Map<String,dynamic> mapResponse = json.decode(response.body);
@@ -135,6 +140,24 @@ class ApiService {
     }catch(e){
       print(e.toString());
       return ViewCategory();
+    }
+  }
+
+  Future<LogOutUser?> logOutUser({String? email})async{
+    try{
+      Map<String,String> header = {
+        ApiUtils.authorization : 'Bearer ' + userToken
+      };
+      Map<String, dynamic> body = {
+        ApiUtils.email: email,
+      };
+      http.Response response=await http.post(Uri.parse(logOutUrl),body: body,headers: header);
+      Map<String, dynamic> mapResponse = json.decode(response.body);
+      print(response.statusCode);
+      return LogOutUser.fromJson(mapResponse);
+    }catch(e) {
+      print(e.toString());
+      return LogOutUser();
     }
   }
 }

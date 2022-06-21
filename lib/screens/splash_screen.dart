@@ -6,6 +6,7 @@ import 'package:pharmly/resources/app_string.dart';
 import 'package:pharmly/screens/home_screen.dart';
 import 'package:pharmly/screens/login_screen.dart';
 import 'package:pharmly/widgets/bottom_nav_bar.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -23,7 +24,11 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void checkUserStatus()async{
-    Timer(Duration(seconds: 10), ()=>Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LoginScreen())));
+    SharedPreferences prefs=await SharedPreferences.getInstance();
+    var userStatus=prefs.getBool('isLoggedIn');
+    (userStatus!=null && userStatus==true)
+        ?Timer(Duration(seconds: 10), ()=>Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>BottomNavBar())))
+    :Timer(Duration(seconds: 10), ()=>Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LoginScreen())));
   }
 
   @override

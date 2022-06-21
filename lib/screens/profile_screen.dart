@@ -8,6 +8,8 @@ import 'package:pharmly/models/get_user_model.dart';
 import 'package:pharmly/networking/api_service.dart';
 import 'package:pharmly/resources/app_color.dart';
 import 'package:pharmly/resources/app_string.dart';
+import 'package:pharmly/screens/login_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -26,8 +28,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   TextEditingController contactController=TextEditingController();
   String? emailText;
   late StreamSubscription subscription;
-  // late var userDetails;
-  // var dataModel;
+  late SharedPreferences userLogIn;
   var userData;
   var updateUserData;
 
@@ -45,7 +46,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   getData() async{
     UserProfile? userData=await ApiService().getUserDetails();
-    // firstNameController.text=userData.da.firstName ?? "Neh";
     lastNameController.text=userData?.data?.lastName ?? "Majmudar";
     contactController.text=userData?.data?.contactNo ?? "9900990099";
     firstNameController.text=userData?.data?.firstName ?? "NEh";
@@ -57,10 +57,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
     await ApiService().updateUserDetails(firstName: newFirstName,lastName: newLastName,contactNo: newContactNo);
   }
 
+  void userLoggedIn()async{
+    userLogIn=await SharedPreferences.getInstance();
+  }
+
   @override
   void initState() {
     getData();
     super.initState();
+    userLoggedIn();
     subscription=Connectivity().onConnectivityChanged.listen(showConnectivityToast);
     // userDetails=ApiService.getUserDetails();
   }
@@ -76,7 +81,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
         actions: [
           TextButton(
             onPressed: (){
-              //sign out method
+              ApiService().logOutUser(email: emailText).then((res) async{
+                if(res?.code==200){
+                  userLogIn.setBool('isLoggedIn', false);
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LoginScreen()));
+                }
+                else{
+                  print(res?.code);
+                }
+              });
             },
             child: Container(
               width: MediaQuery.of(context).size.width/4.9,
