@@ -26,7 +26,7 @@ class _CategoryState extends State<Category> {
                 border: Border.all(color: AppColor.colorGrey.withAlpha(50)),
                 borderRadius: BorderRadius.all(Radius.circular(5))
               ),
-              child: Image.asset(widget.imageUrl,fit: BoxFit.cover,),
+              child: Image.network(widget.imageUrl,fit: BoxFit.cover,),
             ),
           ),
           Text(widget.categoryTitle,style: TextStyle(fontSize: 10,color: AppColor.colorBlack),textAlign: TextAlign.center,)

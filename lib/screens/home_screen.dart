@@ -22,10 +22,10 @@ class _HomeScreenState extends State<HomeScreen> {
   ScrollController scrollController=ScrollController();
 
   late StreamSubscription subscription;
-  var viewCategory;
+  late Future<ViewCategory?> viewCategory;
 
-  getCategory()async{
-    ViewCategory? viewCategory=await ApiService().viewCategories();
+  getCategory(){
+    viewCategory=ApiService().viewCategories();
   }
 
   @override
@@ -139,21 +139,29 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               Expanded(
                 child: SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height/2,
-                  child: GridView.builder(
-                    padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.height*0.02),
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3,
-                      childAspectRatio: 0.7,
-                      crossAxisSpacing: MediaQuery.of(context).size.height*0.015,
-                      mainAxisSpacing: MediaQuery.of(context).size.width/19.6,
-                    ),
-                    itemCount: ,
-                    itemBuilder: (ctx,index){
-                      return Category(imageUrl: , categoryTitle: )
-                    }
-                  )
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height/2,
+                    child: FutureBuilder<ViewCategory?>(
+                      future: viewCategory,
+                      builder: (context,snapShot){
+                        if(snapShot.hasData){
+                          return  GridView.builder(
+                              padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.height*0.02),
+                              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 3,
+                                childAspectRatio: 0.7,
+                                crossAxisSpacing: MediaQuery.of(context).size.height*0.015,
+                                mainAxisSpacing: MediaQuery.of(context).size.width/19.6,
+                              ),
+                              itemCount:snapShot.data?.data?.length,
+                              itemBuilder: (ctx,index){
+                                return Category(imageUrl: snapShot.data!.data![index].categoryImage! , categoryTitle:snapShot.data!.data![index].categoryName! );
+                              }
+                          );
+                        }
+                        return const Center(child: CircularProgressIndicator());
+                      },
+                    )
                 ),
               )
                 // Expanded(
