@@ -62,9 +62,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: Row(
                             children: [
                               Container(
-                                height: 30,
-                                width: 30,
-                                decoration: const BoxDecoration(
+                                height: MediaQuery.of(context).size.height/28.13,
+                                width :MediaQuery.of(context).size.height/28.13,
+
+            decoration: const BoxDecoration(
                                   borderRadius: BorderRadius.all(Radius.circular(30))
                                 ),
                                 child: Image.asset('assets/images/pharmly_logo.png',fit: BoxFit.cover,),
