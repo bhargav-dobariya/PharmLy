@@ -10,7 +10,7 @@ class Validator {
 
   static String? password(String? value) {
     if (value != null && value.length < 8) {
-      return "Enter min. 8 characters";
+      return AppString.txtEntermin8char;
     } else {
       return null;
     }
@@ -18,7 +18,7 @@ class Validator {
 
   static String? phoneNumber(String? value) {
     if (value!.isEmpty || !RegExp(r"^[0-9]{10}$").hasMatch(value)) {
-      return "Enter valid mobile number";
+      return AppString.txtEnterValidMobileNumber;
     } else {
       return null;
     }
@@ -26,7 +26,7 @@ class Validator {
 
   static String? lastName(String? value) {
     if (value == null) {
-      return "Enter a valid firstname";
+      return AppString.txtEnterValidLastname;
     } else {
       return null;
     }
@@ -34,7 +34,7 @@ class Validator {
 
   static String? firstName(String? value) {
     if (value == null) {
-      return "Enter a valid firstname";
+      return AppString.txtEnteraValidFirstnamne;
     } else {
       return null;
     }

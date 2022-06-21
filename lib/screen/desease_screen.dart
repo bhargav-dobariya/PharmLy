@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:pharmly/networking/api_service.dart';
 import 'package:pharmly/resources/app_color.dart';
 import 'package:pharmly/resources/app_string.dart';
 
@@ -13,7 +14,23 @@ class DeseaseScreen extends StatefulWidget {
 class _DeseaseScreenState extends State<DeseaseScreen> {
   late double _deviceHeight;
   late double _deviceWidth;
+  String? diseaseName;
+  String? diseaseDescription;
+  var allDiseaseData;
+  var items;
+
+  getData() async {
+    allDiseaseData = await ApiService().getAllDesease();
+    items = allDiseaseData.data;
+  }
+
   // late final List<String> items;
+  @override
+  void initState() {
+    // TODO: implement initState
+    getData();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -75,16 +92,15 @@ class _DeseaseScreenState extends State<DeseaseScreen> {
                 ),
                 color: Colors.white,
               ),
-              // ListView.builder(
-              //   itemCount: items.length,
-              //   itemBuilder: (context, index) {
-              //     return DeseaseCard(
-              //       title: items[index],
-              //       text: items[index],
-              //     );
-              //   },
-              // ),
-
+              ListView.builder(
+                itemCount: allDiseaseData.data.length,
+                itemBuilder: (context, index) {
+                  return DeseaseCard(
+                    title: items[index][diseaseName],
+                    text: items[index][diseaseDescription],
+                  );
+                },
+              ),
               DeseaseCard(
                 title: "Fever",
                 text:

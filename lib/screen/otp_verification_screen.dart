@@ -48,7 +48,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                     )),
                 OTPTextField(
                   controller: otpController,
-                  length: 5,
+                  length: 6,
                   width: MediaQuery.of(context).size.width,
                   textFieldAlignment: MainAxisAlignment.spaceAround,
                   fieldWidth: 45,

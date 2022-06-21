@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:pharmly/models/all_desease_model.dart';
 import 'package:pharmly/models/login_model.dart';
 import 'package:pharmly/models/signup_model.dart';
 import 'package:pharmly/utils/api_utils.dart';
@@ -40,5 +41,20 @@ class ApiService {
         await http.post(Uri.parse(_userLoginUrl), body: body);
     Map<String, dynamic> mapResponse = json.decode(response.body);
     return LoginModel.fromJson(mapResponse);
+  }
+
+  static const String _allDesease = ApiUtils.baseUrl + ApiUtils.users;
+  Future<DeseaseModel> getAllDesease() async {
+    Map<String, String> header = {
+      ApiUtils.authorization:
+          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijg5OTk0ZmNjLThhMGYtNGU4YS1hYjAyLWRmNmViZTAzZTRlZiIsImVtYWlsIjoiYXBleGEzcGF0ZWxAZ21haWwuY29tIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTY1NTcwNDk4MCwiZXhwIjoxNjU1NzkxMzgwfQ.dzBnm-dRAl2msLFLZd8gKyNmlhxthGAFlATuDhvvafk'
+    };
+    http.Response response = await http.get(
+      Uri.parse(_allDesease),
+      headers: header,
+    );
+    Map<String, dynamic> mapResponse = json.decode(response.body);
+
+    return DeseaseModel.fromJson(mapResponse);
   }
 }

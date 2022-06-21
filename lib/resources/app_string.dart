@@ -16,6 +16,10 @@ class AppString {
   static String txtDontHaveAnAccount = "Don't have an account?";
   static String txtSignUp = "Sign Up";
   static String txtUsername = "Username";
+  static String txtEntermin8char = "Enter min. 8 characters";
+  static String txtEnterValidMobileNumber = "Enter valid mobile number";
+  static String txtEnteraValidFirstnamne = "Enter a valid firstname";
+  static String txtEnterValidLastname = "Enter a valid lastname";
   static String txtPhoneNumber = "Phone number";
   static String txtConfirmPassword = "Confirm Password";
   static String txtByCreatingAccount = "By creating account, I agree with ";
