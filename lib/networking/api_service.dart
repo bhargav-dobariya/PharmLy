@@ -6,7 +6,7 @@ import 'package:pharmly/models/all_desease_model.dart';
 import 'package:pharmly/models/login_model.dart';
 import 'package:pharmly/models/logout_user_model.dart';
 import 'package:pharmly/models/signup_model.dart';
-import 'package:pharmly/networking/constMethod.dart';
+import 'package:pharmly/networking/const_method.dart';
 import 'package:pharmly/utils/api_utils.dart';
 import 'package:pharmly/models/get_user_model.dart';
 import 'package:pharmly/models/update_user_profile.dart';
@@ -58,7 +58,7 @@ class ApiService {
     http.Response response =
         await http.post(Uri.parse(_userLoginUrl), body: body);
     Map<String, dynamic> mapResponse = json.decode(response.body);
-    print(response.statusCode);
+    print("Login:${response.statusCode}");
     return LoginModel.fromJson(mapResponse);
   }
 
@@ -82,7 +82,7 @@ class ApiService {
         ApiUtils.authorization : 'Bearer ' + userToken
       };
       final response = await http.get(Uri.parse(getUserUrl),headers: header);
-      print(response.statusCode);
+      print("User details:${response.statusCode}");
       if (response.statusCode == 200) {
         Map<String,dynamic> mapResponse = json.decode(response.body);
         return UserProfile.fromJson(mapResponse);
@@ -112,7 +112,7 @@ class ApiService {
         ApiUtils.authorization : 'Bearer ' + userToken
       };
       http.Response response=await http.put(Uri.parse(getUserUrl),headers:header,body: body);
-
+      print("Update details:${response.statusCode}");
       if(response.statusCode==200){
         return UpdateProfile.fromJson(jsonDecode(response.body));
       }
@@ -130,7 +130,7 @@ class ApiService {
       };
       final response = await http.get(Uri.parse(categoryUrl),headers: header);
       print(userToken);
-      print(response.statusCode);
+      print("View categories:${response.statusCode}");
       if (response.statusCode == 200) {
         Map<String,dynamic> mapResponse = json.decode(response.body);
         return ViewCategory.fromJson(mapResponse);
@@ -153,7 +153,7 @@ class ApiService {
       };
       http.Response response=await http.post(Uri.parse(logOutUrl),body: body,headers: header);
       Map<String, dynamic> mapResponse = json.decode(response.body);
-      print(response.statusCode);
+      print("Log out:${response.statusCode}");
       return LogOutUser.fromJson(mapResponse);
     }catch(e) {
       print(e.toString());

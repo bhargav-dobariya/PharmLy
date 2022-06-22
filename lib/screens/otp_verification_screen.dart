@@ -4,7 +4,7 @@ import 'package:otp_text_field/style.dart';
 import 'package:pharmly/resources/app_color.dart';
 import 'package:pharmly/resources/app_string.dart';
 
-import '../networking/constMethod.dart';
+import '../networking/const_method.dart';
 
 class OtpVerificationScreen extends StatefulWidget {
   const OtpVerificationScreen({Key? key}) : super(key: key);

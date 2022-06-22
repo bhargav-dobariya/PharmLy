@@ -27,7 +27,7 @@ class _SplashScreenState extends State<SplashScreen> {
     SharedPreferences prefs=await SharedPreferences.getInstance();
     var userStatus=prefs.getBool('isLoggedIn');
     (userStatus!=null && userStatus==true)
-        ?Timer(Duration(seconds: 10), ()=>Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>BottomNavBar())))
+        ?Timer(Duration(seconds: 7), ()=>Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>BottomNavBar())))
     :Timer(Duration(seconds: 10), ()=>Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LoginScreen())));
   }
 
@@ -57,7 +57,7 @@ class _SplashScreenState extends State<SplashScreen> {
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
-              colors: [AppColor.colorLightBlue.withAlpha(100),AppColor.colorLightGreen.withAlpha(100)]
+              colors: [AppColor.colorLightBlue,AppColor.colorLightGreen]
             )
           ),
         ),

@@ -2,7 +2,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pharmly/networking/api_service.dart';
-import 'package:pharmly/networking/constMethod.dart';
+import 'package:pharmly/networking/const_method.dart';
 import 'package:pharmly/resources/app_color.dart';
 import 'package:pharmly/resources/app_string.dart';
 import 'package:pharmly/shared/validator.dart';
@@ -25,6 +25,7 @@ class LoginScreenState extends State<LoginScreen> {
 
   late double _deviceHeight;
   late double _deviceWidth;
+  bool isLoading=false;
   @override
   void initState() {
     ConstantMethod.initPreference();
@@ -37,30 +38,41 @@ class LoginScreenState extends State<LoginScreen> {
     _deviceWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
-          reverse: true,
-          child: Stack(
-            children: [
-              SizedBox(
-                height: _deviceHeight,
-                width: _deviceWidth,
-                child: Image.asset(
-                  "assets/images/bg_image.png",
-                  fit: BoxFit.fitHeight,
-                ),
-              ),
-              Positioned(
-                top: _deviceHeight * 0.02,
-                child: Image.asset(
-                  "assets/images/Logo3.png",
-                  height: _deviceHeight * 0.2,
-                ),
-              ),
-              _getLoginForm(),
-            ],
+      body: Stack(
+        alignment: Alignment.center,
+        children: [
+          Visibility(
+            visible: isLoading,
+            child: Center(
+              child: CircularProgressIndicator(),
+            ),
           ),
-        ),
+          SafeArea(
+            child: SingleChildScrollView(
+              reverse: true,
+              child: Stack(
+                children: [
+                  SizedBox(
+                    height: _deviceHeight,
+                    width: _deviceWidth,
+                    child: Image.asset(
+                      "assets/images/bg_image.png",
+                      fit: BoxFit.fitHeight,
+                    ),
+                  ),
+                  Positioned(
+                    top: _deviceHeight * 0.02,
+                    child: Image.asset(
+                      "assets/images/Logo3.png",
+                      height: _deviceHeight * 0.2,
+                    ),
+                  ),
+                  _getLoginForm(),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -144,8 +156,14 @@ class LoginScreenState extends State<LoginScreen> {
           // Signin Button
           GestureDetector(
             onTap: () async {
+              setState(() {
+                isLoading=true;
+              });
               final result = await Connectivity().checkConnectivity();
               showConnectivityToast(result);
+              setState(() {
+                isLoading=true;
+              });
               if (_formKey.currentState!.validate()) {
                 ApiService()
                     .userLogin(
@@ -154,8 +172,11 @@ class LoginScreenState extends State<LoginScreen> {
                     .then(
                   (res) async {
                     if (res.code == 200) {
+                      setState(() {
+                        isLoading=false;
+                      });
                       ConstantMethod.prefs.setString(AppString.userToken,res.data!);
-                      Navigator.pushNamed(context, '/bottom_navbar');
+                      Navigator.pushReplacementNamed(context, '/bottom_navbar');
                     } else {
                       _emailController.clear();
                       _passworController.clear();
