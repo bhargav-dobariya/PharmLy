@@ -20,11 +20,11 @@ class _CategoryState extends State<Category> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: (){
-        if(widget.snap.categoryName =="Disease"){
+        if(widget.snap.categoryName =="Diseases"){
           Navigator.push(context, MaterialPageRoute(builder: (context)=>const DiseaseScreen()));
         }
         else{
-          Navigator.push(context, MaterialPageRoute(builder: (context)=>ProductsScreen(categoryName: widget.snap.categoryName!,)));
+          Navigator.push(context, MaterialPageRoute(builder: (context)=>ProductsScreen(categorySnap: widget.snap,)));
         }
       },
       child: Center(

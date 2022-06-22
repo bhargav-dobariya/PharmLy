@@ -12,8 +12,8 @@ class ConstantMethod {
     return prefs.getString(AppString.userId);
   }
 
-  static getCategoryId(){
-    return prefs.getString(AppString.txtCategoryId);
+  static keepUserLoggedIn(){
+    return prefs.getBool(AppString.txtIsLoggedIn);
   }
 
   static initPreference() async {

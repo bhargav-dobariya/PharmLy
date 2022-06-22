@@ -94,6 +94,7 @@ class AppString {
   static String userToken = "User_Token";
   static String userId = "User_Id";
   static String txtCategoryId = "Category_Id";
+  static String txtIsLoggedIn = "isLoggedIn";
   static String typeYourMessage = 'Type your message...';
   static String txtUnFollowAlert = "You have unfollowed ";
   static String txtFollowAlert = "You are now following ";

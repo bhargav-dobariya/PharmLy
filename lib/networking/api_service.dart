@@ -23,11 +23,11 @@ class ApiService {
   //user registration url
   static const String _userRegistrationurl = ApiUtils.baseUrl + ApiUtils.users;
   static const String _userLoginUrl = ApiUtils.baseUrl + ApiUtils.login;
-  static const String _allDisease = ApiUtils.baseUrl + ApiUtils.users;
+  static const String allDisease = ApiUtils.baseUrl + ApiUtils.allDisease;
   static const String getUserUrl = ApiUtils.baseUrl + ApiUtils.users;    //take id from shared preferences
   static const categoryUrl=ApiUtils.baseUrl+ApiUtils.category;
   static const logOutUrl=ApiUtils.baseUrl+ApiUtils.logout;
-  static const getProductUrl=ApiUtils.baseUrl + ApiUtils.allProduct + "970f5be9-89b4-4322-b31c-7e0d9122957c";
+  static const getProductUrl=ApiUtils.baseUrl + ApiUtils.allProduct;
 
 
   //user registration url
@@ -67,15 +67,15 @@ class ApiService {
   }
 
 //disease api
-  Future<diseaseModel> getAllDisease() async {
+  Future<DiseaseModel> getAllDisease() async {
     Map<String, String> header = {ApiUtils.authorization: userToken};
     http.Response response = await http.get(
-      Uri.parse(_allDisease),
+      Uri.parse(allDisease + 'a19b6c7e-5006-41d4-9d9f-8ac82a4a6175'),
       headers: header,
     );
     Map<String, dynamic> mapResponse = json.decode(response.body);
 
-    return diseaseModel.fromJson(mapResponse);
+    return DiseaseModel.fromJson(mapResponse);
   }
 
 
@@ -170,12 +170,12 @@ class ApiService {
   }
 
 
-  Future<ProductModel?> getProductDetails()async{
+  Future<ProductModel?> getProductDetails({String? categoryId})async{
     try{
       Map<String,String> header = {
         ApiUtils.authorization : 'Bearer ' + userToken
       };
-      http.Response response=await http.get(Uri.parse(getProductUrl),headers: header,);
+      http.Response response=await http.get(Uri.parse(getProductUrl + categoryId!),headers: header,);
       print("Product details:${response.statusCode}");
       if (response.statusCode == 200) {
         Map<String,dynamic> mapResponse = json.decode(response.body);

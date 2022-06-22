@@ -28,7 +28,7 @@ class LoginScreenState extends State<LoginScreen> {
   bool isLoading=false;
   @override
   void initState() {
-    ConstantMethod.initPreference();
+    // ConstantMethod.initPreference();
     super.initState();
   }
 

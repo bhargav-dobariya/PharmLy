@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:pharmly/networking/const_method.dart';
 import 'package:pharmly/resources/app_color.dart';
 import 'package:pharmly/resources/app_string.dart';
 import 'package:pharmly/screens/home_screen.dart';
@@ -24,8 +25,8 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void checkUserStatus()async{
-    SharedPreferences prefs=await SharedPreferences.getInstance();
-    var userStatus=prefs.getBool('isLoggedIn');
+    ConstantMethod.initPreference();
+    var userStatus=ConstantMethod.keepUserLoggedIn();
     (userStatus!=null && userStatus==true)
         ?Timer(Duration(seconds: 7), ()=>Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>BottomNavBar())))
     :Timer(Duration(seconds: 10), ()=>Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LoginScreen())));

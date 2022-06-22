@@ -6,6 +6,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pharmly/methods/checkInternetConnectivity.dart';
 import 'package:pharmly/models/get_user_model.dart';
 import 'package:pharmly/networking/api_service.dart';
+import 'package:pharmly/networking/const_method.dart';
 import 'package:pharmly/resources/app_color.dart';
 import 'package:pharmly/resources/app_string.dart';
 import 'package:pharmly/screens/login_screen.dart';
@@ -28,7 +29,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   TextEditingController contactController=TextEditingController();
   String? emailText;
   late StreamSubscription subscription;
-  late SharedPreferences userLogIn;
   var userData;
   var updateUserData;
 
@@ -58,14 +58,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   void userLoggedIn()async{
-    userLogIn=await SharedPreferences.getInstance();
+    ConstantMethod.prefs.setBool(AppString.txtIsLoggedIn, false);
   }
 
   @override
   void initState() {
     getData();
     super.initState();
-    userLoggedIn();
     subscription=Connectivity().onConnectivityChanged.listen(showConnectivityToast);
     // userDetails=ApiService.getUserDetails();
   }
@@ -83,7 +82,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             onPressed: (){
               ApiService().logOutUser(email: emailText).then((res) async{
                 if(res?.code==200){
-                  userLogIn.setBool('isLoggedIn', false);
+                  userLoggedIn();
                   Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LoginScreen()));
                 }
                 else{

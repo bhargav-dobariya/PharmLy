@@ -1,16 +1,16 @@
 // To parse this JSON data, do
 //
-//     final diseaseModel = diseaseModelFromJson(jsonString);
+//     final DiseaseModel = DiseaseModelFromJson(jsonString);
 
 import 'dart:convert';
 
-diseaseModel diseaseModelFromJson(String str) =>
-    diseaseModel.fromJson(json.decode(str));
+DiseaseModel DiseaseModelFromJson(String str) =>
+    DiseaseModel.fromJson(json.decode(str));
 
-String diseaseModelToJson(diseaseModel data) => json.encode(data.toJson());
+String DiseaseModelToJson(DiseaseModel data) => json.encode(data.toJson());
 
-class diseaseModel {
-  diseaseModel({
+class DiseaseModel {
+  DiseaseModel({
     this.code,
     this.data,
     this.success,
@@ -20,7 +20,7 @@ class diseaseModel {
   List<Datum>? data;
   bool? success;
 
-  factory diseaseModel.fromJson(Map<String, dynamic> json) => diseaseModel(
+  factory DiseaseModel.fromJson(Map<String, dynamic> json) => DiseaseModel(
         code: json["code"],
         data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
         success: json["success"],
