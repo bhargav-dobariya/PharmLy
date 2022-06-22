@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:otp_text_field/otp_text_field.dart';
 import 'package:otp_text_field/style.dart';
+import 'package:pharmly/networking/api_service.dart';
 import 'package:pharmly/resources/app_color.dart';
 import 'package:pharmly/resources/app_string.dart';
 
-import '../networking/constMethod.dart';
+import '../methods/shared_prefs_methods.dart';
 
 class OtpVerificationScreen extends StatefulWidget {
   const OtpVerificationScreen({Key? key}) : super(key: key);
@@ -16,14 +17,13 @@ class OtpVerificationScreen extends StatefulWidget {
 class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
   late double _deviceHeight;
   late double _deviceWidth;
-  OtpFieldController otpController = OtpFieldController();
+  final OtpFieldController otpController = OtpFieldController();
   late String token;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    token = ConstantMethod.getUserAccessToken();
   }
 
   @override
@@ -73,27 +73,34 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                     print("Completed: " + pin);
                   },
                 ),
-                Container(
-                  margin: EdgeInsets.only(
-                      left: _deviceWidth * 0.39, top: _deviceHeight * 0.08),
-                  width: _deviceWidth * 0.4,
-                  height: _deviceHeight * 0.06,
-                  decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [
-                          AppColor.lightBlueColor2,
-                          AppColor.lightBlueColor,
-                        ],
+                GestureDetector(
+                  onTap: () {
+                    print(otpController);
+                    ApiService().verifyEmail(
+                        ConstantMethod.getEmail(), otpController.toString());
+                  },
+                  child: Container(
+                    margin: EdgeInsets.only(
+                        left: _deviceWidth * 0.39, top: _deviceHeight * 0.08),
+                    width: _deviceWidth * 0.4,
+                    height: _deviceHeight * 0.06,
+                    decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            AppColor.lightBlueColor2,
+                            AppColor.lightBlueColor,
+                          ],
+                        ),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(50))),
+                    alignment: Alignment.center,
+                    child: Text(
+                      AppString.txtVerify,
+                      style: TextStyle(
+                        fontSize: 19,
+                        color: AppColor.whitecolor,
+                        fontWeight: FontWeight.w700,
                       ),
-                      borderRadius:
-                          const BorderRadius.all(Radius.circular(50))),
-                  alignment: Alignment.center,
-                  child: Text(
-                    AppString.txtVerify,
-                    style: TextStyle(
-                      fontSize: 19,
-                      color: AppColor.whitecolor,
-                      fontWeight: FontWeight.w700,
                     ),
                   ),
                 ),

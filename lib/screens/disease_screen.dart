@@ -4,6 +4,8 @@ import 'package:pharmly/networking/api_service.dart';
 import 'package:pharmly/resources/app_color.dart';
 import 'package:pharmly/resources/app_string.dart';
 
+import '../models/all_desease_model.dart';
+
 class DiseaseScreen extends StatefulWidget {
   const DiseaseScreen({Key? key}) : super(key: key);
 
@@ -16,12 +18,10 @@ class _DiseaseScreenState extends State<DiseaseScreen> {
   late double _deviceWidth;
   String? diseaseName;
   String? diseaseDescription;
-  var allDiseaseData;
-  var items;
+  late Future<DiseaseModel> allDiseaseData;
 
   getData() async {
-    allDiseaseData = await ApiService().getAllDisease();
-    items = allDiseaseData.data;
+    allDiseaseData = ApiService().getAllDisease();
   }
 
   // late final List<String> items;
@@ -92,27 +92,29 @@ class _DiseaseScreenState extends State<DiseaseScreen> {
                 ),
                 color: Colors.white,
               ),
-              ListView.builder(
-                itemCount: allDiseaseData.data.length(),
-                itemBuilder: (context, index) {
-                  return DeseaseCard(
-                    title: items[index][diseaseName],
-                    text: items[index][diseaseDescription],
-                  );
-                },
-              ),
-              DeseaseCard(
-                title: "Fever",
-                text:
-                    "Working good ok then bye and do your work order that does  ok",
-              ),
-              DeseaseCard(
-                title: "Fever",
-                text: "Working good ok ",
-              ),
-              DeseaseCard(
-                title: "Fever",
-                text: "Working good ok ",
+              SizedBox(
+                height: 400,
+                width: double.infinity,
+                child: FutureBuilder<DiseaseModel?>(
+                  future: allDiseaseData,
+                  builder: (context, snapShot) {
+                    if (snapShot.hasData) {
+                      return ListView.builder(
+                        itemCount: snapShot.data?.data?.length,
+                        itemBuilder: (context, index) {
+                          return DeseaseCard(
+                            title: snapShot.data!.data![index]!.diseaseName,
+                            text:
+                                snapShot.data!.data![index]!.diseaseDescription,
+                          );
+                        },
+                      );
+                    }
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  },
+                ),
               ),
             ],
           ),

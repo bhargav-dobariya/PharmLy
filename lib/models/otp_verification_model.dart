@@ -1,16 +1,17 @@
 // To parse this JSON data, do
 //
-//     final loginModel = loginModelFromJson(jsonString);
+//     final otpVerificationModel = otpVerificationModelFromJson(jsonString);
 
 import 'dart:convert';
 
-LoginModel loginModelFromJson(String str) =>
-    LoginModel.fromJson(json.decode(str));
+OtpVerificationModel otpVerificationModelFromJson(String str) =>
+    OtpVerificationModel.fromJson(json.decode(str));
 
-String loginModelToJson(LoginModel data) => json.encode(data.toJson());
+String otpVerificationModelToJson(OtpVerificationModel data) =>
+    json.encode(data.toJson());
 
-class LoginModel {
-  LoginModel({
+class OtpVerificationModel {
+  OtpVerificationModel({
     this.code,
     this.data,
     this.success,
@@ -20,7 +21,8 @@ class LoginModel {
   Data? data;
   bool? success;
 
-  factory LoginModel.fromJson(Map<String, dynamic> json) => LoginModel(
+  factory OtpVerificationModel.fromJson(Map<String, dynamic> json) =>
+      OtpVerificationModel(
         code: json["code"],
         data: Data.fromJson(json["data"]),
         success: json["success"],

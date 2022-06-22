@@ -3,32 +3,33 @@ import 'package:http/http.dart' as http;
 
 import 'package:pharmly/models/all_desease_model.dart';
 import 'package:pharmly/models/login_model.dart';
+import 'package:pharmly/models/otp_verification_model.dart';
 import 'package:pharmly/models/signup_model.dart';
-import 'package:pharmly/networking/constMethod.dart';
+import 'package:pharmly/methods/shared_prefs_methods.dart';
 import 'package:pharmly/utils/api_utils.dart';
 import 'package:pharmly/models/get_user_model.dart';
 import 'package:pharmly/models/update_user_profile.dart';
 import 'package:pharmly/models/view_category.dart';
 
-
-
 class ApiService {
-  var userToken = ConstantMethod.getUserAccessToken();
+  var userToken = ConstantMethod.getAccessToken();
   //user registration url
   static const String _userRegistrationurl = ApiUtils.baseUrl + ApiUtils.users;
   static const String _userLoginUrl = ApiUtils.baseUrl + ApiUtils.login;
-  static const String _allDisease = ApiUtils.baseUrl + ApiUtils.users;
-  static const String getUserUrl = ApiUtils.baseUrl + ApiUtils.users + "89994fcc-8a0f-4e8a-ab02-df6ebe03e4ef";    //take id from shared preferences
-  static const categoryUrl=ApiUtils.baseUrl+ApiUtils.category;
-
+  static const String _allDisease = ApiUtils.baseUrl + ApiUtils.all_disease;
+  static const String getUserUrl = ApiUtils.baseUrl +
+      ApiUtils.users +
+      "89994fcc-8a0f-4e8a-ab02-df6ebe03e4ef"; //take id from shared preferences
+  static const categoryUrl = ApiUtils.baseUrl + ApiUtils.category;
+  static const String _verifyUser = ApiUtils.baseUrl + ApiUtils.verify;
 
   //user registration url
-  Future<SignupModel> userRegistration(
+  Future<SignUpModel> userRegistration(
       {String? firstName,
-        String? lastName,
-        String? contactNo,
-        String? email,
-        String? password}) async {
+      String? lastName,
+      String? contactNo,
+      String? email,
+      String? password}) async {
     Map<String, dynamic> body = {
       ApiUtils.firstName: firstName,
       ApiUtils.lastName: lastName,
@@ -41,7 +42,7 @@ class ApiService {
     http.Response response =
         await http.post(Uri.parse(_userRegistrationurl), body: body);
     Map<String, dynamic> mapResponse = json.decode(response.body);
-    return SignupModel.fromJson(mapResponse);
+    return SignUpModel.fromJson(mapResponse);
   }
 
 //login api
@@ -58,82 +59,97 @@ class ApiService {
   }
 
 //disease api
-  Future<diseaseModel> getAllDisease() async {
+  Future<DiseaseModel> getAllDisease() async {
     Map<String, String> header = {ApiUtils.authorization: userToken};
     http.Response response = await http.get(
-      Uri.parse(_allDisease),
+      Uri.parse(_allDisease + 'a19b6c7e-5006-41d4-9d9f-8ac82a4a6175'),
       headers: header,
     );
     Map<String, dynamic> mapResponse = json.decode(response.body);
+    print(response.body);
 
-    return diseaseModel.fromJson(mapResponse);
+    return DiseaseModel.fromJson(mapResponse);
   }
 
+//verify user
 
+  Future<OtpVerificationModel> verifyEmail(String? email, String? otp) async {
+    Map<String, dynamic> body = {ApiUtils.email: email, ApiUtils.otp: otp};
 
-  Future<UserProfile?> getUserDetails() async{
-    try{
-      Map<String,String> header = {
-        ApiUtils.authorization : 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijg5OTk0ZmNjLThhMGYtNGU4YS1hYjAyLWRmNmViZTAzZTRlZiIsImVtYWlsIjoiYXBleGEzcGF0ZWxAZ21haWwuY29tIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTY1NTc4NDg1MCwiZXhwIjoxNjU1ODcxMjUwfQ.OmUQ4Iljk0_Ok1xoO68C--6dPKrDc4G1tlpAcpJaVso'
+    http.Response response =
+        await http.post(Uri.parse(_verifyUser), body: body);
+    Map<String, dynamic> mapResponse = json.decode(response.body);
+    return OtpVerificationModel.fromJson(mapResponse);
+  }
+
+//get userDetails api
+  Future<UserProfile?> getUserDetails() async {
+    try {
+      Map<String, String> header = {
+        ApiUtils.authorization:
+            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijg5OTk0ZmNjLThhMGYtNGU4YS1hYjAyLWRmNmViZTAzZTRlZiIsImVtYWlsIjoiYXBleGEzcGF0ZWxAZ21haWwuY29tIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTY1NTc4NDg1MCwiZXhwIjoxNjU1ODcxMjUwfQ.OmUQ4Iljk0_Ok1xoO68C--6dPKrDc4G1tlpAcpJaVso'
       };
-      final response = await http.get(Uri.parse(getUserUrl),headers: header);
+      final response = await http.get(Uri.parse(getUserUrl), headers: header);
       print(response.statusCode);
       if (response.statusCode == 200) {
-        Map<String,dynamic> mapResponse = json.decode(response.body);
+        Map<String, dynamic> mapResponse = json.decode(response.body);
         return UserProfile.fromJson(mapResponse);
-        // Data dataModel = Data.fromJson(mapResponse);
-        // return dataModel;
       }
-    }
-    catch(e){
-      // print(e.toString());
+    } catch (e) {
       return UserProfile();
     }
+    return null;
   }
 
+//update user api
   Future<UpdateProfile?> updateUserDetails({
     String? firstName,
     String? lastName,
     String? contactNo,
-  })async{
-    Map<String,dynamic> body={
+  }) async {
+    Map<String, dynamic> body = {
       ApiUtils.firstName: firstName,
       ApiUtils.lastName: lastName,
       ApiUtils.contactNo: contactNo,
     };
 
-    try{
-      Map<String,String> header = {
-        ApiUtils.authorization : 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijg5OTk0ZmNjLThhMGYtNGU4YS1hYjAyLWRmNmViZTAzZTRlZiIsImVtYWlsIjoiYXBleGEzcGF0ZWxAZ21haWwuY29tIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTY1NTc4NDg1MCwiZXhwIjoxNjU1ODcxMjUwfQ.OmUQ4Iljk0_Ok1xoO68C--6dPKrDc4G1tlpAcpJaVso'
+    try {
+      Map<String, String> header = {
+        ApiUtils.authorization:
+            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijg5OTk0ZmNjLThhMGYtNGU4YS1hYjAyLWRmNmViZTAzZTRlZiIsImVtYWlsIjoiYXBleGEzcGF0ZWxAZ21haWwuY29tIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTY1NTc4NDg1MCwiZXhwIjoxNjU1ODcxMjUwfQ.OmUQ4Iljk0_Ok1xoO68C--6dPKrDc4G1tlpAcpJaVso'
       };
-      http.Response response=await http.put(Uri.parse(getUserUrl),headers:header,body: body);
+      http.Response response =
+          await http.put(Uri.parse(getUserUrl), headers: header, body: body);
 
-      if(response.statusCode==200){
+      if (response.statusCode == 200) {
         return UpdateProfile.fromJson(jsonDecode(response.body));
       }
-    }catch(e){
+    } catch (e) {
       print(e.toString());
       return UpdateProfile();
     }
+    return null;
   }
 
-
-  Future<ViewCategory?> viewCategories()async{
-    try{
-      Map<String,String> header = {
-        ApiUtils.authorization : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijg5OTk0ZmNjLThhMGYtNGU4YS1hYjAyLWRmNmViZTAzZTRlZiIsImVtYWlsIjoiYXBleGEzcGF0ZWxAZ21haWwuY29tIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTY1NTc4NDc1NiwiZXhwIjoxNjU1ODcxMTU2fQ.WltUbVOFK9gYJG1xUl2otGKYGQfu9nqw99EqIhbalBU'
+//category api
+  Future<ViewCategory?> viewCategories() async {
+    try {
+      Map<String, String> header = {
+        ApiUtils.authorization:
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijg5OTk0ZmNjLThhMGYtNGU4YS1hYjAyLWRmNmViZTAzZTRlZiIsImVtYWlsIjoiYXBleGEzcGF0ZWxAZ21haWwuY29tIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTY1NTc4NDc1NiwiZXhwIjoxNjU1ODcxMTU2fQ.WltUbVOFK9gYJG1xUl2otGKYGQfu9nqw99EqIhbalBU'
       };
-      final response = await http.get(Uri.parse(categoryUrl),headers: header);
+      final response = await http.get(Uri.parse(categoryUrl), headers: header);
       print(response.statusCode);
       if (response.statusCode == 200) {
-        Map<String,dynamic> mapResponse = json.decode(response.body);
+        Map<String, dynamic> mapResponse = json.decode(response.body);
         return ViewCategory.fromJson(mapResponse);
         // Data dataModel = Data.fromJson(mapResponse);
         // return dataModel;
       }
-    }catch(e){
+    } catch (e) {
       print(e.toString());
       return ViewCategory();
     }
+    return null;
   }
 }

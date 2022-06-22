@@ -5,6 +5,7 @@ import 'package:pharmly/resources/app_color.dart';
 import 'package:pharmly/resources/app_string.dart';
 import 'package:pharmly/shared/validator.dart';
 import 'package:pharmly/utils/network_connection.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -14,6 +15,8 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+  late SharedPreferences _prefs;
+
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
@@ -70,7 +73,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   right: _deviceWidth * 0.1,
                   bottom: _deviceHeight * 0.01),
               child: TextFormField(
-                autovalidateMode: AutovalidateMode.always,
+                // autovalidateMode: AutovalidateMode.always,
                 controller: _firstNameController,
                 decoration: InputDecoration(labelText: AppString.txtfirstname),
                 validator: Validator.firstName,
@@ -86,7 +89,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 controller: _lastNameController,
                 decoration: InputDecoration(labelText: AppString.txtlastname),
-                // obscureText: true,
                 validator: Validator.lastName,
               ),
             ),
@@ -143,6 +145,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 final result = await Connectivity().checkConnectivity();
                 showConnectivityToast(result);
                 if (_formKey.currentState!.validate()) {
+                  // ConstantMethod.setFirstName(_firstNameController.text);
+                  // ConstantMethod.setLastName(_lastNameController);
+                  // ConstantMethod.setPhoneNumber(_phoneController);
+                  // ConstantMethod.setEmail(_emailController);
+                  // ConstantMethod.setPassword(_passwordController);
+
                   ApiService()
                       .userRegistration(
                           firstName: _firstNameController.text,
@@ -150,32 +158,35 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           contactNo: _phoneController.text,
                           email: _emailController.text,
                           password: _passwordController.text)
-                      .then((res) {
-                    print(res.code);
-                  });
-                  print("workin");
+                      .then(
+                    (res) {
+                      if (res.code == 200) {
+                        Navigator.pushNamed(context, '/otp_verification');
+                      }
+                    },
+                  );
                 }
               },
               child: Container(
-                  margin: EdgeInsets.only(left: _deviceWidth * 0.39),
-                  width: _deviceWidth * 0.46,
-                  height: _deviceHeight * 0.062,
-                  decoration: BoxDecoration(
-                      gradient: LinearGradient(colors: [
-                        AppColor.lightBlueColor2,
-                        AppColor.lightBlueColor
-                      ]),
-                      borderRadius:
-                          const BorderRadius.all(Radius.circular(50))),
-                  alignment: Alignment.center,
-                  child: Text(
-                    AppString.txtSignUp.toUpperCase(),
-                    style: TextStyle(
-                      fontSize: 19,
-                      color: AppColor.whitecolor,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  )),
+                margin: EdgeInsets.only(left: _deviceWidth * 0.39),
+                width: _deviceWidth * 0.46,
+                height: _deviceHeight * 0.062,
+                decoration: BoxDecoration(
+                    gradient: LinearGradient(colors: [
+                      AppColor.lightBlueColor2,
+                      AppColor.lightBlueColor
+                    ]),
+                    borderRadius: const BorderRadius.all(Radius.circular(50))),
+                alignment: Alignment.center,
+                child: Text(
+                  AppString.txtSignUp.toUpperCase(),
+                  style: TextStyle(
+                    fontSize: 19,
+                    color: AppColor.whitecolor,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
             ),
             GestureDetector(
               onTap: () {

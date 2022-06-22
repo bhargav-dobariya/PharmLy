@@ -1,16 +1,16 @@
 // To parse this JSON data, do
 //
-//     final signupModel = signupModelFromJson(jsonString);
+//     final signUpModel = signUpModelFromJson(jsonString);
 
 import 'dart:convert';
 
-SignupModel signupModelFromJson(String str) =>
-    SignupModel.fromJson(json.decode(str));
+SignUpModel signUpModelFromJson(String str) =>
+    SignUpModel.fromJson(json.decode(str));
 
-String signupModelToJson(SignupModel data) => json.encode(data.toJson());
+String signUpModelToJson(SignUpModel data) => json.encode(data.toJson());
 
-class SignupModel {
-  SignupModel({
+class SignUpModel {
+  SignUpModel({
     this.code,
     this.data,
     this.success,
@@ -20,7 +20,7 @@ class SignupModel {
   String? data;
   bool? success;
 
-  factory SignupModel.fromJson(Map<String, dynamic> json) => SignupModel(
+  factory SignUpModel.fromJson(Map<String, dynamic> json) => SignUpModel(
         code: json["code"],
         data: json["data"],
         success: json["success"],

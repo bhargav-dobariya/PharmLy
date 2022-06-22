@@ -15,7 +15,7 @@ class AppString {
   static String txtSignIn = "SIGN IN";
   static String txtDontHaveAnAccount = "Don't have an account?";
   static String txtSignUp = "Sign Up";
-  static String txtUsername = "Username";
+  static String txtUsername = "Email Id";
   static String txtEntermin8char = "Enter min. 8 characters";
   static String txtEnterValidMobileNumber = "Enter valid mobile number";
   static String txtEnteraValidFirstnamne = "Enter a valid firstname";
@@ -92,6 +92,8 @@ class AppString {
   static String txtnoInternetToast =
       "You're not connected with internet,please check your network connections";
   static String userToken = "User_Token";
+  static String userId = "userId";
+
   static String typeYourMessage = 'Type your message...';
   static String txtUnFollowAlert = "You have unfollowed ";
   static String txtFollowAlert = "You are now following ";
@@ -108,7 +110,6 @@ class AppString {
   static String txtPleaseEnterCorrectEmailAndPassword =
       "Please enter correct email and password details";
 
-
   static String txtPharmly = " PharmLy";
   static String txtProfile = "Profile";
   static String txtFirstName = "First name";
@@ -118,7 +119,9 @@ class AppString {
   static String txtDeleteAccount = "Delete account";
   static String txtUpdateDetails = "Update details";
   static String txtCannotChangeEmail = "You can not edit your email address.";
-  static String txtCheckYourInternetConnection = "Check your internet connection";
-  static String txtInternetIsRequired = "Internet connection is required for this activity";
+  static String txtCheckYourInternetConnection =
+      "Check your internet connection";
+  static String txtInternetIsRequired =
+      "Internet connection is required for this activity";
   static String txtCart = "Cart";
 }

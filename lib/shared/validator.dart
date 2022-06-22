@@ -25,7 +25,7 @@ class Validator {
   }
 
   static String? lastName(String? value) {
-    if (value == null) {
+    if (value!.isEmpty) {
       return AppString.txtEnterValidLastname;
     } else {
       return null;
@@ -33,7 +33,7 @@ class Validator {
   }
 
   static String? firstName(String? value) {
-    if (value == null) {
+    if (value!.isEmpty) {
       return AppString.txtEnteraValidFirstnamne;
     } else {
       return null;
