@@ -29,10 +29,7 @@ class LoginScreenState extends State<LoginScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
-    SharedPreferences.getInstance().then((sharedPref) {
-      _prefs = sharedPref;
-    });
+    ConstantMethod.initPreference();
     super.initState();
   }
 
@@ -140,6 +137,7 @@ class LoginScreenState extends State<LoginScreen> {
           // Signin Button
           GestureDetector(
             onTap: () async {
+              print("Working");
               final result = await Connectivity().checkConnectivity();
               showConnectivityToast(result);
               if (_formKey.currentState!.validate()) {

@@ -145,12 +145,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 final result = await Connectivity().checkConnectivity();
                 showConnectivityToast(result);
                 if (_formKey.currentState!.validate()) {
-                  // ConstantMethod.setFirstName(_firstNameController.text);
-                  // ConstantMethod.setLastName(_lastNameController);
-                  // ConstantMethod.setPhoneNumber(_phoneController);
-                  // ConstantMethod.setEmail(_emailController);
-                  // ConstantMethod.setPassword(_passwordController);
-
                   ApiService()
                       .userRegistration(
                           firstName: _firstNameController.text,

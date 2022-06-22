@@ -15,6 +15,7 @@ class OtpVerificationScreen extends StatefulWidget {
 }
 
 class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
+  late String _pin;
   late double _deviceHeight;
   late double _deviceWidth;
   final OtpFieldController otpController = OtpFieldController();
@@ -70,14 +71,20 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                     print("Changed: " + pin);
                   },
                   onCompleted: (pin) {
-                    print("Completed: " + pin);
+                    _pin = pin;
                   },
                 ),
                 GestureDetector(
                   onTap: () {
-                    print(otpController);
-                    ApiService().verifyEmail(
-                        ConstantMethod.getEmail(), otpController.toString());
+                    ApiService()
+                        .verifyEmail(ConstantMethod.getEmail(), _pin)
+                        .then((value) async {
+                      if (value.code == 200) {
+                        ConstantMethod.setAccessToken(value.data!.token);
+                        ConstantMethod.setUserId(value.data!.userId);
+                        Navigator.pushReplacementNamed(context, "/home_screen");
+                      }
+                    });
                   },
                   child: Container(
                     margin: EdgeInsets.only(
