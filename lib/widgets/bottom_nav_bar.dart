@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pharmly/resources/app_color.dart';
+import 'package:pharmly/screens/address_screen.dart';
 import 'package:pharmly/screens/cart_screen.dart';
 import 'package:pharmly/screens/home_screen.dart';
 import 'package:pharmly/screens/profile_screen.dart';
@@ -35,11 +36,11 @@ class BottomNavBarState extends State<BottomNavBar> {
       case 1:
         return CartScreen();
 
-    ///Notification screen
+    ///Address screen
       case 2:
-        return HomeScreen();
+        return AddressScreen();
 
-    ///Add post/story screen
+    ///Profile screen
       case 3:
         return ProfileScreen();
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pharmly/networking/const_method.dart';
 import 'package:pharmly/screens/disease_screen.dart';
 import 'package:pharmly/screens/forgot_password.dart';
 import 'package:pharmly/screens/login_screen.dart';
@@ -12,7 +13,8 @@ import 'package:pharmly/widgets/bottom_nav_bar.dart';
 import 'package:pharmly/widgets/product.dart';
 
 void main() {
-  runApp(const MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  ConstantMethod.initPreference().then((value) => runApp(const MyApp()));
 }
 
 class MyApp extends StatelessWidget {

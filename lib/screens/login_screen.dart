@@ -178,6 +178,7 @@ class LoginScreenState extends State<LoginScreen> {
                       });
                       ConstantMethod.prefs.setString(AppString.userToken,res.data!.token!);
                       ConstantMethod.prefs.setString(AppString.userId,res.data!.userId!);
+                      ConstantMethod.prefs.setBool(AppString.txtIsLoggedIn, true);
                       Navigator.pushReplacementNamed(context, '/bottom_navbar');
                     } else {
                       _emailController.clear();

@@ -128,4 +128,6 @@ class AppString {
   static String txtAddToCart = "Add to cart";
   static String txtUpdatedDetails = "Updated details";
   static String txtSignedOut = "You have signed out.";
+  static String txtMyAddresses = "My addresses";
+  static String txtAddANewAddress = "Add a new address";
 }

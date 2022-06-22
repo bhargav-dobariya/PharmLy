@@ -25,10 +25,9 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void checkUserStatus()async{
-    ConstantMethod.initPreference();
     var userStatus=ConstantMethod.keepUserLoggedIn();
     (userStatus!=null && userStatus==true)
-        ?Timer(Duration(seconds: 7), ()=>Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>BottomNavBar())))
+        ?Timer(Duration(seconds: 3), ()=>Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>BottomNavBar())))
     :Timer(Duration(seconds: 10), ()=>Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LoginScreen())));
   }
 

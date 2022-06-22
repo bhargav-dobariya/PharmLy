@@ -16,7 +16,7 @@ class ConstantMethod {
     return prefs.getBool(AppString.txtIsLoggedIn);
   }
 
-  static initPreference() async {
+  static Future initPreference() async {
     prefs = await SharedPreferences.getInstance();
   }
 }
