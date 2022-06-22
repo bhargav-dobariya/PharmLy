@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:pharmly/methods/checkInternetConnectivity.dart';
 import 'package:pharmly/models/view_category.dart';
 import 'package:pharmly/networking/api_service.dart';
+import 'package:pharmly/networking/const_method.dart';
 import 'package:pharmly/resources/app_color.dart';
 import 'package:pharmly/resources/app_string.dart';
 
@@ -156,7 +157,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               itemCount:snapShot.data?.data?.length,
                               itemBuilder: (ctx,index){
-                                return Category(imageUrl: snapShot.data!.data![index].categoryImage! , categoryTitle:snapShot.data!.data![index].categoryName! );
+                                return Category(snap: snapShot.data!.data![index] );
                               }
                           );
                         }

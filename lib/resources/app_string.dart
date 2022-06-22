@@ -92,6 +92,8 @@ class AppString {
   static String txtnoInternetToast =
       "You're not connected with internet,please check your network connections";
   static String userToken = "User_Token";
+  static String userId = "User_Id";
+  static String txtCategoryId = "Category_Id";
   static String typeYourMessage = 'Type your message...';
   static String txtUnFollowAlert = "You have unfollowed ";
   static String txtFollowAlert = "You are now following ";
@@ -123,4 +125,6 @@ class AppString {
   static String txtCart = "Cart";
   static String txtCategoryName = "Category name";
   static String txtAddToCart = "Add to cart";
+  static String txtUpdatedDetails = "Updated details";
+  static String txtSignedOut = "You have signed out.";
 }

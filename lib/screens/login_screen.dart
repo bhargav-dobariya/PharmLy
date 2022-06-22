@@ -41,12 +41,6 @@ class LoginScreenState extends State<LoginScreen> {
       body: Stack(
         alignment: Alignment.center,
         children: [
-          Visibility(
-            visible: isLoading,
-            child: Center(
-              child: CircularProgressIndicator(),
-            ),
-          ),
           SafeArea(
             child: SingleChildScrollView(
               reverse: true,
@@ -70,6 +64,13 @@ class LoginScreenState extends State<LoginScreen> {
                   _getLoginForm(),
                 ],
               ),
+            ),
+          ),
+          Visibility(
+            visible: isLoading,
+            child: Align(
+              alignment: Alignment.center,
+              child: CircularProgressIndicator(),
             ),
           ),
         ],
@@ -175,7 +176,8 @@ class LoginScreenState extends State<LoginScreen> {
                       setState(() {
                         isLoading=false;
                       });
-                      ConstantMethod.prefs.setString(AppString.userToken,res.data!);
+                      ConstantMethod.prefs.setString(AppString.userToken,res.data!.token!);
+                      ConstantMethod.prefs.setString(AppString.userId,res.data!.userId!);
                       Navigator.pushReplacementNamed(context, '/bottom_navbar');
                     } else {
                       _emailController.clear();

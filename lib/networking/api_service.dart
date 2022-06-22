@@ -1,12 +1,15 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:pharmly/models/all_desease_model.dart';
 import 'package:pharmly/models/login_model.dart';
 import 'package:pharmly/models/logout_user_model.dart';
+import 'package:pharmly/models/product_model.dart';
 import 'package:pharmly/models/signup_model.dart';
 import 'package:pharmly/networking/const_method.dart';
+import 'package:pharmly/resources/app_string.dart';
 import 'package:pharmly/utils/api_utils.dart';
 import 'package:pharmly/models/get_user_model.dart';
 import 'package:pharmly/models/update_user_profile.dart';
@@ -16,14 +19,15 @@ import 'package:pharmly/models/view_category.dart';
 
 class ApiService {
   var userToken = ConstantMethod.getUserAccessToken();
+  var userId=ConstantMethod.getUserAccessId();
   //user registration url
   static const String _userRegistrationurl = ApiUtils.baseUrl + ApiUtils.users;
   static const String _userLoginUrl = ApiUtils.baseUrl + ApiUtils.login;
   static const String _allDisease = ApiUtils.baseUrl + ApiUtils.users;
-  static const String getUserUrl = ApiUtils.baseUrl + ApiUtils.users + "89994fcc-8a0f-4e8a-ab02-df6ebe03e4ef";    //take id from shared preferences
+  static const String getUserUrl = ApiUtils.baseUrl + ApiUtils.users;    //take id from shared preferences
   static const categoryUrl=ApiUtils.baseUrl+ApiUtils.category;
   static const logOutUrl=ApiUtils.baseUrl+ApiUtils.logout;
-
+  static const getProductUrl=ApiUtils.baseUrl + ApiUtils.allProduct;
 
 
   //user registration url
@@ -57,7 +61,7 @@ class ApiService {
     };
     http.Response response =
         await http.post(Uri.parse(_userLoginUrl), body: body);
-    Map<String, dynamic> mapResponse = json.decode(response.body);
+    Map<String, String> mapResponse = json.decode(response.body);
     print("Login:${response.statusCode}");
     return LoginModel.fromJson(mapResponse);
   }
@@ -81,7 +85,7 @@ class ApiService {
       Map<String,String> header = {
         ApiUtils.authorization : 'Bearer ' + userToken
       };
-      final response = await http.get(Uri.parse(getUserUrl),headers: header);
+      final response = await http.get(Uri.parse(getUserUrl + userId),headers: header);
       print("User details:${response.statusCode}");
       if (response.statusCode == 200) {
         Map<String,dynamic> mapResponse = json.decode(response.body);
@@ -111,9 +115,10 @@ class ApiService {
       Map<String,String> header = {
         ApiUtils.authorization : 'Bearer ' + userToken
       };
-      http.Response response=await http.put(Uri.parse(getUserUrl),headers:header,body: body);
+      http.Response response=await http.put(Uri.parse(getUserUrl + userId),headers:header,body: body);
       print("Update details:${response.statusCode}");
       if(response.statusCode==200){
+        Fluttertoast.showToast(msg: AppString.txtUpdatedDetails);
         return UpdateProfile.fromJson(jsonDecode(response.body));
       }
     }catch(e){
@@ -152,12 +157,28 @@ class ApiService {
         ApiUtils.email: email,
       };
       http.Response response=await http.post(Uri.parse(logOutUrl),body: body,headers: header);
-      Map<String, dynamic> mapResponse = json.decode(response.body);
       print("Log out:${response.statusCode}");
-      return LogOutUser.fromJson(mapResponse);
+      if(response.statusCode==200){
+        Map<String, dynamic> mapResponse = json.decode(response.body);
+        Fluttertoast.showToast(msg: AppString.txtSignedOut);
+        return LogOutUser.fromJson(mapResponse);
+      }
     }catch(e) {
       print(e.toString());
       return LogOutUser();
     }
   }
+
+
+  // Future<ProductModel?> getProductDetails()async{
+  //   try{
+  //     Map<String,String> header = {
+  //       ApiUtils.authorization : 'Bearer ' + userToken
+  //     };
+  //     http.Response response=await http.get(Uri.parse(getProductUrl + ))
+  //   }catch(e){
+  //     print(e.toString());
+  //     return ProductModel();
+  //   }
+  // }
 }

@@ -8,6 +8,14 @@ class ConstantMethod {
     return prefs.getString(AppString.userToken);
   }
 
+  static getUserAccessId(){
+    return prefs.getString(AppString.userId);
+  }
+
+  static getCategoryId(){
+    return prefs.getString(AppString.txtCategoryId);
+  }
+
   static initPreference() async {
     prefs = await SharedPreferences.getInstance();
   }

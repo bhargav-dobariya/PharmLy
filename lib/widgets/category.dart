@@ -3,10 +3,13 @@ import 'package:pharmly/resources/app_color.dart';
 import 'package:pharmly/screens/disease_screen.dart';
 import 'package:pharmly/screens/products_screen.dart';
 
+import '../models/view_category.dart' as ViewCategory;
+
 class Category extends StatefulWidget {
-  final String imageUrl;
-  final String categoryTitle;
-  const Category({Key? key,required this.imageUrl,required this.categoryTitle}) : super(key: key);
+  // final String imageUrl;
+  // final String categoryTitle;
+  final ViewCategory.Datum snap;
+  const Category({Key? key,required this.snap}) : super(key: key);
 
   @override
   _CategoryState createState() => _CategoryState();
@@ -17,11 +20,11 @@ class _CategoryState extends State<Category> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: (){
-        if(widget.categoryTitle=="Disease"){
+        if(widget.snap.categoryName =="Disease"){
           Navigator.push(context, MaterialPageRoute(builder: (context)=>const DiseaseScreen()));
         }
         else{
-          Navigator.push(context, MaterialPageRoute(builder: (context)=>ProductsScreen(categoryName: widget.categoryTitle,)));
+          Navigator.push(context, MaterialPageRoute(builder: (context)=>ProductsScreen(categoryName: widget.snap.categoryName!,)));
         }
       },
       child: Center(
@@ -37,10 +40,10 @@ class _CategoryState extends State<Category> {
                   border: Border.all(color: AppColor.colorGrey.withAlpha(50)),
                   borderRadius: BorderRadius.all(Radius.circular(5))
                 ),
-                child: Image.network(widget.imageUrl,fit: BoxFit.cover,),
+                child: Image.network(widget.snap.categoryImage!,fit: BoxFit.cover,),
               ),
             ),
-            Text(widget.categoryTitle,style: TextStyle(fontSize: 10,color: AppColor.colorBlack),textAlign: TextAlign.center,)
+            Text(widget.snap.categoryName!,style: TextStyle(fontSize: 10,color: AppColor.colorBlack),textAlign: TextAlign.center,)
           ],
         ),
       ),
