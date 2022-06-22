@@ -27,7 +27,7 @@ class ApiService {
   static const String getUserUrl = ApiUtils.baseUrl + ApiUtils.users;    //take id from shared preferences
   static const categoryUrl=ApiUtils.baseUrl+ApiUtils.category;
   static const logOutUrl=ApiUtils.baseUrl+ApiUtils.logout;
-  static const getProductUrl=ApiUtils.baseUrl + ApiUtils.allProduct;
+  static const getProductUrl=ApiUtils.baseUrl + ApiUtils.allProduct + 'a19b6c7e-5006-41d4-9d9f-8ac82a4a6175';
 
 
   //user registration url
@@ -61,7 +61,7 @@ class ApiService {
     };
     http.Response response =
         await http.post(Uri.parse(_userLoginUrl), body: body);
-    Map<String, String> mapResponse = json.decode(response.body);
+    Map<String, dynamic> mapResponse = json.decode(response.body);
     print("Login:${response.statusCode}");
     return LoginModel.fromJson(mapResponse);
   }
@@ -170,15 +170,20 @@ class ApiService {
   }
 
 
-  // Future<ProductModel?> getProductDetails()async{
-  //   try{
-  //     Map<String,String> header = {
-  //       ApiUtils.authorization : 'Bearer ' + userToken
-  //     };
-  //     http.Response response=await http.get(Uri.parse(getProductUrl + ))
-  //   }catch(e){
-  //     print(e.toString());
-  //     return ProductModel();
-  //   }
-  // }
+  Future<ProductModel?> getProductDetails()async{
+    try{
+      Map<String,String> header = {
+        ApiUtils.authorization : 'Bearer ' + userToken
+      };
+      http.Response response=await http.get(Uri.parse(getProductUrl),headers: header,);
+      print("Product details:${response.statusCode}");
+      if (response.statusCode == 200) {
+        Map<String,dynamic> mapResponse = json.decode(response.body);
+        return ProductModel.fromJson(mapResponse);
+      }
+    }catch(e){
+      print(e.toString());
+      return ProductModel();
+    }
+  }
 }
