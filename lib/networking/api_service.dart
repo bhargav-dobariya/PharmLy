@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 
 import 'package:pharmly/models/all_desease_model.dart';
 import 'package:pharmly/models/login_model.dart';
+import 'package:pharmly/models/otp_resend_model.dart';
 import 'package:pharmly/models/otp_verification_model.dart';
 import 'package:pharmly/models/signup_model.dart';
 import 'package:pharmly/methods/shared_prefs_methods.dart';
@@ -17,11 +18,13 @@ class ApiService {
   static const String _userRegistrationurl = ApiUtils.baseUrl + ApiUtils.users;
   static const String _userLoginUrl = ApiUtils.baseUrl + ApiUtils.login;
   static const String _allDisease = ApiUtils.baseUrl + ApiUtils.all_disease;
+  static const String _verifyUserUrl = ApiUtils.baseUrl + ApiUtils.verify;
+  static const String _resendOtpUrl = ApiUtils.baseUrl + ApiUtils.resend;
+
   static const String getUserUrl = ApiUtils.baseUrl +
       ApiUtils.users +
       "89994fcc-8a0f-4e8a-ab02-df6ebe03e4ef"; //take id from shared preferences
   static const categoryUrl = ApiUtils.baseUrl + ApiUtils.category;
-  static const String _verifyUser = ApiUtils.baseUrl + ApiUtils.verify;
 
   //user registration url
   Future<SignUpModel> userRegistration(
@@ -55,6 +58,7 @@ class ApiService {
     http.Response response =
         await http.post(Uri.parse(_userLoginUrl), body: body);
     Map<String, dynamic> mapResponse = json.decode(response.body);
+    print(mapResponse);
     return LoginModel.fromJson(mapResponse);
   }
 
@@ -77,9 +81,21 @@ class ApiService {
     Map<String, dynamic> body = {ApiUtils.email: email, ApiUtils.otp: otp};
 
     http.Response response =
-        await http.post(Uri.parse(_verifyUser), body: body);
+        await http.post(Uri.parse(_verifyUserUrl), body: body);
     Map<String, dynamic> mapResponse = json.decode(response.body);
     return OtpVerificationModel.fromJson(mapResponse);
+  }
+
+//otp resend
+  Future<OtpResendModel> otpResend(String? email) async {
+    Map<String, dynamic> body = {
+      ApiUtils.email: email,
+    };
+
+    http.Response response =
+        await http.post(Uri.parse(_resendOtpUrl), body: body);
+    Map<String, dynamic> mapResponse = json.decode(response.body);
+    return OtpResendModel.fromJson(mapResponse);
   }
 
 //get userDetails api

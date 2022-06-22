@@ -34,6 +34,8 @@ class AppString {
   static String txtOR = "OR";
   static String txtContinue = "continue";
   static String txtVerify = "Verify";
+  static String txtResendOtp = "Resend OTP";
+
   static String txtPassworddontmatch = "Password don't match";
   static String txtSkipForNow = "Skip For Now";
   static String txtPost = "Posts";

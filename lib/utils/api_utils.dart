@@ -4,6 +4,7 @@ class ApiUtils {
   static const String login = "login/";
   static const String all_disease = "all-disease/";
   static const String verify = "verify/";
+  static const String resend = "resend/";
 
   static const String logout = "logout/";
   static const String category = "category/?search=";

@@ -7,6 +7,7 @@ import 'package:pharmly/screens/otp_verification_screen.dart';
 import 'package:pharmly/screens/home_screen.dart';
 import 'package:pharmly/screens/profile_screen.dart';
 import 'package:pharmly/screens/signUp_screen.dart';
+import 'package:pharmly/screens/splash_screen.dart';
 import 'package:pharmly/widgets/bottom_nav_bar.dart';
 
 void main() {
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       routes: {
-        '/': (context) => const LoginScreen(),
+        '/': (context) => const SplashScreen(),
         '/signup_screen': (context) => const SignUpScreen(),
         '/login_screen': (context) => const LoginScreen(),
         '/forgot_password': (context) => const ForgotPassword(),

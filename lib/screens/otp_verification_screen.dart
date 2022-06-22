@@ -1,10 +1,13 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:otp_text_field/otp_text_field.dart';
 import 'package:otp_text_field/style.dart';
 import 'package:pharmly/networking/api_service.dart';
 import 'package:pharmly/resources/app_color.dart';
 import 'package:pharmly/resources/app_string.dart';
 
+import '../methods/check_internet_connectivity.dart.dart';
 import '../methods/shared_prefs_methods.dart';
 
 class OtpVerificationScreen extends StatefulWidget {
@@ -71,11 +74,15 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                     print("Changed: " + pin);
                   },
                   onCompleted: (pin) {
-                    _pin = pin;
+                    setState(() {
+                      _pin = pin.toString();
+                    });
                   },
                 ),
                 GestureDetector(
-                  onTap: () {
+                  onTap: () async {
+                    final result = await Connectivity().checkConnectivity();
+                    showConnectivityToast(result);
                     ApiService()
                         .verifyEmail(ConstantMethod.getEmail(), _pin)
                         .then((value) async {
@@ -83,6 +90,10 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                         ConstantMethod.setAccessToken(value.data!.token);
                         ConstantMethod.setUserId(value.data!.userId);
                         Navigator.pushReplacementNamed(context, "/home_screen");
+                      } else {
+                        Fluttertoast.showToast(
+                            msg:
+                                "You Entered wrong OTP, Please add the right OTP");
                       }
                     });
                   },
@@ -111,6 +122,48 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                     ),
                   ),
                 ),
+                GestureDetector(
+                  onTap: () async {
+                    final result = await Connectivity().checkConnectivity();
+                    showConnectivityToast(result);
+                    otpController.clear();
+                    ApiService()
+                        .otpResend(ConstantMethod.getEmail())
+                        .then((value) {
+                      if (value.code == 200) {
+                        Fluttertoast.showToast(msg: "OTP sent Successfully");
+                      } else {
+                        Fluttertoast.showToast(
+                            msg:
+                                "Something Went Wrong Please try afterSometime");
+                      }
+                    });
+                  },
+                  child: Container(
+                    margin: EdgeInsets.only(
+                        left: _deviceWidth * 0.39, top: _deviceHeight * 0.08),
+                    width: _deviceWidth * 0.4,
+                    height: _deviceHeight * 0.06,
+                    decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            AppColor.lightBlueColor2,
+                            AppColor.lightBlueColor,
+                          ],
+                        ),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(50))),
+                    alignment: Alignment.center,
+                    child: Text(
+                      AppString.txtResendOtp,
+                      style: TextStyle(
+                        fontSize: 19,
+                        color: AppColor.whitecolor,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
+                )
               ],
             ),
           ],
