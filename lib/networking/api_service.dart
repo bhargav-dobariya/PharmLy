@@ -27,7 +27,7 @@ class ApiService {
   static const String getUserUrl = ApiUtils.baseUrl + ApiUtils.users;    //take id from shared preferences
   static const categoryUrl=ApiUtils.baseUrl+ApiUtils.category;
   static const logOutUrl=ApiUtils.baseUrl+ApiUtils.logout;
-  static const getProductUrl=ApiUtils.baseUrl + ApiUtils.allProduct + 'a19b6c7e-5006-41d4-9d9f-8ac82a4a6175';
+  static const getProductUrl=ApiUtils.baseUrl + ApiUtils.allProduct + "970f5be9-89b4-4322-b31c-7e0d9122957c";
 
 
   //user registration url

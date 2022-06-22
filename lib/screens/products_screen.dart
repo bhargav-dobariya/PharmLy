@@ -15,7 +15,7 @@ class ProductsScreen extends StatefulWidget {
 
 class _ProductsScreenState extends State<ProductsScreen> {
   late Future<ProductModel?> productDetails;
-  getProduct()async{
+  getProduct(){
     productDetails=ApiService().getProductDetails();
   }
 
@@ -38,7 +38,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                 ),
                 itemCount: snapshot.data?.data?.length,
                 itemBuilder: (ctx,index){
-                  return Product(index: index,productCompany: snapshot.data!.data![index]!.companyName,addToCart: true,productImageUrl: 'assets/images/carousel3.jpg',productName: "Dettol Sanitizer 250 ml",productPrice: 3000,);
+                  return Product(index: index,addToCart: true,snap: snapshot.data!.data![index],);
                 }
             );
           }

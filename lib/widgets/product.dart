@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:pharmly/models/product_model.dart' as ProductModel;
 import 'package:pharmly/resources/app_color.dart';
 import 'package:pharmly/resources/app_string.dart';
 
+
 class Product extends StatefulWidget {
-  final String productName;
-  final String productCompany;
-  final double productPrice;
-  final String productImageUrl;
+  // final String productName;
+  // final String productCompany;
+  // final double productPrice;
+  // final String productImageUrl;
   final bool addToCart;
   final int index;
-  const Product({Key? key,required this.productName,required this.productCompany,required this.productImageUrl,required this.productPrice,required this.addToCart,required this.index}) : super(key: key);
+  final ProductModel.Datum snap;
+  const Product({Key? key,required this.addToCart,required this.index,required this.snap}) : super(key: key);
 
   @override
   _ProductState createState() => _ProductState();
@@ -36,12 +39,12 @@ class _ProductState extends State<Product> {
                     // border: Border(left: BorderSide(color: AppColor.colorGrey)),
                     borderRadius: BorderRadius.all(Radius.circular(5))
                 ),
-                child: Image.asset(widget.productImageUrl,fit: BoxFit.cover,),
+                child: Image.network(widget.snap.productImage!,fit: BoxFit.cover,),
               ),
             ),
-            Text(widget.productName,style: TextStyle(fontSize: 15,color: AppColor.colorBlack,fontWeight: FontWeight.bold),textAlign: TextAlign.center,),
-            Text(widget.productCompany,style: TextStyle(fontSize: 10,color: AppColor.colorGrey),textAlign: TextAlign.center,),
-            Text("Rs. ${widget.productPrice}/-",style: TextStyle(fontSize: 10,color: AppColor.colorBlack,fontWeight: FontWeight.bold),textAlign: TextAlign.center,),
+            Text(widget.snap.title!,style: TextStyle(fontSize: 15,color: AppColor.colorBlack,fontWeight: FontWeight.bold),textAlign: TextAlign.center,),
+            Text(widget.snap.companyName!,style: TextStyle(fontSize: 10,color: AppColor.colorGrey),textAlign: TextAlign.center,),
+            Text("Rs. ${int.parse(widget.snap.price!)}/-",style: TextStyle(fontSize: 10,color: AppColor.colorBlack,fontWeight: FontWeight.bold),textAlign: TextAlign.center,),
             GestureDetector(
               child: Container(
                 alignment: Alignment.center,
