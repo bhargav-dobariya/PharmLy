@@ -6,7 +6,6 @@ import 'package:pharmly/resources/app_color.dart';
 import 'package:pharmly/resources/app_string.dart';
 import 'package:pharmly/shared/validator.dart';
 import 'package:pharmly/utils/network_connection.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../methods/shared_prefs_methods.dart';
 
@@ -18,7 +17,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class LoginScreenState extends State<LoginScreen> {
-  late SharedPreferences _prefs;
+  bool _isLoading = false;
 
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
@@ -63,144 +62,162 @@ class LoginScreenState extends State<LoginScreen> {
   Widget _getLoginForm() {
     return Form(
       key: _formKey,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Stack(
         children: [
-          Image.asset(
-            "assets/images/Logo3.png",
-            height: _deviceHeight / 5,
+          Center(
+            child: Visibility(
+              visible: _isLoading,
+              child: Container(
+                  margin: EdgeInsets.only(top: _deviceHeight / 2),
+                  child: const CircularProgressIndicator()),
+            ),
           ),
-          Container(
-            margin: EdgeInsets.only(
-                top: _deviceHeight * 0.04,
-                bottom: _deviceHeight * 0.05,
-                right: _deviceWidth * 0.62),
-            alignment: Alignment.center,
-            child: Text(
-              AppString.txtlogin,
-              style: TextStyle(
-                fontSize: _deviceHeight * 0.04,
-                fontWeight: FontWeight.bold,
-                color: AppColor.lightBlueColor,
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Image.asset(
+                "assets/images/Logo3.png",
+                height: _deviceHeight / 5,
               ),
-            ),
-          ),
-
-          //Email TextField
-          Container(
-            alignment: Alignment.center,
-            margin: EdgeInsets.only(
-                left: _deviceWidth * 0.1,
-                right: _deviceWidth * 0.1,
-                bottom: _deviceHeight * 0.04),
-            child: TextFormField(
-              autovalidateMode: AutovalidateMode.onUserInteraction,
-              controller: _emailController,
-              decoration: InputDecoration(labelText: AppString.txtUsername),
-              validator: Validator.email,
-            ),
-          ),
-
-          //Password TextField
-          Container(
-            alignment: Alignment.center,
-            margin: EdgeInsets.only(
-                left: _deviceWidth * 0.1,
-                right: _deviceWidth * 0.1,
-                bottom: _deviceHeight * 0.01),
-            child: TextFormField(
-              controller: _passworController,
-              decoration: InputDecoration(labelText: AppString.txtPassword),
-              obscureText: true,
-            ),
-          ),
-          //Forgot password
-          GestureDetector(
-            onTap: () {
-              Navigator.pushNamed(context, '/forgot_password');
-            },
-            child: Container(
-              margin: EdgeInsets.only(
-                  right: _deviceWidth * 0.09, bottom: _deviceHeight * 0.05),
-              alignment: Alignment.centerRight,
-              child: Text(
-                AppString.txtForgotPassword,
-                style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  color: AppColor.lightBlueColor,
-                ),
-              ),
-            ),
-          ),
-
-          // Signin Button
-          GestureDetector(
-            onTap: () async {
-              print("Working");
-              final result = await Connectivity().checkConnectivity();
-              showConnectivityToast(result);
-              if (_formKey.currentState!.validate()) {
-                ApiService()
-                    .userLogin(
-                        email: _emailController.text,
-                        password: _passworController.text)
-                    .then(
-                  (res) async {
-                    if (res.code == 200) {
-                      ConstantMethod.setAccessToken(res.data!.token);
-                      ConstantMethod.setUserId(res.data!.userId);
-
-                      Navigator.pushNamed(context, '/disease_screen');
-                    } else {
-                      _emailController.clear();
-                      _passworController.clear();
-                      Fluttertoast.showToast(
-                          msg: AppString.txtPleaseEnterCorrectEmailAndPassword);
-                    }
-                  },
-                );
-              }
-            },
-            child: Container(
-              margin: EdgeInsets.only(left: _deviceWidth * 0.46),
-              width: _deviceWidth * 0.46,
-              height: _deviceHeight * 0.062,
-              decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [
-                      AppColor.lightBlueColor2,
-                      AppColor.lightBlueColor,
-                    ],
+              Container(
+                margin: EdgeInsets.only(
+                    top: _deviceHeight * 0.04,
+                    bottom: _deviceHeight * 0.05,
+                    right: _deviceWidth * 0.62),
+                alignment: Alignment.center,
+                child: Text(
+                  AppString.txtlogin,
+                  style: TextStyle(
+                    fontSize: _deviceHeight * 0.04,
+                    fontWeight: FontWeight.bold,
+                    color: AppColor.lightBlueColor,
                   ),
-                  borderRadius: const BorderRadius.all(Radius.circular(50))),
-              alignment: Alignment.center,
-              child: Text(
-                AppString.txtSignIn,
-                style: TextStyle(
-                  fontSize: 19,
-                  color: AppColor.whitecolor,
-                  fontWeight: FontWeight.w700,
                 ),
               ),
-            ),
-          ),
-          GestureDetector(
-            onTap: () async {
-              Navigator.pushReplacementNamed(context, '/signup_screen');
-            },
-            child: Container(
-              margin: EdgeInsets.only(
-                  left: _deviceWidth * 0.45, top: _deviceHeight * 0.025),
-              child: Text(
-                AppString.txtDontHaveAnAccountSignup,
-                style: TextStyle(
-                  fontSize: _deviceHeight * 0.018,
-                  fontWeight: FontWeight.w500,
-                  color: AppColor.purpleButton,
+
+              //Email TextField
+              Container(
+                alignment: Alignment.center,
+                margin: EdgeInsets.only(
+                    left: _deviceWidth * 0.1,
+                    right: _deviceWidth * 0.1,
+                    bottom: _deviceHeight * 0.04),
+                child: TextFormField(
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  controller: _emailController,
+                  decoration: InputDecoration(labelText: AppString.txtUsername),
+                  validator: Validator.email,
                 ),
               ),
-            ),
+
+              //Password TextField
+              Container(
+                alignment: Alignment.center,
+                margin: EdgeInsets.only(
+                    left: _deviceWidth * 0.1,
+                    right: _deviceWidth * 0.1,
+                    bottom: _deviceHeight * 0.01),
+                child: TextFormField(
+                  controller: _passworController,
+                  decoration: InputDecoration(labelText: AppString.txtPassword),
+                  obscureText: true,
+                ),
+              ),
+              //Forgot password
+              GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, '/forgot_password');
+                },
+                child: Container(
+                  margin: EdgeInsets.only(
+                      right: _deviceWidth * 0.09, bottom: _deviceHeight * 0.05),
+                  alignment: Alignment.centerRight,
+                  child: Text(
+                    AppString.txtForgotPassword,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      color: AppColor.lightBlueColor,
+                    ),
+                  ),
+                ),
+              ),
+
+              // Signin Button
+              GestureDetector(
+                onTap: () async {
+                  final result = await Connectivity().checkConnectivity();
+                  showConnectivityToast(result);
+                  if (_formKey.currentState!.validate()) {
+                    setState(() {
+                      _isLoading = true;
+                    });
+                    ApiService()
+                        .userLogin(
+                            email: _emailController.text,
+                            password: _passworController.text)
+                        .then(
+                      (res) async {
+                        if (res.code == 200) {
+                          ConstantMethod.setAccessToken(res.data!.token);
+                          ConstantMethod.setUserId(res.data!.userId);
+                          setState(() {
+                            _isLoading = false;
+                          });
+                          Navigator.pushNamed(context, '/disease_screen');
+                        } else {
+                          _emailController.clear();
+                          _passworController.clear();
+                          Fluttertoast.showToast(
+                              msg: AppString
+                                  .txtPleaseEnterCorrectEmailAndPassword);
+                        }
+                      },
+                    );
+                  }
+                },
+                child: Container(
+                  margin: EdgeInsets.only(left: _deviceWidth * 0.46),
+                  width: _deviceWidth * 0.46,
+                  height: _deviceHeight * 0.062,
+                  decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [
+                          AppColor.lightBlueColor2,
+                          AppColor.lightBlueColor,
+                        ],
+                      ),
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(50))),
+                  alignment: Alignment.center,
+                  child: Text(
+                    AppString.txtSignIn,
+                    style: TextStyle(
+                      fontSize: 19,
+                      color: AppColor.whitecolor,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ),
+              ),
+              GestureDetector(
+                onTap: () async {
+                  Navigator.pushReplacementNamed(context, '/signup_screen');
+                },
+                child: Container(
+                  margin: EdgeInsets.only(
+                      left: _deviceWidth * 0.45, top: _deviceHeight * 0.025),
+                  child: Text(
+                    AppString.txtDontHaveAnAccountSignup,
+                    style: TextStyle(
+                      fontSize: _deviceHeight * 0.018,
+                      fontWeight: FontWeight.w500,
+                      color: AppColor.purpleButton,
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
         ],
       ),

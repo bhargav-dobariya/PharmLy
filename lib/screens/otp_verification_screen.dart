@@ -89,7 +89,8 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                       if (value.code == 200) {
                         ConstantMethod.setAccessToken(value.data!.token);
                         ConstantMethod.setUserId(value.data!.userId);
-                        Navigator.pushReplacementNamed(context, "/home_screen");
+                        Navigator.pushReplacementNamed(
+                            context, "/disease_screen");
                       } else {
                         Fluttertoast.showToast(
                             msg:
