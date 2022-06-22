@@ -45,7 +45,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                 ),
                 itemCount: snapshot.data?.data?.length,
                 itemBuilder: (ctx,index){
-                  return Product(index: index,addToCart: true,snap: snapshot.data!.data![index],);
+                  return Product(index: index,snap: snapshot.data!.data![index],);
                 }
             );
           }

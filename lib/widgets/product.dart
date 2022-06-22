@@ -9,10 +9,9 @@ class Product extends StatefulWidget {
   // final String productCompany;
   // final double productPrice;
   // final String productImageUrl;
-  final bool addToCart;
   final int index;
   final ProductModel.Datum snap;
-  const Product({Key? key,required this.addToCart,required this.index,required this.snap}) : super(key: key);
+  const Product({Key? key,required this.index,required this.snap}) : super(key: key);
 
   @override
   _ProductState createState() => _ProductState();

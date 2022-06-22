@@ -77,7 +77,7 @@ class BottomNavBarState extends State<BottomNavBar> {
               BottomNavigationBarItem(
                   icon: Icon(Icons.shopping_cart), label: "Cart"),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.dynamic_feed), label: "___"),
+                  icon: Icon(Icons.dynamic_feed), label: "Address"),
               BottomNavigationBarItem(
                   icon: Icon(Icons.account_circle), label: "Profile"),
             ],
