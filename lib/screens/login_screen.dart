@@ -169,7 +169,8 @@ class LoginScreenState extends State<LoginScreen> {
                           setState(() {
                             _isLoading = false;
                           });
-                          Navigator.pushNamed(context, '/disease_screen');
+                          Navigator.pushReplacementNamed(
+                              context, '/home_screen');
                         } else {
                           _emailController.clear();
                           _passworController.clear();

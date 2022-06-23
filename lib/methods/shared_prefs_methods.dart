@@ -10,7 +10,7 @@ class PreferenceHelper {
   }
 
   static getUserAccessToken() {
-    return prefs.getString(AppString.userToken);
+    return prefs.getString(AppString.userToken) ?? " ";
   }
 
   static getUserAccessId() {
@@ -70,7 +70,7 @@ class PreferenceHelper {
   }
 
   static getAccessToken() {
-    return prefs.getString(AppString.userToken);
+    return prefs.getString(AppString.userToken) ?? "";
   }
 
   static getUserId() {

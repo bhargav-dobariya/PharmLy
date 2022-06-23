@@ -2,11 +2,12 @@ class ApiUtils {
   static const String baseUrl = "https://c62d-103-238-107-162.in.ngrok.io/";
   static const String users = "users/";
   static const String login = "login/";
-  static const String all_disease = "all-disease/";
+  static const String all_disease = "all-disease/" '';
   static const String verify = "verify/";
   static const String resend = "resend/";
   static const String forgotPassword = "forgotpassword/";
   static const String addAddress = "addresses/";
+  static const String diseaseCategory = "a19b6c7e-5006-41d4-9d9f-8ac82a4a6175/";
 
   static const String allDisease = "all-disease/";
   static const String allProduct = "all-product/";
@@ -21,7 +22,9 @@ class ApiUtils {
   static const email = "email";
   static const otp = "otp";
   static const contactNo = "contactNo";
+  static const newPassword = "newPassword";
   static const password = "password";
+
   static const address = "address";
   static const area = "area";
   static const city = "city";
