@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:pharmly/models/get_cart_model.dart' as GetCartModel;
 import 'package:pharmly/resources/app_color.dart';
 
 class ProductInCart extends StatefulWidget {
-  const ProductInCart({Key? key}) : super(key: key);
+  final GetCartModel.ProductDatum snap;
+  const ProductInCart({Key? key,required this.snap}) : super(key: key);
 
   @override
   _ProductInCartState createState() => _ProductInCartState();
@@ -20,7 +22,7 @@ class _ProductInCartState extends State<ProductInCart> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Image.asset('assets/images/carousel2.jpg',fit: BoxFit.cover,),
+          Image.network(widget.snap.product!.productImage!,fit: BoxFit.cover,),
           Expanded(
             child: Container(
               height: double.infinity,
@@ -29,9 +31,9 @@ class _ProductInCartState extends State<ProductInCart> {
               child: RichText(
                 text: TextSpan(
                   children: [
-                    TextSpan(text: "Dettol disinfectant spray bottle, 225ml",style: TextStyle(fontSize: 20,color: AppColor.colorBlack)),
-                    TextSpan(text: "\nCompany",style: TextStyle(fontSize: 15,color: AppColor.colorGrey)),
-                    TextSpan(text: "\nPrice",style: TextStyle(fontSize: 20,color: AppColor.colorBlack)),
+                    TextSpan(text: widget.snap.product!.title!,style: TextStyle(fontSize: 20,color: AppColor.colorBlack)),
+                    TextSpan(text: widget.snap.product!.companyName!,style: TextStyle(fontSize: 15,color: AppColor.colorGrey)),
+                    TextSpan(text: widget.snap.product!.price!,style: TextStyle(fontSize: 20,color: AppColor.colorBlack)),
                   ]
                 )
               ),

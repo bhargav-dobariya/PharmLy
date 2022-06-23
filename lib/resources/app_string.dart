@@ -93,7 +93,7 @@ class AppString {
       "You're not connected with internet,please check your network connections";
   static String userToken = "User_Token";
   static String userId = "User_Id";
-  static String txtAddedToCart = "added_to_cart";
+  static String txtAddedToCart = "Added to cart";
   static String txtCategoryId = "Category_Id";
   static String txtIsLoggedIn = "isLoggedIn";
   static String typeYourMessage = 'Type your message...';
@@ -131,4 +131,6 @@ class AppString {
   static String txtSignedOut = "You have signed out.";
   static String txtMyAddresses = "My addresses";
   static String txtAddANewAddress = "Add a new address";
+  static String txtAlreadyAddedToCart = "Already added to cart. If you want to remove it, please do so in the 'Cart' section.";
+  static String  txtProceedToCheckout= "Proceed to checkout";
 }

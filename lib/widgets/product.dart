@@ -1,5 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:pharmly/models/add_product_to_cart.dart';
 import 'package:pharmly/models/product_model.dart' as ProductModel;
+import 'package:pharmly/networking/api_service.dart';
 import 'package:pharmly/resources/app_color.dart';
 import 'package:pharmly/resources/app_string.dart';
 
@@ -18,6 +23,14 @@ class Product extends StatefulWidget {
 }
 
 class _ProductState extends State<Product> {
+  late AddProductToCartModel addToCart;
+  bool addedToCart=false;
+
+  Future addProductToCart()async{
+    addToCart=(await ApiService().postProductToCart(productId: widget.snap.id))!;
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -45,19 +58,38 @@ class _ProductState extends State<Product> {
             Text(widget.snap.companyName!,style: TextStyle(fontSize: 10,color: AppColor.colorGrey),textAlign: TextAlign.center,),
             Text("Rs. ${int.parse(widget.snap.price!)}/-",style: TextStyle(fontSize: 10,color: AppColor.colorBlack,fontWeight: FontWeight.bold),textAlign: TextAlign.center,),
             GestureDetector(
-              child: Container(
+              child: addedToCart?Container(
                 alignment: Alignment.center,
                 width: MediaQuery.of(context).size.width/2.3,
                 height: 20,
-                margin: EdgeInsets.only(bottom: 5),
-                child: Text(AppString.txtAddToCart.toUpperCase(),style: TextStyle(fontSize: 10,fontWeight: FontWeight.bold),),
+                margin: EdgeInsets.only(bottom: 5,top: 5),
+                child: Text(AppString.txtAddedToCart.toUpperCase(),style: TextStyle(fontSize: 10,fontWeight: FontWeight.bold),),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(20)),
-                  color: AppColor.colorBlue.withAlpha(110)
+                  color: AppColor.lightRedColor
+                ),
+              ):Container(
+                alignment: Alignment.center,
+                width: MediaQuery.of(context).size.width/2.3,
+                height: 20,
+                margin: EdgeInsets.only(bottom: 5,top: 5),
+                child: Text(AppString.txtAddToCart.toUpperCase(),style: TextStyle(fontSize: 10,fontWeight: FontWeight.bold),),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(20)),
+                    color: AppColor.colorBlue.withAlpha(110)
                 ),
               ),
               onTap: (){
-
+                addProductToCart().then((value) {
+                  if(addToCart.code==401){
+                    Fluttertoast.showToast(msg: AppString.txtAlreadyAddedToCart);
+                  }
+                  else{
+                    setState(() {
+                      addedToCart=true;
+                    });
+                  }
+                });
               },
             )
           ],

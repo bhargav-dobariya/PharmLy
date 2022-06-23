@@ -20,7 +20,4 @@ class ConstantMethod {
     prefs = await SharedPreferences.getInstance();
   }
 
-  static addToCart()async{
-    return prefs.getStringList(AppString.txtAddedToCart);
-  }
 }

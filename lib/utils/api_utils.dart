@@ -5,6 +5,7 @@ class ApiUtils {
   static const String allDisease = "all-disease/";
   static const String allProduct = "all-product/";
   static const String addresses = "addresses";
+  static const String cart = "cart/";
 
   static const String logout = "logout";
   static const String category = "category";
@@ -15,4 +16,5 @@ class ApiUtils {
   static const contactNo = "contactNo";
   static const password = "password";
   static const authorization = "Authorization";
+  static const productId = "id";
 }

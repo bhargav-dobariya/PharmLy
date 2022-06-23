@@ -2,9 +2,12 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
+import 'package:pharmly/models/add_product_to_cart.dart';
 
 import 'package:pharmly/models/all_desease_model.dart';
+import 'package:pharmly/models/delete_from_cart_model.dart';
 import 'package:pharmly/models/get_addresses_model.dart';
+import 'package:pharmly/models/get_cart_model.dart';
 import 'package:pharmly/models/login_model.dart';
 import 'package:pharmly/models/logout_user_model.dart';
 import 'package:pharmly/models/product_model.dart';
@@ -30,6 +33,7 @@ class ApiService {
   static const logOutUrl=ApiUtils.baseUrl+ApiUtils.logout;
   static const getProductUrl=ApiUtils.baseUrl + ApiUtils.allProduct;
   static const getAddressesUrl=ApiUtils.baseUrl + ApiUtils.addresses;
+  static const cartUrl=ApiUtils.baseUrl + ApiUtils.cart;
 
 
   //user registration url
@@ -204,6 +208,66 @@ class ApiService {
     }catch(e){
       print(e.toString());
       GetAddressesModel();
+    }
+  }
+
+
+  Future<AddProductToCartModel?> postProductToCart({String? productId})async{
+    try{
+      Map<String,String> header={
+        ApiUtils.authorization : 'Bearer ' + userToken
+      };
+      Map<String,dynamic> body={
+        ApiUtils.productId: productId,
+      };
+      http.Response response=await http.put(Uri.parse(cartUrl + productId!),headers:header,body: body);
+      print("Add to cart: ${response.statusCode}");
+      if(response.statusCode==200){
+        Fluttertoast.showToast(msg: AppString.txtAddedToCart);
+        return AddProductToCartModel.fromJson(jsonDecode(response.body));
+      }
+    }catch(e){
+      print(e.toString());
+      return AddProductToCartModel();
+    }
+  }
+
+
+  Future<GetCartModel?> getCart()async{
+    try{
+      Map<String,String> header={
+        ApiUtils.authorization : 'Bearer ' + userToken
+      };
+      http.Response response=await http.get(Uri.parse(cartUrl),headers: header);
+      print("Get cart: ${response.statusCode}");
+      if(response.statusCode==200){
+        Map<String,dynamic> mapResponse = json.decode(response.body);
+        return GetCartModel.fromJson(mapResponse);
+      }
+    }catch(e){
+      print(e.toString());
+      return GetCartModel();
+    }
+  }
+
+
+  Future<DeleteFromCartModel?> deleteItem({String? productId})async{
+    try{
+      Map<String,String> header={
+        ApiUtils.authorization : 'Bearer ' + userToken
+      };
+      Map<String,dynamic> body={
+        ApiUtils.productId: productId,
+      };
+      http.Response response=await http.put(Uri.parse(cartUrl + productId!),headers:header,body: body);
+      print("Delete from cart: ${response.statusCode}");
+      if(response.statusCode==200){
+        Fluttertoast.showToast(msg: AppString.txtAddedToCart);
+        return DeleteFromCartModel.fromJson(jsonDecode(response.body));
+      }
+    }catch(e){
+      print(e.toString());
+      return DeleteFromCartModel();
     }
   }
 }
