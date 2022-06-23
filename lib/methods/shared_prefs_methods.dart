@@ -9,6 +9,18 @@ class PreferenceHelper {
     prefs = await SharedPreferences.getInstance();
   }
 
+  static getUserAccessToken() {
+    return prefs.getString(AppString.userToken);
+  }
+
+  static getUserAccessId() {
+    return prefs.getString(AppString.userId);
+  }
+
+  static keepUserLoggedIn() {
+    return prefs.getBool(AppString.txtIsLoggedIn);
+  }
+
   static setAccessToken(accessToken) {
     prefs.setString(AppString.userToken, accessToken);
   }
