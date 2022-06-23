@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:pharmly/resources/app_color.dart';
+import 'package:pharmly/screens/disease_screen.dart';
+import 'package:pharmly/screens/products_screen.dart';
+
+import '../models/view_category.dart' as ViewCategory;
 
 class Category extends StatefulWidget {
-  final String imageUrl;
-  final String categoryTitle;
-  const Category({Key? key,required this.imageUrl,required this.categoryTitle}) : super(key: key);
+  // final String imageUrl;
+  // final String categoryTitle;
+  final ViewCategory.Datum snap;
+  const Category({Key? key,required this.snap}) : super(key: key);
 
   @override
   _CategoryState createState() => _CategoryState();
@@ -13,24 +18,34 @@ class Category extends StatefulWidget {
 class _CategoryState extends State<Category> {
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        // crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Expanded(
-            child: Container(
-              padding: EdgeInsets.all(10),
-              margin: EdgeInsets.only(bottom: 5),
-              decoration: BoxDecoration(
-                border: Border.all(color: AppColor.colorGrey.withAlpha(50)),
-                borderRadius: BorderRadius.all(Radius.circular(5))
+    return GestureDetector(
+      onTap: (){
+        if(widget.snap.categoryName =="Diseases"){
+          Navigator.push(context, MaterialPageRoute(builder: (context)=>const DiseaseScreen()));
+        }
+        else{
+          Navigator.push(context, MaterialPageRoute(builder: (context)=>ProductsScreen(categorySnap: widget.snap,)));
+        }
+      },
+      child: Center(
+        child: Column(
+          // crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Expanded(
+              child: Container(
+                padding: EdgeInsets.all(10),
+                margin: EdgeInsets.only(bottom: 5),
+                decoration: BoxDecoration(
+                  border: Border.all(color: AppColor.colorGrey.withAlpha(50)),
+                  borderRadius: BorderRadius.all(Radius.circular(5))
+                ),
+                child: Image.network(widget.snap.categoryImage!,fit: BoxFit.cover,),
               ),
-              child: Image.network(widget.imageUrl,fit: BoxFit.cover,),
             ),
-          ),
-          Text(widget.categoryTitle,style: TextStyle(fontSize: 10,color: AppColor.colorBlack),textAlign: TextAlign.center,)
-        ],
+            Text(widget.snap.categoryName!,style: TextStyle(fontSize: 10,color: AppColor.colorBlack),textAlign: TextAlign.center,)
+          ],
+        ),
       ),
     );
     // return Column(

@@ -1,9 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:pharmly/networking/preference_helper.dart';
 import 'package:pharmly/resources/app_color.dart';
 import 'package:pharmly/resources/app_string.dart';
 import 'package:pharmly/screens/login_screen.dart';
+import 'package:pharmly/widgets/bottom_nav_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -16,6 +18,8 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   static late SharedPreferences _pref;
 
+  Shader colorPharmly = LinearGradient(colors: [AppColor.colorBlue,AppColor.colorGreen]).createShader(Rect.fromLTWH(0, 0, 400, 200));
+
   @override
   void initState() {
     SharedPreferences.getInstance().then((sharedPref) async {
@@ -25,11 +29,11 @@ class _SplashScreenState extends State<SplashScreen> {
     checkUserStatus();
   }
 
-  void checkUserStatus() async {
-    Timer(
-        const Duration(seconds: 10),
-        () => Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) => const LoginScreen())));
+  void checkUserStatus()async{
+    var userStatus=PreferenceHelper.keepUserLoggedIn();
+    (userStatus!=null && userStatus==true)
+        ?Timer(Duration(seconds: 3), ()=>Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>BottomNavBar())))
+    :Timer(Duration(seconds: 10), ()=>Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LoginScreen())));
   }
 
   @override
@@ -51,25 +55,14 @@ class _SplashScreenState extends State<SplashScreen> {
                       fit: BoxFit.cover,
                     )),
                 Container(
-                  child: Text(
-                    AppString.txtPharmly,
-                    style: TextStyle(
-                        fontSize: 36,
-                        fontFamily: 'Mali',
-                        color: AppColor.colorWhite),
-                  ),
+                  child: Text(AppString.txtPharmly,style: TextStyle(fontSize: 36,fontFamily: 'Mali',foreground: Paint()..shader=colorPharmly),),
                 )
               ],
             ),
           ),
           decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [
-                AppColor.colorLightBlue.withAlpha(100),
-                AppColor.colorLightGreen.withAlpha(100)
-              ])),
+            color: AppColor.colorBlack12.withAlpha(20)
+          ),
         ),
       ),
     );

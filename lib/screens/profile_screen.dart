@@ -6,8 +6,11 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pharmly/methods/check_internet_connectivity.dart.dart';
 import 'package:pharmly/models/get_user_model.dart';
 import 'package:pharmly/networking/api_service.dart';
+import 'package:pharmly/networking/preference_helper.dart';
 import 'package:pharmly/resources/app_color.dart';
 import 'package:pharmly/resources/app_string.dart';
+import 'package:pharmly/screens/login_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -26,8 +29,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   TextEditingController contactController = TextEditingController();
   String? emailText;
   late StreamSubscription subscription;
-  // late var userDetails;
-  // var dataModel;
   var userData;
   var updateUserData;
 
@@ -43,13 +44,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
     super.dispose();
   }
 
-  getData() async {
-    UserProfile? userData = await ApiService().getUserDetails();
-    // firstNameController.text=userData.da.firstName ?? "Neh";
-    lastNameController.text = userData?.data?.lastName ?? "Majmudar";
-    contactController.text = userData?.data?.contactNo ?? "9900990099";
-    firstNameController.text = userData?.data?.firstName ?? "NEh";
-    emailText = userData?.data?.email ?? "NEh";
+  getData() async{
+    UserProfile? userData=await ApiService().getUserDetails();
+    lastNameController.text=userData?.data?.lastName ?? "Majmudar";
+    contactController.text=userData?.data?.contactNo ?? "9900990099";
+    firstNameController.text=userData?.data?.firstName ?? "NEh";
+    emailText=userData?.data?.email ?? "NEh";
     setState(() {});
   }
 
@@ -59,6 +59,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
         firstName: newFirstName,
         lastName: newLastName,
         contactNo: newContactNo);
+  }
+
+  void userLoggedIn()async{
+    PreferenceHelper.prefs.setBool(AppString.txtIsLoggedIn, false);
   }
 
   @override
@@ -75,28 +79,34 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: Text(AppString.txtProfile,
-            style: const TextStyle(fontFamily: 'Mali')),
+        title: Text(AppString.txtProfile),
         centerTitle: true,
         backgroundColor: AppColor.colorTheme,
         elevation: 1,
         actions: [
           TextButton(
-              onPressed: () {
-                //sign out method
-              },
-              child: Container(
-                width: MediaQuery.of(context).size.width / 4.9,
-                height: MediaQuery.of(context).size.height / 28.13,
-                alignment: Alignment.center,
-                child: Text(
-                  AppString.txtSignOut,
-                  style: TextStyle(color: AppColor.colorWhite, fontSize: 10),
-                ),
-                decoration: BoxDecoration(
-                    color: AppColor.colorRedAccent,
-                    borderRadius: const BorderRadius.all(Radius.circular(20))),
-              ))
+            onPressed: (){
+              ApiService().logOutUser(email: emailText).then((res) async{
+                if(res?.code==200){
+                  userLoggedIn();
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LoginScreen()));
+                }
+                else{
+                  print(res?.code);
+                }
+              });
+            },
+            child: Container(
+              width: MediaQuery.of(context).size.width/4.9,
+              height: MediaQuery.of(context).size.height/28.13,
+              alignment: Alignment.center,
+              child: Text(AppString.txtSignOut,style: TextStyle(color: AppColor.colorWhite,fontSize: 10),),
+              decoration: BoxDecoration(
+                color: AppColor.colorRedAccent,
+                borderRadius: BorderRadius.all(Radius.circular(20))
+              ),
+            )
+          )
         ],
       ),
       body: SingleChildScrollView(

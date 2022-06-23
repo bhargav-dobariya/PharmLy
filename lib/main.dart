@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pharmly/screens/add_address.dart';
+import 'package:pharmly/networking/preference_helper.dart';
 import 'package:pharmly/screens/disease_screen.dart';
 import 'package:pharmly/screens/forgot_password.dart';
 import 'package:pharmly/screens/forgot_password_verification.dart';
@@ -7,13 +8,17 @@ import 'package:pharmly/screens/login_screen.dart';
 import 'package:pharmly/screens/new_password_screen.dart';
 import 'package:pharmly/screens/otp_verification_screen.dart';
 
+import 'package:pharmly/screens/products_screen.dart';
+
 import 'package:pharmly/screens/home_screen.dart';
 import 'package:pharmly/screens/profile_screen.dart';
 import 'package:pharmly/screens/signUp_screen.dart';
 import 'package:pharmly/widgets/bottom_nav_bar.dart';
+import 'package:pharmly/widgets/product.dart';
 
 void main() {
-  runApp(const MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  PreferenceHelper.initPreference().then((value) => runApp(const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -38,6 +43,9 @@ class MyApp extends StatelessWidget {
         '/forgot_password_verification': (context) =>
             const ForgotPasswordVeficationScreen(),
         '/add_new_address': (context) => const AddAddressScreen(),
+        '/bottom_navbar': (context) => BottomNavBar(),
+        '/home_screen': (context) => const HomeScreen(),
+        '/profile_screen': (context) => const ProfileScreen(),
       },
     );
   }

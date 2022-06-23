@@ -1,6 +1,6 @@
 // To parse this JSON data, do
 //
-//     final diseaseModel = diseaseModelFromJson(jsonString);
+//     final DiseaseModel = DiseaseModelFromJson(jsonString);
 
 import 'dart:convert';
 

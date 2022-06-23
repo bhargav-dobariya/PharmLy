@@ -163,6 +163,9 @@ class LoginScreenState extends State<LoginScreen> {
                         if (res.code == 200) {
                           PreferenceHelper.setAccessToken(res.data!.token);
                           PreferenceHelper.setUserId(res.data!.userId);
+
+                          PreferenceHelper.prefs
+                              .setBool(AppString.txtIsLoggedIn, true);
                           setState(() {
                             _isLoading = false;
                           });

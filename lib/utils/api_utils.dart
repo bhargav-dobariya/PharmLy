@@ -8,8 +8,13 @@ class ApiUtils {
   static const String forgotPassword = "forgotpassword/";
   static const String addAddress = "addresses/";
 
-  static const String logout = "logout/";
-  static const String category = "category/?search=";
+  static const String allDisease = "all-disease/";
+  static const String allProduct = "all-product/";
+  static const String addresses = "addresses";
+  static const String cart = "cart/";
+
+  static const String logout = "logout";
+  static const String category = "category";
 
   static const firstName = "firstName";
   static const lastName = "lastName";
@@ -22,4 +27,6 @@ class ApiUtils {
   static const city = "city";
   static const pinCode = "pincode";
   static const authorization = "Authorization";
+
+  static const productId = "id";
 }

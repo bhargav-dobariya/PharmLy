@@ -96,9 +96,12 @@ class AppString {
   static String txtnoInternetToast =
       "You're not connected with internet,please check your network connections";
   static String userToken = "User_Token";
-  static String userId = "userId";
   static String accessToken = "access token";
 
+  static String userId = "User_Id";
+  static String txtAddedToCart = "Added to cart";
+  static String txtCategoryId = "Category_Id";
+  static String txtIsLoggedIn = "isLoggedIn";
   static String typeYourMessage = 'Type your message...';
   static String txtUnFollowAlert = "You have unfollowed ";
   static String txtFollowAlert = "You are now following ";
@@ -139,4 +142,19 @@ class AppString {
   static String txtCart = "Cart";
   static String txtAddressFieldShouldNotbeEmapty =
       "Address Field Should not Be Empty";
+
+  static String txtCategoryName = "Category name";
+  static String txtAddToCart = "Add to cart";
+  static String txtUpdatedDetails = "Updated details";
+  static String txtSignedOut = "You have signed out.";
+  static String txtMyAddresses = "My addresses";
+  static String txtAddANewAddress = "Add a new address";
+  static String txtAlreadyAddedToCart =
+      "Already added to cart. If you want to remove it, please do so in the 'Cart' section.";
+  static String txtProceedToCheckout = "Proceed to checkout";
+  static String txtDeleteConfirmationBody =
+      "Are you sure want to delete this item from your cart?";
+  static String txtDeleteConfirmation = "Delete confirmation";
+  static String txtDelete = "Delete";
+  static String txtItemDeleted = "Item deleted";
 }
