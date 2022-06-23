@@ -12,7 +12,7 @@ import 'package:pharmly/models/login_model.dart';
 import 'package:pharmly/models/logout_user_model.dart';
 import 'package:pharmly/models/product_model.dart';
 import 'package:pharmly/models/signup_model.dart';
-import 'package:pharmly/networking/const_method.dart';
+import 'package:pharmly/networking/preference_helper.dart';
 import 'package:pharmly/resources/app_string.dart';
 import 'package:pharmly/utils/api_utils.dart';
 import 'package:pharmly/models/get_user_model.dart';
@@ -22,8 +22,8 @@ import 'package:pharmly/models/view_category.dart';
 
 
 class ApiService {
-  var userToken = ConstantMethod.getUserAccessToken();
-  var userId=ConstantMethod.getUserAccessId();
+  var userToken = PreferenceHelper.getUserAccessToken();
+  var userId=PreferenceHelper.getUserAccessId();
   //user registration url
   static const String _userRegistrationurl = ApiUtils.baseUrl + ApiUtils.users;
   static const String _userLoginUrl = ApiUtils.baseUrl + ApiUtils.login;
@@ -220,10 +220,9 @@ class ApiService {
       Map<String,dynamic> body={
         ApiUtils.productId: productId,
       };
-      http.Response response=await http.put(Uri.parse(cartUrl + productId!),headers:header,body: body);
+      http.Response response=await http.post(Uri.parse(cartUrl + productId!),headers:header,body: body);
       print("Add to cart: ${response.statusCode}");
       if(response.statusCode==200){
-        Fluttertoast.showToast(msg: AppString.txtAddedToCart);
         return AddProductToCartModel.fromJson(jsonDecode(response.body));
       }
     }catch(e){
@@ -259,10 +258,9 @@ class ApiService {
       Map<String,dynamic> body={
         ApiUtils.productId: productId,
       };
-      http.Response response=await http.put(Uri.parse(cartUrl + productId!),headers:header,body: body);
+      http.Response response=await http.delete(Uri.parse(cartUrl + productId!),headers:header,body: body);
       print("Delete from cart: ${response.statusCode}");
       if(response.statusCode==200){
-        Fluttertoast.showToast(msg: AppString.txtAddedToCart);
         return DeleteFromCartModel.fromJson(jsonDecode(response.body));
       }
     }catch(e){

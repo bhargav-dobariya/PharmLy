@@ -2,7 +2,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pharmly/networking/api_service.dart';
-import 'package:pharmly/networking/const_method.dart';
+import 'package:pharmly/networking/preference_helper.dart';
 import 'package:pharmly/resources/app_color.dart';
 import 'package:pharmly/resources/app_string.dart';
 import 'package:pharmly/shared/validator.dart';
@@ -28,7 +28,7 @@ class LoginScreenState extends State<LoginScreen> {
   bool isLoading=false;
   @override
   void initState() {
-    // ConstantMethod.initPreference();
+    // PreferenceHelper.initPreference();
     super.initState();
   }
 
@@ -176,9 +176,9 @@ class LoginScreenState extends State<LoginScreen> {
                       setState(() {
                         isLoading=false;
                       });
-                      ConstantMethod.prefs.setString(AppString.userToken,res.data!.token!);
-                      ConstantMethod.prefs.setString(AppString.userId,res.data!.userId!);
-                      ConstantMethod.prefs.setBool(AppString.txtIsLoggedIn, true);
+                      PreferenceHelper.prefs.setString(AppString.userToken,res.data!.token!);
+                      PreferenceHelper.prefs.setString(AppString.userId,res.data!.userId!);
+                      PreferenceHelper.prefs.setBool(AppString.txtIsLoggedIn, true);
                       Navigator.pushReplacementNamed(context, '/bottom_navbar');
                     } else {
                       _emailController.clear();

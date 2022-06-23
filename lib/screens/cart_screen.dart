@@ -33,6 +33,7 @@ class _CartScreenState extends State<CartScreen> {
           centerTitle: true,
         ),
         body: Stack(
+          alignment: Alignment.center,
           children: [
             SizedBox(
               width: MediaQuery.of(context).size.width,
@@ -59,16 +60,17 @@ class _CartScreenState extends State<CartScreen> {
               ),
             ),
             Positioned(
-              bottom: 0,
+              bottom: 10,
               child: GestureDetector(
                 onTap: (){},
                 child: Container(
                   height: MediaQuery.of(context).size.height/14.5,
-                  width: MediaQuery.of(context).size.width,
+                  width: MediaQuery.of(context).size.width/1.75,
                   alignment: Alignment.center,
                   child: Text(AppString.txtProceedToCheckout,style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold,color: AppColor.colorWhite),),
                   decoration: BoxDecoration(
-                    color: AppColor.colorRedAccent
+                    color: AppColor.colorRedAccent,
+                    borderRadius: BorderRadius.all(Radius.circular(20))
                   ),
                 ),
               )

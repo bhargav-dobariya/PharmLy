@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:pharmly/models/delete_from_cart_model.dart';
 import 'package:pharmly/models/get_cart_model.dart' as GetCartModel;
+import 'package:pharmly/networking/api_service.dart';
 import 'package:pharmly/resources/app_color.dart';
+import 'package:pharmly/resources/app_string.dart';
 
 class ProductInCart extends StatefulWidget {
   final GetCartModel.ProductDatum snap;
@@ -11,6 +15,12 @@ class ProductInCart extends StatefulWidget {
 }
 
 class _ProductInCartState extends State<ProductInCart> {
+  late DeleteFromCartModel? deleteCartItem;
+
+  Future deleteItems()async{
+    deleteCartItem=await ApiService().deleteItem(productId: widget.snap.product!.id);
+  }
+
   @override
   Widget build(BuildContext context) {
     var deviceHeight=MediaQuery.of(context).size.height;
@@ -40,7 +50,44 @@ class _ProductInCartState extends State<ProductInCart> {
               ),
             ),
           ),
-          IconButton(icon: Icon(Icons.delete_sharp),color: AppColor.colorGrey, onPressed: () {  },)
+          IconButton(
+            icon: Icon(Icons.delete_sharp),
+            color: AppColor.colorGrey,
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context){
+                  return AlertDialog(
+                    title: Text(AppString.txtDeleteConfirmation),
+                    content: SingleChildScrollView(
+                      child: ListBody(
+                        children: [
+                          Text(AppString.txtDeleteConfirmationBody)
+                        ],
+                      ),
+                    ),
+                    actions: [
+                      TextButton(
+                        onPressed: (){
+                          deleteItems().then((value){
+                            if(deleteCartItem?.code!=200){
+                              Fluttertoast.showToast(msg: AppString.txtSomeErrorOccurred);
+                            }
+                            else{
+                              Navigator.pop(context);
+                              setState(() {});
+                              Fluttertoast.showToast(msg: AppString.txtItemDeleted);
+                            }
+                          });
+                        },
+                        child: Text(AppString.txtDelete,style: TextStyle(color: AppColor.colorRed),)
+                      )
+                    ],
+                  );
+                }
+              );
+            },
+          )
         ],
       ),
     );

@@ -132,5 +132,9 @@ class AppString {
   static String txtMyAddresses = "My addresses";
   static String txtAddANewAddress = "Add a new address";
   static String txtAlreadyAddedToCart = "Already added to cart. If you want to remove it, please do so in the 'Cart' section.";
-  static String  txtProceedToCheckout= "Proceed to checkout";
+  static String txtProceedToCheckout= "Proceed to checkout";
+  static String txtDeleteConfirmationBody= "Are you sure want to delete this item from your cart?";
+  static String txtDeleteConfirmation= "Delete confirmation";
+  static String txtDelete= "Delete";
+  static String txtItemDeleted= "Item deleted";
 }

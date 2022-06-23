@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:pharmly/networking/const_method.dart';
+import 'package:pharmly/networking/preference_helper.dart';
 import 'package:pharmly/resources/app_color.dart';
 import 'package:pharmly/resources/app_string.dart';
 import 'package:pharmly/screens/home_screen.dart';
@@ -18,6 +18,8 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
 
+  Shader colorPharmly = LinearGradient(colors: [AppColor.colorBlue,AppColor.colorGreen]).createShader(Rect.fromLTWH(0, 0, 400, 200));
+
   @override
   void initState() {
     super.initState();
@@ -25,7 +27,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void checkUserStatus()async{
-    var userStatus=ConstantMethod.keepUserLoggedIn();
+    var userStatus=PreferenceHelper.keepUserLoggedIn();
     (userStatus!=null && userStatus==true)
         ?Timer(Duration(seconds: 3), ()=>Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>BottomNavBar())))
     :Timer(Duration(seconds: 10), ()=>Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LoginScreen())));
@@ -48,17 +50,13 @@ class _SplashScreenState extends State<SplashScreen> {
                   child: Image.asset('assets/images/pharmly_logo.png',fit: BoxFit.cover,)
                 ),
                 Container(
-                  child: Text(AppString.txtPharmly,style: TextStyle(fontSize: 36,fontFamily: 'Mali',color: AppColor.colorWhite),),
+                  child: Text(AppString.txtPharmly,style: TextStyle(fontSize: 36,fontFamily: 'Mali',foreground: Paint()..shader=colorPharmly),),
                 )
               ],
             ),
           ),
           decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [AppColor.colorLightBlue,AppColor.colorLightGreen]
-            )
+            color: AppColor.colorBlack12.withAlpha(20)
           ),
         ),
       ),

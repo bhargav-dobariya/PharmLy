@@ -6,7 +6,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pharmly/methods/checkInternetConnectivity.dart';
 import 'package:pharmly/models/get_user_model.dart';
 import 'package:pharmly/networking/api_service.dart';
-import 'package:pharmly/networking/const_method.dart';
+import 'package:pharmly/networking/preference_helper.dart';
 import 'package:pharmly/resources/app_color.dart';
 import 'package:pharmly/resources/app_string.dart';
 import 'package:pharmly/screens/login_screen.dart';
@@ -58,7 +58,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   void userLoggedIn()async{
-    ConstantMethod.prefs.setBool(AppString.txtIsLoggedIn, false);
+    PreferenceHelper.prefs.setBool(AppString.txtIsLoggedIn, false);
   }
 
   @override
@@ -73,7 +73,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: Text(AppString.txtProfile,style: TextStyle(fontFamily: 'Mali')),
+        title: Text(AppString.txtProfile),
         centerTitle: true,
         backgroundColor: AppColor.colorTheme,
         elevation: 1,

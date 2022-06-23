@@ -4,7 +4,7 @@ import 'package:otp_text_field/style.dart';
 import 'package:pharmly/resources/app_color.dart';
 import 'package:pharmly/resources/app_string.dart';
 
-import '../networking/const_method.dart';
+import '../networking/preference_helper.dart';
 
 class OtpVerificationScreen extends StatefulWidget {
   const OtpVerificationScreen({Key? key}) : super(key: key);
@@ -23,7 +23,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    token = ConstantMethod.getUserAccessToken();
+    token = PreferenceHelper.getUserAccessToken();
   }
 
   @override

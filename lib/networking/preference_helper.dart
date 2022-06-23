@@ -2,7 +2,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../resources/app_string.dart';
 
-class ConstantMethod {
+class PreferenceHelper {
   static late SharedPreferences prefs;
   static getUserAccessToken() {
     return prefs.getString(AppString.userToken);

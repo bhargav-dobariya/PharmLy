@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:pharmly/methods/checkInternetConnectivity.dart';
 import 'package:pharmly/models/view_category.dart';
 import 'package:pharmly/networking/api_service.dart';
-import 'package:pharmly/networking/const_method.dart';
+import 'package:pharmly/networking/preference_helper.dart';
 import 'package:pharmly/resources/app_color.dart';
 import 'package:pharmly/resources/app_string.dart';
 

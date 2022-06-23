@@ -23,11 +23,11 @@ class Product extends StatefulWidget {
 }
 
 class _ProductState extends State<Product> {
-  late AddProductToCartModel addToCart;
+  late AddProductToCartModel? addToCart;
   bool addedToCart=false;
 
   Future addProductToCart()async{
-    addToCart=(await ApiService().postProductToCart(productId: widget.snap.id))!;
+    addToCart=await ApiService().postProductToCart(productId: widget.snap.id);
   }
 
 
@@ -81,13 +81,19 @@ class _ProductState extends State<Product> {
               ),
               onTap: (){
                 addProductToCart().then((value) {
-                  if(addToCart.code==401){
-                    Fluttertoast.showToast(msg: AppString.txtAlreadyAddedToCart);
+                  if(addToCart?.code!=200){
+                    if(addedToCart){
+                      Fluttertoast.showToast(msg: AppString.txtAlreadyAddedToCart);
+                    }
+                    else{
+                      Fluttertoast.showToast(msg: AppString.txtSomeErrorOccurred);
+                    }
                   }
                   else{
                     print("Pressed?");
                     setState(() {
-                      addedToCart=true;
+                      Fluttertoast.showToast(msg: AppString.txtAddedToCart);
+                      addedToCart=!addedToCart;
                     });
                   }
                 });
