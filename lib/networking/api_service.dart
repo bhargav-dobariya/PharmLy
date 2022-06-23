@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:pharmly/models/add_new_address_model.dart';
 
 import 'package:pharmly/models/all_desease_model.dart';
+import 'package:pharmly/models/forgot_password_model.dart';
 import 'package:pharmly/models/login_model.dart';
 import 'package:pharmly/models/otp_resend_model.dart';
 import 'package:pharmly/models/otp_verification_model.dart';
@@ -13,13 +15,17 @@ import 'package:pharmly/models/update_user_profile.dart';
 import 'package:pharmly/models/view_category.dart';
 
 class ApiService {
-  var userToken = ConstantMethod.getAccessToken();
+  var userToken = 'Bearer ' + ConstantMethod.getAccessToken();
   //user registration url
   static const String _userRegistrationurl = ApiUtils.baseUrl + ApiUtils.users;
   static const String _userLoginUrl = ApiUtils.baseUrl + ApiUtils.login;
   static const String _allDisease = ApiUtils.baseUrl + ApiUtils.all_disease;
   static const String _verifyUserUrl = ApiUtils.baseUrl + ApiUtils.verify;
   static const String _resendOtpUrl = ApiUtils.baseUrl + ApiUtils.resend;
+  static const String _addAddressUrl = ApiUtils.baseUrl + ApiUtils.addAddress;
+
+  static const String _forgotPassword =
+      ApiUtils.baseUrl + ApiUtils.forgotPassword;
 
   static const String getUserUrl = ApiUtils.baseUrl +
       ApiUtils.users +
@@ -66,7 +72,7 @@ class ApiService {
   Future<DiseaseModel> getAllDisease() async {
     Map<String, String> header = {ApiUtils.authorization: userToken};
     http.Response response = await http.get(
-      Uri.parse(_allDisease + 'a19b6c7e-5006-41d4-9d9f-8ac82a4a6175'),
+      Uri.parse(_allDisease),
       headers: header,
     );
     Map<String, dynamic> mapResponse = json.decode(response.body);
@@ -96,6 +102,44 @@ class ApiService {
         await http.post(Uri.parse(_resendOtpUrl), body: body);
     Map<String, dynamic> mapResponse = json.decode(response.body);
     return OtpResendModel.fromJson(mapResponse);
+  }
+
+  //forgotpassword
+  Future<ForgotPasswordModel> addPassword(
+      String? email, String? password) async {
+    Map<String, dynamic> body = {
+      ApiUtils.email: email,
+      ApiUtils.password: password
+    };
+
+    http.Response response =
+        await http.post(Uri.parse(_forgotPassword), body: body);
+    Map<String, dynamic> mapResponse = json.decode(response.body);
+    return ForgotPasswordModel.fromJson(mapResponse);
+  }
+//add New Adress Api
+
+  Future<AddNewAdressModel> addNewAddress({
+    String? addresss,
+    String? area,
+    String? city,
+    String? pincode,
+  }) async {
+    Map<String, dynamic> body = {
+      ApiUtils.address: addresss,
+      ApiUtils.area: area,
+      ApiUtils.pinCode: city,
+      ApiUtils.city: pincode,
+    };
+    Map<String, String> header = {ApiUtils.authorization: userToken};
+
+    http.Response response = await http.post(
+      Uri.parse(_addAddressUrl),
+      body: body,
+      headers: header,
+    );
+    Map<String, dynamic> mapResponse = json.decode(response.body);
+    return AddNewAdressModel.fromJson(mapResponse);
   }
 
 //get userDetails api

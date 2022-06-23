@@ -1,11 +1,15 @@
 import 'dart:async';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:pharmly/methods/shared_prefs_methods.dart';
 import 'package:pharmly/resources/app_color.dart';
 import 'package:pharmly/resources/app_string.dart';
+import 'package:pharmly/utils/validator.dart';
 import 'package:pharmly/utils/network_connection.dart';
+
+import '../networking/api_service.dart';
 
 class ForgotPassword extends StatefulWidget {
   const ForgotPassword({Key? key}) : super(key: key);
@@ -15,11 +19,11 @@ class ForgotPassword extends StatefulWidget {
 }
 
 class _ForgotPasswordState extends State<ForgotPassword> {
-  final TextEditingController _emailValidator = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
 
   late StreamSubscription subscription;
   TextEditingController emailController = TextEditingController();
-
+  bool _isLoading = false;
   late double _deviceHeight;
   late double _deviceWidth;
 
@@ -42,13 +46,17 @@ class _ForgotPasswordState extends State<ForgotPassword> {
     _deviceWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       body: SingleChildScrollView(
-        child: Container(
-          width: double.infinity,
-          margin: const EdgeInsets.only(
-              // bottom: _deviceHeight * ,
-
-              ),
-          child: Column(
+          child: Stack(
+        children: [
+          Center(
+            child: Visibility(
+              visible: _isLoading,
+              child: Container(
+                  margin: EdgeInsets.only(top: _deviceHeight / 2),
+                  child: const CircularProgressIndicator()),
+            ),
+          ),
+          Column(
             children: [
               Material(
                 elevation: 2,
@@ -75,13 +83,10 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                       right: _deviceWidth * 0.1,
                       top: _deviceHeight * 0.08),
                   child: TextFormField(
-                      controller: _emailValidator,
+                      controller: _emailController,
                       decoration:
                           InputDecoration(labelText: AppString.txtEmailAddress),
-                      validator: (email) =>
-                          email != null && !EmailValidator.validate(email)
-                              ? 'Enter A Valid Email'
-                              : null)),
+                      validator: Validator.email)),
               GestureDetector(
                 child: Container(
                   margin: EdgeInsets.only(top: _deviceHeight * 0.1),
@@ -110,13 +115,35 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                 onTap: () async {
                   final result = await Connectivity().checkConnectivity();
                   showConnectivityToast(result);
-                  Navigator.pushNamed(context, '/otp_verification');
+                  setState(() {
+                    _isLoading = true;
+                  });
+                  ApiService().otpResend(_emailController.text).then(
+                    (value) {
+                      if (value.code == 200) {
+                        print('______1!!!!!!!!!');
+
+                        ConstantMethod.setEmail(_emailController.text);
+                        print('______2!!!!!!!!!');
+
+                        setState(() {
+                          _isLoading = false;
+                        });
+                        Navigator.pushReplacementNamed(
+                            context, "/forgot_password_verification");
+                      } else {
+                        Fluttertoast.showToast(
+                            msg:
+                                "Something Went Wrong Please try afterSometime");
+                      }
+                    },
+                  );
                 },
               ),
             ],
           ),
-        ),
-      ),
+        ],
+      )),
     );
   }
 }

@@ -10,19 +10,21 @@ import 'package:pharmly/resources/app_string.dart';
 import '../methods/check_internet_connectivity.dart.dart';
 import '../methods/shared_prefs_methods.dart';
 
-class OtpVerificationScreen extends StatefulWidget {
-  const OtpVerificationScreen({Key? key}) : super(key: key);
+class ForgotPasswordVeficationScreen extends StatefulWidget {
+  const ForgotPasswordVeficationScreen({Key? key}) : super(key: key);
 
   @override
-  State<OtpVerificationScreen> createState() => _OtpVerificationScreenState();
+  State<ForgotPasswordVeficationScreen> createState() =>
+      ForgotPasswordVeficationScreenState();
 }
 
-class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
+class ForgotPasswordVeficationScreenState
+    extends State<ForgotPasswordVeficationScreen> {
   late String _pin;
   late double _deviceHeight;
   late double _deviceWidth;
   final OtpFieldController otpController = OtpFieldController();
-  late String token;
+  final bool _isLoading = false;
 
   @override
   void initState() {
@@ -39,12 +41,20 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
       body: SingleChildScrollView(
         child: Stack(
           children: [
-            _logoUi(),
+            Center(
+              child: Visibility(
+                visible: _isLoading,
+                child: Container(
+                    margin: EdgeInsets.only(top: _deviceHeight / 2),
+                    child: const CircularProgressIndicator()),
+              ),
+            ),
+            _bgUi(),
             Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Container(
-                  margin: EdgeInsets.only(top: _deviceHeight * 0.2),
+                  margin: EdgeInsets.only(top: _deviceHeight * 0.1),
                   child: Image.asset(
                     "assets/images/Logo3.png",
                     height: _deviceHeight * 0.2,
@@ -87,10 +97,8 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                         .verifyEmail(ConstantMethod.getEmail(), _pin)
                         .then((value) async {
                       if (value.code == 200) {
-                        ConstantMethod.setAccessToken(value.data!.token);
-                        ConstantMethod.setUserId(value.data!.userId);
                         Navigator.pushReplacementNamed(
-                            context, "/add_new_address");
+                            context, "/new_password_screen");
                       } else {
                         Fluttertoast.showToast(
                             msg:
@@ -123,48 +131,6 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                     ),
                   ),
                 ),
-                GestureDetector(
-                  onTap: () async {
-                    final result = await Connectivity().checkConnectivity();
-                    showConnectivityToast(result);
-                    otpController.clear();
-                    ApiService()
-                        .otpResend(ConstantMethod.getEmail())
-                        .then((value) {
-                      if (value.code == 200) {
-                        Fluttertoast.showToast(msg: "OTP sent Successfully");
-                      } else {
-                        Fluttertoast.showToast(
-                            msg:
-                                "Something Went Wrong Please try afterSometime");
-                      }
-                    });
-                  },
-                  child: Container(
-                    margin: EdgeInsets.only(
-                        left: _deviceWidth * 0.39, top: _deviceHeight * 0.08),
-                    width: _deviceWidth * 0.4,
-                    height: _deviceHeight * 0.06,
-                    decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [
-                            AppColor.lightBlueColor2,
-                            AppColor.lightBlueColor,
-                          ],
-                        ),
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(50))),
-                    alignment: Alignment.center,
-                    child: Text(
-                      AppString.txtResendOtp,
-                      style: TextStyle(
-                        fontSize: 19,
-                        color: AppColor.whitecolor,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ),
-                )
               ],
             ),
           ],
@@ -173,7 +139,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
     );
   }
 
-  SizedBox _logoUi() {
+  SizedBox _bgUi() {
     return SizedBox(
       height: _deviceHeight,
       width: _deviceWidth,

@@ -13,6 +13,8 @@ class AppString {
   static String txtPassword = "Password";
   static String txtForgotPassword = "Forgot Password?";
   static String txtSignIn = "SIGN IN";
+  static String txtSubmit = "Submit";
+
   static String txtDontHaveAnAccount = "Don't have an account?";
   static String txtSignUp = "Sign Up";
   static String txtUsername = "Email Id";
@@ -109,6 +111,8 @@ class AppString {
   static String txtDontHaveAnAccountSignup = "Don't have an account? Sign up";
   static String txtAlreadyhaveAnAccount = "Already Have An Account? Sign in";
   static String txtEnterYourOtpHere = "Enter Your OTP Here";
+  static String txtEnterYourNewPasswordHere = "Set Your New Password Here";
+
   static String txtPleaseEnterCorrectEmailAndPassword =
       "Please enter correct email and password details";
 
@@ -125,5 +129,13 @@ class AppString {
       "Check your internet connection";
   static String txtInternetIsRequired =
       "Internet connection is required for this activity";
+  static String txtAddDeliveryAddress = "Add delivery address";
+  static String txtPinCode = "PinCode";
+  static String txtArea = "Area,Road name, colony(Required)";
+  static String txtAddress =
+      "Add Address, like House No. Building name etc(required)";
+  static String txtCity = "City";
   static String txtCart = "Cart";
+  static String txtAddressFieldShouldNotbeEmapty =
+      "Address Field Should not Be Empty";
 }

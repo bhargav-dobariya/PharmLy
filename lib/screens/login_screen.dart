@@ -4,10 +4,11 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pharmly/networking/api_service.dart';
 import 'package:pharmly/resources/app_color.dart';
 import 'package:pharmly/resources/app_string.dart';
-import 'package:pharmly/shared/validator.dart';
+import 'package:pharmly/utils/validator.dart';
 import 'package:pharmly/utils/network_connection.dart';
 
 import '../methods/shared_prefs_methods.dart';
+import '../utils/validator.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -64,6 +65,7 @@ class LoginScreenState extends State<LoginScreen> {
       key: _formKey,
       child: Stack(
         children: [
+          //progressindicator
           Center(
             child: Visibility(
               visible: _isLoading,

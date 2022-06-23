@@ -4,7 +4,7 @@ import 'package:pharmly/methods/shared_prefs_methods.dart';
 import 'package:pharmly/networking/api_service.dart';
 import 'package:pharmly/resources/app_color.dart';
 import 'package:pharmly/resources/app_string.dart';
-import 'package:pharmly/shared/validator.dart';
+import 'package:pharmly/utils/validator.dart';
 import 'package:pharmly/utils/network_connection.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
