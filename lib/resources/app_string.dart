@@ -13,6 +13,7 @@ class AppString {
   static String txtPassword = "Password";
   static String txtForgotPassword = "Forgot Password?";
   static String txtSignIn = "SIGN IN";
+  static String txtConfirm = "Confirm";
   static String txtSubmit = "Submit";
 
   static String txtDontHaveAnAccount = "Don't have an account?";
@@ -157,4 +158,8 @@ class AppString {
   static String txtDeleteConfirmation = "Delete confirmation";
   static String txtDelete = "Delete";
   static String txtItemDeleted = "Item deleted";
+  static String txtSelectAddress = "Select address";
+  static String txtOrderConfirmation = "Order confirmation";
+  static String txtOrderConfirmationBody = "Are you sure about placing the order?";
+  static String txtOrderPlacedSuccessfully = "Your order is placed successfully";
 }

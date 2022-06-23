@@ -3,6 +3,7 @@ import 'package:pharmly/models/get_cart_model.dart';
 import 'package:pharmly/networking/api_service.dart';
 import 'package:pharmly/resources/app_color.dart';
 import 'package:pharmly/resources/app_string.dart';
+import 'package:pharmly/screens/address_selection_screen.dart';
 import 'package:pharmly/widgets/product_of_cart.dart';
 
 class CartScreen extends StatefulWidget {
@@ -13,6 +14,8 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
+  String cartId="";
+  String orderBill="";
   late Future<GetCartModel?> getCartData;
   getCartDetails(){
     getCartData=ApiService().getCart();
@@ -41,6 +44,10 @@ class _CartScreenState extends State<CartScreen> {
               child: FutureBuilder<GetCartModel?>(
                 future: getCartData,
                 builder: (context, snapshot) {
+                  setState(() {
+                    orderBill=snapshot.data!.data!.totalPriceOfCart!;
+                  });
+                  cartId=snapshot.data!.data!.cartId!;
                   if(snapshot.hasData){
                     return ListView.separated(
                         itemBuilder: (context,index){
@@ -62,7 +69,9 @@ class _CartScreenState extends State<CartScreen> {
             Positioned(
               bottom: 10,
               child: GestureDetector(
-                onTap: (){},
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>AddressSelectionScreen(cartId: cartId,billTotal: orderBill)));
+                },
                 child: Container(
                   height: MediaQuery.of(context).size.height/14.5,
                   width: MediaQuery.of(context).size.width/1.75,

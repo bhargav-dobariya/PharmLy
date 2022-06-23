@@ -16,6 +16,7 @@ class ApiUtils {
 
   static const String logout = "logout";
   static const String category = "category";
+  static const String placedorder = "placedorder";
 
   static const firstName = "firstName";
   static const lastName = "lastName";
@@ -32,4 +33,6 @@ class ApiUtils {
   static const authorization = "Authorization";
 
   static const productId = "id";
+  static const cartId = "cartId";
+  static const addressId = "addressId";
 }

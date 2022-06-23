@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:pharmly/models/add_new_address_model.dart';
+import 'package:pharmly/models/add_order_model.dart';
 
 import 'package:pharmly/models/all_desease_model.dart';
 import 'package:pharmly/models/forgot_password_model.dart';
@@ -28,7 +29,7 @@ import 'package:pharmly/models/update_user_profile.dart';
 import 'package:pharmly/models/view_category.dart';
 
 class ApiService {
-  var userToken2 = 'Bearer ' + PreferenceHelper.getAccessToken();
+  var userToken = 'Bearer ' + PreferenceHelper.getAccessToken();
   //user registration url
   static const String _userRegistrationurl = ApiUtils.baseUrl + ApiUtils.users;
   static const String _userLoginUrl = ApiUtils.baseUrl + ApiUtils.login;
@@ -41,11 +42,9 @@ class ApiService {
 
   static const String _forgotPassword =
       ApiUtils.baseUrl + ApiUtils.forgotPassword;
-  static const String getUserUrl = ApiUtils.baseUrl +
-      ApiUtils.users +
-      "89994fcc-8a0f-4e8a-ab02-df6ebe03e4ef"; //take id from shared preferences
   static const categoryUrl = ApiUtils.baseUrl + ApiUtils.category;
-  var userToken = PreferenceHelper.getUserAccessToken();
+  static const String getUserUrl = ApiUtils.baseUrl +
+      ApiUtils.users; //take id from shared preferences
   var userId=PreferenceHelper.getUserAccessId();
   //user registration url
   static const String allDisease = ApiUtils.baseUrl + ApiUtils.allDisease;
@@ -53,6 +52,7 @@ class ApiService {
   static const getProductUrl=ApiUtils.baseUrl + ApiUtils.allProduct;
   static const getAddressesUrl=ApiUtils.baseUrl + ApiUtils.addresses;
   static const cartUrl=ApiUtils.baseUrl + ApiUtils.cart;
+  static const addOrderUrl=ApiUtils.baseUrl + ApiUtils.placedorder;
 
 
   //user registration url
@@ -166,22 +166,24 @@ class ApiService {
   }
 
 //get userDetails api
-  Future<UserProfile?> getUserDetails() async {
-    try {
-      Map<String, String> header = {
-        ApiUtils.authorization:
-            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijg5OTk0ZmNjLThhMGYtNGU4YS1hYjAyLWRmNmViZTAzZTRlZiIsImVtYWlsIjoiYXBleGEzcGF0ZWxAZ21haWwuY29tIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTY1NTc4NDg1MCwiZXhwIjoxNjU1ODcxMjUwfQ.OmUQ4Iljk0_Ok1xoO68C--6dPKrDc4G1tlpAcpJaVso'
+  Future<UserProfile?> getUserDetails() async{
+    try{
+      Map<String,String> header = {
+        ApiUtils.authorization : userToken
       };
-      final response = await http.get(Uri.parse(getUserUrl), headers: header);
-      print(response.statusCode);
+      final response = await http.get(Uri.parse(getUserUrl + userId),headers: header);
+      print("User details:${response.statusCode}");
       if (response.statusCode == 200) {
-        Map<String, dynamic> mapResponse = json.decode(response.body);
+        Map<String,dynamic> mapResponse = json.decode(response.body);
         return UserProfile.fromJson(mapResponse);
+        // Data dataModel = Data.fromJson(mapResponse);
+        // return dataModel;
       }
-    } catch (e) {
+    }
+    catch(e){
+      // print(e.toString());
       return UserProfile();
     }
-    return null;
   }
 
 //update user api
@@ -198,7 +200,7 @@ class ApiService {
 
     try{
       Map<String,String> header = {
-        ApiUtils.authorization : 'Bearer ' + userToken
+        ApiUtils.authorization : userToken
       };
       http.Response response=await http.put(Uri.parse(getUserUrl + userId),headers:header,body: body);
       print("Update details:${response.statusCode}");
@@ -217,7 +219,7 @@ class ApiService {
   Future<ViewCategory?> viewCategories()async{
     try{
       Map<String,String> header = {
-        ApiUtils.authorization : 'Bearer ' + userToken
+        ApiUtils.authorization : userToken
       };
       final response = await http.get(Uri.parse(categoryUrl),headers: header);
       print(userToken);
@@ -238,7 +240,7 @@ class ApiService {
   Future<LogOutUser?> logOutUser({String? email})async{
     try{
       Map<String,String> header = {
-        ApiUtils.authorization : 'Bearer ' + userToken
+        ApiUtils.authorization : userToken
       };
       Map<String, dynamic> body = {
         ApiUtils.email: email,
@@ -260,7 +262,7 @@ class ApiService {
   Future<ProductModel?> getProductDetails({String? categoryId})async{
     try{
       Map<String,String> header = {
-        ApiUtils.authorization : 'Bearer ' + userToken
+        ApiUtils.authorization : userToken
       };
       http.Response response=await http.get(Uri.parse(getProductUrl + categoryId!),headers: header,);
       print("Product details:${response.statusCode}");
@@ -278,7 +280,7 @@ class ApiService {
   Future<GetAddressesModel?> getAddresses()async{
     try{
       Map<String,String> header={
-        ApiUtils.authorization : 'Bearer ' + userToken
+        ApiUtils.authorization : userToken
       };
       final http.Response response=await http.get(Uri.parse(getAddressesUrl),headers: header);
       print("Addresses: ${response.statusCode}");
@@ -296,7 +298,7 @@ class ApiService {
   Future<AddProductToCartModel?> postProductToCart({String? productId})async{
     try{
       Map<String,String> header={
-        ApiUtils.authorization : 'Bearer ' + userToken
+        ApiUtils.authorization : userToken
       };
       Map<String,dynamic> body={
         ApiUtils.productId: productId,
@@ -316,7 +318,7 @@ class ApiService {
   Future<GetCartModel?> getCart()async{
     try{
       Map<String,String> header={
-        ApiUtils.authorization : 'Bearer ' + userToken
+        ApiUtils.authorization : userToken
       };
       http.Response response=await http.get(Uri.parse(cartUrl),headers: header);
       print("Get cart: ${response.statusCode}");
@@ -334,7 +336,7 @@ class ApiService {
   Future<DeleteFromCartModel?> deleteItem({String? productId})async{
     try{
       Map<String,String> header={
-        ApiUtils.authorization : 'Bearer ' + userToken
+        ApiUtils.authorization : userToken
       };
       Map<String,dynamic> body={
         ApiUtils.productId: productId,
@@ -349,5 +351,27 @@ class ApiService {
       return DeleteFromCartModel();
     }
   }
+
+
+  Future<AddOrderModel?> addOrder({String? cartId,String? addressId})async{
+    try{
+      Map<String,String> header={
+        ApiUtils.authorization : userToken
+      };
+      Map<String,dynamic> body={
+        ApiUtils.cartId: cartId,
+        ApiUtils.addressId: addressId
+      };
+      http.Response response=await http.post(Uri.parse(addOrderUrl),headers:header,body: body);
+      print("Place cart:: ${response.statusCode}");
+      if(response.statusCode==200){
+        return AddOrderModel.fromJson(jsonDecode(response.body));
+      }
+    }catch(e){
+      print(e.toString());
+      return AddOrderModel();
+    }
+  }
+
 }
   

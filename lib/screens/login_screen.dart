@@ -170,7 +170,7 @@ class LoginScreenState extends State<LoginScreen> {
                             _isLoading = false;
                           });
                           Navigator.pushReplacementNamed(
-                              context, '/home_screen');
+                              context, '/bottom_navbar');
                         } else {
                           _emailController.clear();
                           _passworController.clear();

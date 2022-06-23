@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pharmly/screens/add_address.dart';
+import 'package:pharmly/screens/address_selection_screen.dart';
 
 import 'package:pharmly/screens/disease_screen.dart';
 import 'package:pharmly/screens/forgot_password.dart';
@@ -11,6 +12,7 @@ import 'package:pharmly/screens/otp_verification_screen.dart';
 import 'package:pharmly/screens/home_screen.dart';
 import 'package:pharmly/screens/profile_screen.dart';
 import 'package:pharmly/screens/signup_screen.dart';
+import 'package:pharmly/screens/splash_screen.dart';
 import 'package:pharmly/widgets/bottom_nav_bar.dart';
 
 import 'methods/shared_prefs_methods.dart';
@@ -29,7 +31,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       routes: {
-        '/': (context) => const LoginScreen(),
+        '/': (context) => const SplashScreen(),
         '/signup_screen': (context) => const SignUpScreen(),
         '/login_screen': (context) => const LoginScreen(),
         '/forgot_password': (context) => const ForgotPassword(),
