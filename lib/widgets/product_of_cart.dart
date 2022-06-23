@@ -25,6 +25,7 @@ class _ProductInCartState extends State<ProductInCart> {
           Image.network(widget.snap.product!.productImage!,fit: BoxFit.cover,),
           Expanded(
             child: Container(
+              alignment: Alignment.center,
               height: double.infinity,
               width: 120,
               margin: EdgeInsets.only(left: 10),
@@ -32,8 +33,8 @@ class _ProductInCartState extends State<ProductInCart> {
                 text: TextSpan(
                   children: [
                     TextSpan(text: widget.snap.product!.title!,style: TextStyle(fontSize: 20,color: AppColor.colorBlack)),
-                    TextSpan(text: widget.snap.product!.companyName!,style: TextStyle(fontSize: 15,color: AppColor.colorGrey)),
-                    TextSpan(text: widget.snap.product!.price!,style: TextStyle(fontSize: 20,color: AppColor.colorBlack)),
+                    TextSpan(text: "\n ${widget.snap.product!.companyName!}",style: TextStyle(fontSize: 15,color: AppColor.colorGrey)),
+                    TextSpan(text: "\nRs. ${widget.snap.product!.price!}/-",style: TextStyle(fontSize: 20,color: AppColor.colorBlack)),
                   ]
                 )
               ),

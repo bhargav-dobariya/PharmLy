@@ -51,7 +51,7 @@ class _CartScreenState extends State<CartScreen> {
                             color: AppColor.colorGrey.withAlpha(50),
                           );
                         },
-                        itemCount: 6
+                        itemCount: snapshot.data!.data!.productData!.length
                     );
                   }
                   return const Center(child: CircularProgressIndicator());
