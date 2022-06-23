@@ -19,4 +19,8 @@ class ConstantMethod {
   static Future initPreference() async {
     prefs = await SharedPreferences.getInstance();
   }
+
+  static addToCart()async{
+    return prefs.getStringList(AppString.txtAddedToCart);
+  }
 }

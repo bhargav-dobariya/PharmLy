@@ -93,6 +93,7 @@ class AppString {
       "You're not connected with internet,please check your network connections";
   static String userToken = "User_Token";
   static String userId = "User_Id";
+  static String txtAddedToCart = "added_to_cart";
   static String txtCategoryId = "Category_Id";
   static String txtIsLoggedIn = "isLoggedIn";
   static String typeYourMessage = 'Type your message...';

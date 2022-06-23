@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:pharmly/models/all_desease_model.dart';
+import 'package:pharmly/models/get_addresses_model.dart';
 import 'package:pharmly/models/login_model.dart';
 import 'package:pharmly/models/logout_user_model.dart';
 import 'package:pharmly/models/product_model.dart';
@@ -28,6 +29,7 @@ class ApiService {
   static const categoryUrl=ApiUtils.baseUrl+ApiUtils.category;
   static const logOutUrl=ApiUtils.baseUrl+ApiUtils.logout;
   static const getProductUrl=ApiUtils.baseUrl + ApiUtils.allProduct;
+  static const getAddressesUrl=ApiUtils.baseUrl + ApiUtils.addresses;
 
 
   //user registration url
@@ -184,6 +186,24 @@ class ApiService {
     }catch(e){
       print(e.toString());
       return ProductModel();
+    }
+  }
+
+
+  Future<GetAddressesModel?> getAddresses()async{
+    try{
+      Map<String,String> header={
+        ApiUtils.authorization : 'Bearer ' + userToken
+      };
+      final http.Response response=await http.get(Uri.parse(getAddressesUrl),headers: header);
+      print("Addresses: ${response.statusCode}");
+      if(response.statusCode==200){
+        Map<String,dynamic> mapResponse = json.decode(response.body);
+        return GetAddressesModel.fromJson(mapResponse);
+      }
+    }catch(e){
+      print(e.toString());
+      GetAddressesModel();
     }
   }
 }

@@ -1,9 +1,10 @@
 class ApiUtils {
-  static const String baseUrl = "https://ab49-103-240-35-190.in.ngrok.io/";
+  static const String baseUrl = "https://c62d-103-238-107-162.in.ngrok.io/";
   static const String users = "users/";
   static const String login = "login/";
   static const String allDisease = "all-disease/";
   static const String allProduct = "all-product/";
+  static const String addresses = "addresses";
 
   static const String logout = "logout";
   static const String category = "category";

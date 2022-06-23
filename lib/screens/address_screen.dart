@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:pharmly/models/get_addresses_model.dart';
+import 'package:pharmly/networking/api_service.dart';
 import 'package:pharmly/resources/app_color.dart';
 import 'package:pharmly/resources/app_string.dart';
 
@@ -10,6 +12,18 @@ class AddressScreen extends StatefulWidget {
 }
 
 class _AddressScreenState extends State<AddressScreen> {
+  late Future<GetAddressesModel?> getAddress;
+
+  getAddressDetails(){
+    getAddress=ApiService().getAddresses();
+  }
+
+  @override
+  void initState() {
+    getAddressDetails();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -28,7 +42,7 @@ class _AddressScreenState extends State<AddressScreen> {
                 onTap: (){},
                 child: Container(
                   padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width/26.13),
-                  margin: EdgeInsets.only(bottom: MediaQuery.of(context).size.height/6.5),
+                  margin: EdgeInsets.only(bottom: MediaQuery.of(context).size.height/13),
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height/11,
                   alignment: Alignment.center,
@@ -50,17 +64,47 @@ class _AddressScreenState extends State<AddressScreen> {
                   ),
                 ),
               ),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height/6,
-                padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width/26.13),
-                child: Text("Address",style: TextStyle(fontSize: 15,color: AppColor.colorBlack),),
-                decoration: BoxDecoration(
-                  color: AppColor.colorWhite,
-                    boxShadow: [
-                      BoxShadow(color: AppColor.colorBlack12,blurRadius: 2,spreadRadius: 2)
-                    ]
-                ),
+              // Container(
+              //   width: MediaQuery.of(context).size.width,
+              //   height: MediaQuery.of(context).size.height/6,
+              //   padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width/26.13),
+              //   child: Text("Address",style: TextStyle(fontSize: 15,color: AppColor.colorBlack),),
+              //   decoration: BoxDecoration(
+              //     color: AppColor.colorWhite,
+              //       boxShadow: [
+              //         BoxShadow(color: AppColor.colorBlack12,blurRadius: 2,spreadRadius: 2)
+              //       ]
+              //   ),
+              // )
+              FutureBuilder<GetAddressesModel?>(
+                future: getAddress,
+                builder: (context,snapshot){
+                  if(snapshot.hasData){
+                    return Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height,
+                      child: ListView.builder(
+                        itemCount: snapshot.data!.data!.length,
+                        itemBuilder: (ctx,index){
+                          return Container(
+                            width: MediaQuery.of(context).size.width,
+                            height: MediaQuery.of(context).size.height/6,
+                            margin: EdgeInsets.only(bottom: 10),
+                            padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width/26.13),
+                            child: Text("${snapshot.data!.data![index].address!}, ${snapshot.data!.data![index].area!}, ${snapshot.data!.data![index].city!}, ${snapshot.data!.data![index].pincode!}",style: TextStyle(fontSize: 15,color: AppColor.colorBlack,),maxLines: 5,),
+                            decoration: BoxDecoration(
+                                color: AppColor.colorWhite,
+                                boxShadow: [
+                                  BoxShadow(color: AppColor.colorBlack12,blurRadius: 2,spreadRadius: 2)
+                                ]
+                            ),
+                          );
+                        },
+                      ),
+                    );
+                  }
+                  return const Center(child: CircularProgressIndicator());
+                }
               )
             ],
           ),
