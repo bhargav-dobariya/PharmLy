@@ -94,7 +94,7 @@ class ForgotPasswordVeficationScreenState
                     final result = await Connectivity().checkConnectivity();
                     showConnectivityToast(result);
                     ApiService()
-                        .verifyEmail(ConstantMethod.getEmail(), _pin)
+                        .verifyEmail(PreferenceHelper.getEmail(), _pin)
                         .then((value) async {
                       if (value.code == 200) {
                         Navigator.pushReplacementNamed(

@@ -17,7 +17,7 @@ class ApiUtils {
   static const otp = "otp";
   static const contactNo = "contactNo";
   static const password = "password";
-  static const address = "adreess";
+  static const address = "address";
   static const area = "area";
   static const city = "city";
   static const pinCode = "pincode";

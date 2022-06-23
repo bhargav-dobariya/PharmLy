@@ -48,11 +48,5 @@ class Validator {
     }
   }
 
-  static String? pinCode(String? value) {
-    if (value!.isEmpty || !RegExp(r"^[0-9]{6}$").hasMatch(value)) {
-      return AppString.txtEnterValidMobileNumber;
-    } else {
-      return null;
-    }
-  }
+
 }

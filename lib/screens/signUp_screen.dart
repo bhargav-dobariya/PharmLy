@@ -1,5 +1,6 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pharmly/methods/shared_prefs_methods.dart';
 import 'package:pharmly/networking/api_service.dart';
 import 'package:pharmly/resources/app_color.dart';
@@ -172,11 +173,23 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           .then(
                         (res) {
                           if (res.code == 200) {
-                            ConstantMethod.setEmail(_emailController.text);
+                            PreferenceHelper.setEmail(_emailController.text);
                             setState(() {
                               _isLoading = false;
                             });
                             Navigator.pushNamed(context, '/otp_verification');
+                          } else if (res.code == 409) {
+                            setState(() {
+                              _isLoading = false;
+                            });
+                            Fluttertoast.showToast(
+                                msg:
+                                    "Your mail Id is already used for this account please try login from this mail id");
+                          } else {
+                            _isLoading = false;
+                            Fluttertoast.showToast(
+                                msg:
+                                    "something went wrong please try after sometime");
                           }
                         },
                       );

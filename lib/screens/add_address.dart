@@ -167,7 +167,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                                   )
                                 ]),
                             child: TextFormField(
-                              validator: Validator.pinCode,
+                              validator: Validator.adreesField,
                               controller: _pincodeController,
                               style: TextStyle(fontSize: _deviceHeight * 0.022),
                               maxLines: 2,
@@ -209,7 +209,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                                     _isLoading = false;
                                   });
                                   Navigator.pushNamed(
-                                      context, '/disease_screenScreen');
+                                      context, '/disease_screen');
                                 }
                               },
                             );

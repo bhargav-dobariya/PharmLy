@@ -123,7 +123,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                       if (value.code == 200) {
                         print('______1!!!!!!!!!');
 
-                        ConstantMethod.setEmail(_emailController.text);
+                        PreferenceHelper.setEmail(_emailController.text);
                         print('______2!!!!!!!!!');
 
                         setState(() {

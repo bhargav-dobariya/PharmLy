@@ -92,8 +92,8 @@ class newPasswordScreenState extends State<newPasswordScreen> {
                       _isLoading = true;
                     });
                     ApiService()
-                        .addPassword(
-                            ConstantMethod.getEmail(), _passwordController.text)
+                        .addPassword(PreferenceHelper.getEmail(),
+                            _passwordController.text)
                         .then((value) async {
                       if (value.code == 200) {
                         setState(() {

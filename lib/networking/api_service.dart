@@ -15,18 +15,19 @@ import 'package:pharmly/models/update_user_profile.dart';
 import 'package:pharmly/models/view_category.dart';
 
 class ApiService {
-  var userToken = 'Bearer ' + ConstantMethod.getAccessToken();
+  var userToken = 'Bearer ' + PreferenceHelper.getAccessToken();
   //user registration url
   static const String _userRegistrationurl = ApiUtils.baseUrl + ApiUtils.users;
   static const String _userLoginUrl = ApiUtils.baseUrl + ApiUtils.login;
-  static const String _allDisease = ApiUtils.baseUrl + ApiUtils.all_disease;
+  static const String _allDisease = ApiUtils.baseUrl +
+      ApiUtils.all_disease +
+      "a19b6c7e-5006-41d4-9d9f-8ac82a4a6175/";
   static const String _verifyUserUrl = ApiUtils.baseUrl + ApiUtils.verify;
   static const String _resendOtpUrl = ApiUtils.baseUrl + ApiUtils.resend;
   static const String _addAddressUrl = ApiUtils.baseUrl + ApiUtils.addAddress;
 
   static const String _forgotPassword =
       ApiUtils.baseUrl + ApiUtils.forgotPassword;
-
   static const String getUserUrl = ApiUtils.baseUrl +
       ApiUtils.users +
       "89994fcc-8a0f-4e8a-ab02-df6ebe03e4ef"; //take id from shared preferences
@@ -128,8 +129,8 @@ class ApiService {
     Map<String, dynamic> body = {
       ApiUtils.address: addresss,
       ApiUtils.area: area,
-      ApiUtils.pinCode: city,
-      ApiUtils.city: pincode,
+      ApiUtils.city: city,
+      ApiUtils.pinCode: pincode,
     };
     Map<String, String> header = {ApiUtils.authorization: userToken};
 

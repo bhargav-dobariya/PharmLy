@@ -97,6 +97,7 @@ class AppString {
       "You're not connected with internet,please check your network connections";
   static String userToken = "User_Token";
   static String userId = "userId";
+  static String accessToken = "access token";
 
   static String typeYourMessage = 'Type your message...';
   static String txtUnFollowAlert = "You have unfollowed ";

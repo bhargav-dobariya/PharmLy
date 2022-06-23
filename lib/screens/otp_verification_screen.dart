@@ -84,11 +84,11 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                     final result = await Connectivity().checkConnectivity();
                     showConnectivityToast(result);
                     ApiService()
-                        .verifyEmail(ConstantMethod.getEmail(), _pin)
+                        .verifyEmail(PreferenceHelper.getEmail(), _pin)
                         .then((value) async {
                       if (value.code == 200) {
-                        ConstantMethod.setAccessToken(value.data!.token);
-                        ConstantMethod.setUserId(value.data!.userId);
+                        PreferenceHelper.setAccessToken(value.data!.token);
+                        PreferenceHelper.setUserId(value.data!.userId);
                         Navigator.pushReplacementNamed(
                             context, "/add_new_address");
                       } else {
@@ -129,7 +129,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                     showConnectivityToast(result);
                     otpController.clear();
                     ApiService()
-                        .otpResend(ConstantMethod.getEmail())
+                        .otpResend(PreferenceHelper.getEmail())
                         .then((value) {
                       if (value.code == 200) {
                         Fluttertoast.showToast(msg: "OTP sent Successfully");

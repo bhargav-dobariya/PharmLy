@@ -29,7 +29,7 @@ class LoginScreenState extends State<LoginScreen> {
 
   @override
   void initState() {
-    ConstantMethod.initPreference();
+    PreferenceHelper.initPreference();
     super.initState();
   }
 
@@ -161,8 +161,8 @@ class LoginScreenState extends State<LoginScreen> {
                         .then(
                       (res) async {
                         if (res.code == 200) {
-                          ConstantMethod.setAccessToken(res.data!.token);
-                          ConstantMethod.setUserId(res.data!.userId);
+                          PreferenceHelper.setAccessToken(res.data!.token);
+                          PreferenceHelper.setUserId(res.data!.userId);
                           setState(() {
                             _isLoading = false;
                           });

@@ -2,7 +2,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../resources/app_string.dart';
 
-class ConstantMethod {
+class PreferenceHelper {
   static late SharedPreferences prefs;
 
   static initPreference() async {
@@ -10,7 +10,7 @@ class ConstantMethod {
   }
 
   static setAccessToken(accessToken) {
-    prefs.setString(AppString.userId, accessToken);
+    prefs.setString(AppString.userToken, accessToken);
   }
 
   static setUserId(userId) {
