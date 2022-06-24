@@ -4,6 +4,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pharmly/methods/check_internet_connectivity.dart.dart';
+import 'package:pharmly/models/delete_user_model.dart';
 import 'package:pharmly/models/get_user_model.dart';
 import 'package:pharmly/networking/api_service.dart';
 
@@ -33,6 +34,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   late StreamSubscription subscription;
   var userData;
   var updateUserData;
+  late DeleteUserModel? removeUser;
 
   String userFirstName = "";
   String userLastName = "";
@@ -63,9 +65,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
         contactNo: newContactNo);
   }
 
+  Future deleteAccount()async{
+    removeUser=await ApiService().deleteUser();
+  }
+
   void userLoggedIn() async {
     PreferenceHelper.prefs.setBool(AppString.txtIsLoggedIn, false);
   }
+
 
   @override
   void initState() {
@@ -323,11 +330,40 @@ class _ProfileScreenState extends State<ProfileScreen> {
               GestureDetector(
                 onTap: () {
                   if (ConnectivityResult.none != true) {
-                    //delete account from db
+                    deleteAccount().then((value){
+                      if(removeUser?.code!=200){
+                        Fluttertoast.showToast(msg: AppString.txtSomeErrorOccurred);
+                      }
+                      else{
+                        AlertDialog(
+                          title: Text(AppString.txtDeleteUserConfirmation.toUpperCase(),style: TextStyle(color: AppColor.colorRed,fontSize: 20),),
+                          content: Text(AppString.txtDeleteUserConfirmationBody),
+                          actions: [
+                            TextButton(
+                                onPressed: (){
+                                  Fluttertoast.showToast(msg: AppString.txtAccountDeleted);
+                                  ApiService().logOutUser(email: emailText).then((res) async {
+                                    if (res?.code == 200) {
+                                      Navigator.pushAndRemoveUntil(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => const LoginScreen()),(Route<dynamic> route) => false);
+                                    } else {
+                                      print(res?.code);
+                                    }
+                                  });
+                                },
+                                child: Text(AppString.txtYesDelete,style: TextStyle(color: AppColor.colorRed),)
+                            )
+                          ],
+                        );
+                      }
+                    });
                   } else {
                     Fluttertoast.showToast(
                         msg: AppString.txtInternetIsRequired);
                   }
+
                 },
                 child: Container(
                   alignment: Alignment.center,

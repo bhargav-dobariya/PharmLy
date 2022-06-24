@@ -148,6 +148,7 @@ class AppString {
 
   static String txtCategoryName = "Category name";
   static String txtAddToCart = "Add to cart";
+  static String txtNoDataInCart = "No data found in cart";
   static String txtUpdatedDetails = "Updated details";
   static String txtSignedOut = "You have signed out.";
   static String txtMyAddresses = "My addresses";
@@ -158,8 +159,12 @@ class AppString {
   static String txtDeleteConfirmationBody =
       "Are you sure want to delete this item from your cart?";
   static String txtDeleteConfirmation = "Delete confirmation";
+  static String txtDeleteUserConfirmation = "Delete account";
+  static String txtDeleteUserConfirmationBody = "By pressing 'yes', your account will be deleted  and you won't be able to avail our service. Do you want to continue?";
   static String txtDelete = "Delete";
+  static String txtYesDelete = "Yes, delete";
   static String txtItemDeleted = "Item deleted";
+  static String txtAccountDeleted = "Please register yourself if you want to avail our our services.";
   static String txtSelectAddress = "Select address";
   static String txtOrderConfirmation = "Order confirmation";
   static String txtOrderConfirmationBody = "Are you sure about placing the order?";

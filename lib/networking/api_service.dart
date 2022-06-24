@@ -6,6 +6,7 @@ import 'package:pharmly/models/add_new_address_model.dart';
 import 'package:pharmly/models/add_order_model.dart';
 
 import 'package:pharmly/models/all_desease_model.dart';
+import 'package:pharmly/models/delete_user_model.dart';
 import 'package:pharmly/models/forgot_password_model.dart';
 import 'package:pharmly/models/login_model.dart';
 import 'package:pharmly/models/otp_resend_model.dart';
@@ -53,6 +54,7 @@ class ApiService {
   static const getAddressesUrl=ApiUtils.baseUrl + ApiUtils.addresses;
   static const cartUrl=ApiUtils.baseUrl + ApiUtils.cart;
   static const addOrderUrl=ApiUtils.baseUrl + ApiUtils.placedorder;
+  static const deleteUserUrl=ApiUtils.baseUrl + ApiUtils.users;
 
 
   //user registration url
@@ -213,6 +215,23 @@ class ApiService {
       return UpdateProfile();
     }
     return null;
+  }
+
+
+  Future<DeleteUserModel?> deleteUser()async{
+    try{
+      Map<String,String> header = {
+        ApiUtils.authorization : userToken
+      };
+      http.Response response=await http.delete(Uri.parse(deleteUserUrl + userId),headers: header);
+      print("Delete user: ${response.statusCode}");
+      if(response.statusCode==200){
+        return DeleteUserModel.fromJson(jsonDecode(response.body));
+      }
+    }catch(e){
+      print(e.toString());
+      return DeleteUserModel();
+    }
   }
 
 

@@ -60,6 +60,9 @@ class _CartScreenState extends State<CartScreen> {
                         itemCount: snapshot.data!.data!.productData!.length
                     );
                   }
+                  // else{
+                  //   return Center(child: Text(AppString.txtNoDataInCart,style: TextStyle(fontSize: 15,color: AppColor.colorTheme),));
+                  // }
                   return const Center(child: CircularProgressIndicator());
                 }
               ),

@@ -1,5 +1,5 @@
 class ApiUtils {
-  static const String baseUrl = "https://da61-103-238-107-162.in.ngrok.io/";
+  static const String baseUrl = "https://d65c-103-240-35-190.in.ngrok.io/";
   static const String users = "users/";
   static const String login = "login/";
   static const String all_disease = "all-disease/" '';
