@@ -3,7 +3,6 @@ import 'package:pharmly/models/product_model.dart';
 import 'package:pharmly/models/view_category.dart' as ViewCategory;
 import 'package:pharmly/networking/api_service.dart';
 import 'package:pharmly/resources/app_color.dart';
-import 'package:pharmly/resources/app_string.dart';
 import 'package:pharmly/widgets/product.dart';
 
 class ProductsScreen extends StatefulWidget {

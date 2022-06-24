@@ -1,56 +1,52 @@
 // To parse this JSON data, do
 //
-//     final otpVerificationModel = otpVerificationModelFromJson(jsonString);
+//     final OtpVerificationModel = OtpVerificationModelFromJson(jsonString);
 
 import 'dart:convert';
 
-OtpVerificationModel otpVerificationModelFromJson(String str) =>
+OtpVerificationModel OtpVerificationModelFromJson(String str) =>
     OtpVerificationModel.fromJson(json.decode(str));
 
-String otpVerificationModelToJson(OtpVerificationModel data) =>
+String OtpVerificationModelToJson(OtpVerificationModel data) =>
     json.encode(data.toJson());
 
 class OtpVerificationModel {
   OtpVerificationModel({
     this.code,
+    this.errorMessage,
+    this.error,
     this.data,
     this.success,
   });
 
   int? code;
-  Data? data;
+  String? errorMessage;
+  Error? error;
+  dynamic? data;
   bool? success;
 
   factory OtpVerificationModel.fromJson(Map<String, dynamic> json) =>
       OtpVerificationModel(
-        code: json["code"],
-        data: Data.fromJson(json["data"]),
-        success: json["success"],
+        code: json["code"] ?? null,
+        errorMessage: json["errorMessage"] ?? null,
+        error: json["error"] == null ? null : Error.fromJson(json["error"]),
+        data: json["data"],
+        success: json["success"] ?? null,
       );
 
   Map<String, dynamic> toJson() => {
-        "code": code,
-        "data": data?.toJson(),
-        "success": success,
+        "code": code ?? null,
+        "errorMessage": errorMessage ?? null,
+        "error": error == null ? null : error?.toJson(),
+        "data": data,
+        "success": success ?? null,
       };
 }
 
-class Data {
-  Data({
-    this.token,
-    this.userId,
-  });
+class Error {
+  Error();
 
-  String? token;
-  String? userId;
+  factory Error.fromJson(Map<String, dynamic> json) => Error();
 
-  factory Data.fromJson(Map<String, dynamic> json) => Data(
-        token: json["token"],
-        userId: json["userId"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "token": token,
-        "userId": userId,
-      };
+  Map<String, dynamic> toJson() => {};
 }

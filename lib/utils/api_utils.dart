@@ -8,6 +8,7 @@ class ApiUtils {
   static const String forgotPassword = "forgotpassword/";
   static const String addAddress = "addresses/";
   static const String diseaseCategory = "a19b6c7e-5006-41d4-9d9f-8ac82a4a6175/";
+  static const String diseaseProduct = "disease-product/";
 
   static const String allDisease = "all-disease/";
   static const String allProduct = "all-product/";

@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:pharmly/models/add_new_address_model.dart';
 import 'package:pharmly/models/all_desease_model.dart';
+import 'package:pharmly/models/disease_product.dart';
 import 'package:pharmly/models/forgot_password_model.dart';
 import 'package:pharmly/models/login_model.dart';
 import 'package:pharmly/models/otp_resend_model.dart';
@@ -48,6 +49,7 @@ class ApiService {
   static const getProductUrl = ApiUtils.baseUrl + ApiUtils.allProduct;
   static const getAddressesUrl = ApiUtils.baseUrl + ApiUtils.addresses;
   static const cartUrl = ApiUtils.baseUrl + ApiUtils.cart;
+  static const productDiseaseUrl = ApiUtils.baseUrl + ApiUtils.diseaseProduct;
 
   //user registration url
   Future<SignUpModel> userRegistration(
@@ -189,6 +191,25 @@ class ApiService {
       return AddNewAdressModel.fromJson(mapResponse);
     } catch (e) {
       return AddNewAdressModel();
+    }
+  }
+
+//get Disease product
+  Future<DiseaseProduct?> getDiseaseProduct({String? categoryId}) async {
+    try {
+      Map<String, String> header = {ApiUtils.authorization: userToken};
+      http.Response response = await http.get(
+        Uri.parse(getProductUrl + categoryId!),
+        headers: header,
+      );
+      print("Product details:${response.statusCode}");
+      if (response.statusCode == 200) {
+        Map<String, dynamic> mapResponse = json.decode(response.body);
+        return DiseaseProduct.fromJson(mapResponse);
+      }
+    } catch (e) {
+      print(e.toString());
+      return DiseaseProduct();
     }
     return null;
   }

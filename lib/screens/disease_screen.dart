@@ -3,11 +3,19 @@ import 'package:flutter_svg/svg.dart';
 import 'package:pharmly/networking/api_service.dart';
 import 'package:pharmly/resources/app_color.dart';
 import 'package:pharmly/resources/app_string.dart';
+import 'package:pharmly/screens/products_screen.dart';
 
-import '../models/all_desease_model.dart';
+import '../models/all_desease_model.dart' as DiseaseModel;
 
 class DiseaseScreen extends StatefulWidget {
-  const DiseaseScreen({Key? key}) : super(key: key);
+  DiseaseModel.Datum? snap;
+
+  DiseaseScreen({
+    @required snap,
+    Key? key,
+  }) : super(
+          key: key,
+        );
 
   @override
   State<DiseaseScreen> createState() => _DiseaseScreenState();
@@ -18,7 +26,7 @@ class _DiseaseScreenState extends State<DiseaseScreen> {
   late double _deviceWidth;
   String? diseaseName;
   String? diseaseDescription;
-  late Future<DiseaseModel> allDiseaseData;
+  late Future<DiseaseModel.DiseaseModel> allDiseaseData;
 
   getData() async {
     allDiseaseData = ApiService().getAllDisease();
@@ -92,28 +100,37 @@ class _DiseaseScreenState extends State<DiseaseScreen> {
                 ),
                 color: Colors.white,
               ),
-              SizedBox(
-                height: 400,
-                width: double.infinity,
-                child: FutureBuilder<DiseaseModel?>(
-                  future: allDiseaseData,
-                  builder: (context, snapShot) {
-                    if (snapShot.hasData) {
-                      return ListView.builder(
-                        itemCount: snapShot.data?.data?.length,
-                        itemBuilder: (context, index) {
-                          return DeseaseCard(
-                            title: snapShot.data!.data![index]!.diseaseName,
-                            text:
-                                snapShot.data!.data![index]!.diseaseDescription,
-                          );
-                        },
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              ProductsScreen(categorySnap: widget.snap)));
+                },
+                child: SizedBox(
+                  height: 400,
+                  width: double.infinity,
+                  child: FutureBuilder<DiseaseModel.DiseaseModel?>(
+                    future: allDiseaseData,
+                    builder: (context, snapShot) {
+                      if (snapShot.hasData) {
+                        return ListView.builder(
+                          itemCount: snapShot.data?.data?.length,
+                          itemBuilder: (context, index) {
+                            return DeseaseCard(
+                              title: snapShot.data!.data![index]!.diseaseName,
+                              text: snapShot
+                                  .data!.data![index]!.diseaseDescription,
+                            );
+                          },
+                        );
+                      }
+                      return const Center(
+                        child: CircularProgressIndicator(),
                       );
-                    }
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  },
+                    },
+                  ),
                 ),
               ),
             ],
