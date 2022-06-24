@@ -44,8 +44,6 @@ class ApiService {
   static const String getUserUrl = ApiUtils.baseUrl +
       ApiUtils.users; //take id from shared preferences
   var userId=PreferenceHelper.getUserAccessId();
-
-  var userId = PreferenceHelper.getUserAccessId();
   //user registration url
   static const String allDisease = ApiUtils.baseUrl + ApiUtils.allDisease;
   static const logOutUrl=ApiUtils.baseUrl+ApiUtils.logout;
@@ -54,11 +52,6 @@ class ApiService {
   static const cartUrl=ApiUtils.baseUrl + ApiUtils.cart;
   static const addOrderUrl=ApiUtils.baseUrl + ApiUtils.placedorder;
   static const deleteUserUrl=ApiUtils.baseUrl + ApiUtils.users;
-
-  static const logOutUrl = ApiUtils.baseUrl + ApiUtils.logout;
-  static const getProductUrl = ApiUtils.baseUrl + ApiUtils.allProduct;
-  static const getAddressesUrl = ApiUtils.baseUrl + ApiUtils.addresses;
-  static const cartUrl = ApiUtils.baseUrl + ApiUtils.cart;
   static const productDiseaseUrl = ApiUtils.baseUrl + ApiUtils.diseaseProduct;
 
   //user registration url

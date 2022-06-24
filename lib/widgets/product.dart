@@ -88,7 +88,7 @@ class _ProductState extends State<Product> {
                     print("Pressed?");
                     setState(() {
                       Fluttertoast.showToast(msg: AppString.txtAddedToCart);
-                      addedToCart=!addedToCart;
+                      addedToCart=true;
                     });
                   }
                 });

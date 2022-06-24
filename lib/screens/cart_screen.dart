@@ -47,18 +47,35 @@ class _CartScreenState extends State<CartScreen> {
                   orderBill=snapshot.data?.data?.totalPriceOfCart;
                   cartId=snapshot.data?.data?.cartId;
                   if(snapshot.hasData){
-                    return ListView.separated(
-                        itemBuilder: (context,index){
-                          return ProductInCart(snap: snapshot.data!.data!.productData![index],);
-                        },
-                        separatorBuilder: (context,index){
-                          return Divider(
-                            thickness: 2,
-                            color: AppColor.colorGrey.withAlpha(50),
-                          );
-                        },
-                        itemCount: snapshot.data!.data!.productData!.length
-                    );
+                    if(snapshot.data!.data!.productData!.length!=0){
+                      return ListView.separated(
+                          itemBuilder: (context,index){
+                            return ProductInCart(snap: snapshot.data!.data!.productData![index],);
+                          },
+                          separatorBuilder: (context,index){
+                            return Divider(
+                              thickness: 2,
+                              color: AppColor.colorGrey.withAlpha(50),
+                            );
+                          },
+                          itemCount: snapshot.data!.data!.productData!.length
+                      );
+                    }
+                    else{
+                      return Center(child: Text(AppString.txtNoDataInCart,style: TextStyle(fontSize: 25,color: AppColor.colorTheme),));
+                    }
+                    // return ListView.separated(
+                    //     itemBuilder: (context,index){
+                    //       return ProductInCart(snap: snapshot.data!.data!.productData![index],);
+                    //     },
+                    //     separatorBuilder: (context,index){
+                    //       return Divider(
+                    //         thickness: 2,
+                    //         color: AppColor.colorGrey.withAlpha(50),
+                    //       );
+                    //     },
+                    //     itemCount: snapshot.data!.data!.productData!.length
+                    // );
                   }
                   // else{
                   //   return Center(child: Text(AppString.txtNoDataInCart,style: TextStyle(fontSize: 15,color: AppColor.colorTheme),));

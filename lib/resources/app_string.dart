@@ -17,6 +17,7 @@ class AppString {
   static String txtSubmit = "Submit";
   static String txtYes = "Yes";
   static String txtNo = "No";
+  static String txtQty = "Qty";
 
   static String txtDontHaveAnAccount = "Don't have an account?";
   static String txtSignUp = "Sign Up";
@@ -171,4 +172,6 @@ class AppString {
   static String txtOrderPlacedSuccessfully = "Your order is placed successfully";
   static String txtExitConfirmation = "Exit from the app";
   static String txtExitConfirmationBody = "Do you want to exit the application?";
+  static String txtLoginFirstError = "Error of login first error.";
+  static String txtAddressSelectionConfirmationBody = "Are you sure you don't want to place the order?";
 }

@@ -335,27 +335,30 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         Fluttertoast.showToast(msg: AppString.txtSomeErrorOccurred);
                       }
                       else{
-                        AlertDialog(
-                          title: Text(AppString.txtDeleteUserConfirmation.toUpperCase(),style: TextStyle(color: AppColor.colorRed,fontSize: 20),),
-                          content: Text(AppString.txtDeleteUserConfirmationBody),
-                          actions: [
-                            TextButton(
-                                onPressed: (){
-                                  Fluttertoast.showToast(msg: AppString.txtAccountDeleted);
-                                  ApiService().logOutUser(email: emailText).then((res) async {
-                                    if (res?.code == 200) {
-                                      Navigator.pushAndRemoveUntil(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) => const LoginScreen()),(Route<dynamic> route) => false);
-                                    } else {
-                                      print(res?.code);
-                                    }
-                                  });
-                                },
-                                child: Text(AppString.txtYesDelete,style: TextStyle(color: AppColor.colorRed),)
-                            )
-                          ],
+                        showDialog(
+                          context: context,
+                          builder: (context)=>AlertDialog(
+                            title: Text(AppString.txtDeleteUserConfirmation.toUpperCase(),style: TextStyle(color: AppColor.colorRed,fontSize: 20),),
+                            content: Text(AppString.txtDeleteUserConfirmationBody),
+                            actions: [
+                              TextButton(
+                                  onPressed: (){
+                                    Fluttertoast.showToast(msg: AppString.txtAccountDeleted);
+                                    ApiService().logOutUser(email: emailText).then((res) async {
+                                      if (res?.code == 200) {
+                                        Navigator.pushAndRemoveUntil(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) => const LoginScreen()),(Route<dynamic> route) => false);
+                                      } else {
+                                        print(res?.code);
+                                      }
+                                    });
+                                  },
+                                  child: Text(AppString.txtYesDelete,style: TextStyle(color: AppColor.colorRed),)
+                              )
+                            ],
+                          )
                         );
                       }
                     });

@@ -6,6 +6,7 @@ import 'package:pharmly/models/view_category.dart';
 import 'package:pharmly/networking/api_service.dart';
 import 'package:pharmly/resources/app_color.dart';
 import 'package:pharmly/resources/app_string.dart';
+import 'package:pharmly/screens/cart_screen.dart';
 
 import 'package:pharmly/widgets/category.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
@@ -88,9 +89,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                 padding: EdgeInsets.only(
                                     left: MediaQuery.of(context).size.width /
                                         2.20),
-                                child: Icon(Icons.shopping_cart_sharp,
-                                    size: 20,
-                                    color: AppColor.colorBlack.withAlpha(90)))
+                                child: GestureDetector(
+                                  onTap: (){
+                                    Navigator.push(context, MaterialPageRoute(builder: (context)=>CartScreen()));
+                                  },
+                                  child: Icon(Icons.shopping_cart_sharp,
+                                      size: 20,
+                                      color: AppColor.colorBlack.withAlpha(90)),
+                                ))
                           ],
                         ),
                       ),
@@ -141,20 +147,20 @@ class _HomeScreenState extends State<HomeScreen> {
                     width: MediaQuery.of(context).size.width,
                     height: MediaQuery.of(context).size.height / 3.5,
                     child: Image.asset(
-                      'assets/images/carousel1.jpg',
+                      'assets/images/carousel4.jpg',
                       fit: BoxFit.cover,
                     ),
                   ),
                   SizedBox(
                     width: MediaQuery.of(context).size.width,
                     height: MediaQuery.of(context).size.height / 3.5,
-                    child: Image.asset('assets/images/carousel2.jpg',
+                    child: Image.asset('assets/images/carousel5.jpg',
                         fit: BoxFit.cover),
                   ),
                   SizedBox(
                     width: MediaQuery.of(context).size.width,
                     height: MediaQuery.of(context).size.height / 3.5,
-                    child: Image.asset('assets/images/carousel3.jpg',
+                    child: Image.asset('assets/images/carousel4.jpg',
                         fit: BoxFit.cover),
                   ),
                 ],
@@ -174,6 +180,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     future: viewCategory,
                     builder: (context, snapShot) {
                       if (snapShot.hasData) {
+                        if(snapShot.data!.code==401){
+                          return Text(AppString.txtLoginFirstError,style: TextStyle(color: AppColor.colorRed,fontSize: 20),);
+                        }
                         return GridView.builder(
                             padding: EdgeInsets.symmetric(
                                 horizontal:
