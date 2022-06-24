@@ -29,6 +29,7 @@ class _AddressSelectionScreenState extends State<AddressSelectionScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print("In the screen?");
     return SafeArea(
       child: Scaffold(
         backgroundColor: AppColor.colorBlack12.withAlpha(20),
@@ -58,7 +59,7 @@ class _AddressSelectionScreenState extends State<AddressSelectionScreen> {
                                   content: SingleChildScrollView(
                                     child: ListBody(
                                       children: [
-                                        Text("${AppString.txtOrderConfirmationBody}. If yes, then procedd to payment gateway for the payment of  Rs. ${widget.billTotal}")
+                                        Text("${AppString.txtOrderConfirmationBody}. If yes, then proceed to payment gateway for the payment of  Rs. ${widget.billTotal}")
                                       ],
                                     ),
                                   ),

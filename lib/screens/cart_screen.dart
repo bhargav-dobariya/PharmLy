@@ -14,8 +14,8 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
-  String cartId="";
-  String orderBill="";
+  String? cartId;
+  String? orderBill;
   late Future<GetCartModel?> getCartData;
   getCartDetails(){
     getCartData=ApiService().getCart();
@@ -44,10 +44,8 @@ class _CartScreenState extends State<CartScreen> {
               child: FutureBuilder<GetCartModel?>(
                 future: getCartData,
                 builder: (context, snapshot) {
-                  setState(() {
-                    orderBill=snapshot.data!.data!.totalPriceOfCart!;
-                  });
-                  cartId=snapshot.data!.data!.cartId!;
+                  orderBill=snapshot.data?.data?.totalPriceOfCart;
+                  cartId=snapshot.data?.data?.cartId;
                   if(snapshot.hasData){
                     return ListView.separated(
                         itemBuilder: (context,index){
@@ -70,7 +68,7 @@ class _CartScreenState extends State<CartScreen> {
               bottom: 10,
               child: GestureDetector(
                 onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>AddressSelectionScreen(cartId: cartId,billTotal: orderBill)));
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>AddressSelectionScreen(cartId: cartId!,billTotal: orderBill!)));
                 },
                 child: Container(
                   height: MediaQuery.of(context).size.height/14.5,

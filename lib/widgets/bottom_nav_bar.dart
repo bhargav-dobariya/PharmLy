@@ -30,20 +30,13 @@ class BottomNavBarState extends State<BottomNavBar> {
   screenOptions(currentIndex) {
     switch (currentIndex) {
       case 0:
-        return HomeScreen();
-
-    ///Home screen
+        return HomeScreen();  ///Home screen
       case 1:
-        return CartScreen();
-
-    ///Address screen
+        return CartScreen();  ///Cart screen
       case 2:
-        return AddressScreen();
-
-    ///Profile screen
+        return AddressScreen(); ///Address screen
       case 3:
-        return ProfileScreen();
-
+        return ProfileScreen(); ///Profile screen
 
       default:
         return HomeScreen();
