@@ -200,8 +200,7 @@ class LoginScreenState extends State<LoginScreen> {
                           Fluttertoast.showToast(
                               msg:
                                   "Your Password is Wrong please try again or Click on forgot password");
-                        }
-                        if (res?.code == 200) {
+                        } else if (res?.code == 200) {
                           setState(() {
                             _isLoading = false;
                           });

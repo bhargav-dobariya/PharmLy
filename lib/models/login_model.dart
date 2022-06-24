@@ -12,39 +12,43 @@ String loginModelToJson(LoginModel data) => json.encode(data.toJson());
 class LoginModel {
   LoginModel({
     this.code,
-    this.errorMessage,
-    this.error,
     this.data,
     this.success,
   });
 
   int? code;
-  String? errorMessage;
-  Error? error;
-  dynamic? data;
+  Data? data;
   bool? success;
 
   factory LoginModel.fromJson(Map<String, dynamic> json) => LoginModel(
         code: json["code"] ?? null,
-        errorMessage: json["errorMessage"] ?? null,
-        error: json["error"] == null ? null : Error.fromJson(json["error"]),
-        data: json["data"],
+        data: json["data"] == null ? null : Data.fromJson(json["data"]),
         success: json["success"] ?? null,
       );
 
   Map<String, dynamic> toJson() => {
         "code": code ?? null,
-        "errorMessage": errorMessage ?? null,
-        "error": error == null ? null : error?.toJson(),
-        "data": data,
+        "data": data == null ? null : data!.toJson(),
         "success": success ?? null,
       };
 }
 
-class Error {
-  Error();
+class Data {
+  Data({
+    this.token,
+    this.userId,
+  });
 
-  factory Error.fromJson(Map<String, dynamic> json) => Error();
+  String? token;
+  String? userId;
 
-  Map<String, dynamic> toJson() => {};
+  factory Data.fromJson(Map<String, dynamic> json) => Data(
+        token: json["token"] ?? null,
+        userId: json["userId"] ?? null,
+      );
+
+  Map<String, dynamic> toJson() => {
+        "token": token ?? null,
+        "userId": userId ?? null,
+      };
 }

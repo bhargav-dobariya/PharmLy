@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:pharmly/models/disease_product.dart' as DiseaseProduct;
 import 'package:pharmly/networking/api_service.dart';
 import 'package:pharmly/resources/app_color.dart';
 import 'package:pharmly/resources/app_string.dart';
-import 'package:pharmly/screens/products_screen.dart';
+import 'package:pharmly/screens/disease_product_screen.dart';
 
 import '../models/all_desease_model.dart' as DiseaseModel;
 
 class DiseaseScreen extends StatefulWidget {
-  DiseaseModel.Datum? snap;
+  DiseaseProduct.Datum? snap;
 
   DiseaseScreen({
     @required snap,
@@ -105,9 +106,9 @@ class _DiseaseScreenState extends State<DiseaseScreen> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => ProductsScreen(
+                          builder: (context) => DiseaseProductsScreen(
                               id: widget.snap!.id!,
-                              name: widget.snap!.diseaseName!)));
+                              name: widget.snap!.title!)));
                 },
                 child: SizedBox(
                   height: 400,
