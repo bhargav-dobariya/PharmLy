@@ -19,7 +19,7 @@ class LoginScreen extends StatefulWidget {
 
 class LoginScreenState extends State<LoginScreen> {
   bool _isLoading = false;
-
+  bool _isVisible = false;
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passworController = TextEditingController();
@@ -74,6 +74,35 @@ class LoginScreenState extends State<LoginScreen> {
                   child: const CircularProgressIndicator()),
             ),
           ),
+
+          //verify button if user not verified
+          Visibility(
+            visible: _isVisible,
+            child: Container(
+              margin: EdgeInsets.only(
+                  left: _deviceWidth * 0.5, top: _deviceHeight * 0.23),
+              width: _deviceWidth * 0.4,
+              height: _deviceHeight * 0.06,
+              decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      AppColor.lightBlueColor3,
+                      AppColor.lightBlueColor2,
+                    ],
+                  ),
+                  borderRadius: const BorderRadius.all(Radius.circular(50))),
+              alignment: Alignment.center,
+              child: Text(
+                AppString.txtVerify,
+                style: TextStyle(
+                  fontSize: 19,
+                  color: AppColor.whitecolor,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ),
+          ),
+
           Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -159,24 +188,49 @@ class LoginScreenState extends State<LoginScreen> {
                             email: _emailController.text,
                             password: _passworController.text)
                         .then(
-                      (res) async {
-                        if (res.code == 200) {
-                          PreferenceHelper.setAccessToken(res.data!.token);
-                          PreferenceHelper.setUserId(res.data!.userId);
+                      (res) {
+                        if (res?.code == 401) {
+                          Fluttertoast.showToast(
+                              msg:
+                                  "first verify your self by tapping verify button");
+                          setState(() {
+                            _isVisible = true;
+                            _isLoading = false;
+                          });
+                          Fluttertoast.showToast(
+                              msg:
+                                  "Your Password is Wrong please try again or Click on forgot password");
+                        }
+                        if (res?.code == 200) {
+                          PreferenceHelper.setAccessToken(res?.data!.token);
+                          PreferenceHelper.setUserId(res?.data!.userId);
 
                           PreferenceHelper.prefs
                               .setBool(AppString.txtIsLoggedIn, true);
+
+                          Navigator.pushReplacementNamed(
+                              context, '/bottom_navbar');
+                        } else if (res?.code == 406) {
                           setState(() {
                             _isLoading = false;
                           });
-                          Navigator.pushReplacementNamed(
-                              context, '/home_screen');
-                        } else {
+                          Fluttertoast.showToast(
+                              msg:
+                                  "Your Password is Wrong please try again or Click on forgot password");
+                        } else if (res?.code != 200) {
                           _emailController.clear();
                           _passworController.clear();
+                          setState(() {
+                            _isLoading = false;
+                          });
                           Fluttertoast.showToast(
                               msg: AppString
                                   .txtPleaseEnterCorrectEmailAndPassword);
+                        } else {
+                          print("else called");
+                          setState(() {
+                            _isLoading = false;
+                          });
                         }
                       },
                     );

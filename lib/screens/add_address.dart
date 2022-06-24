@@ -204,12 +204,12 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                                     pincode: _pincodeController.text)
                                 .then(
                               (res) async {
-                                if (res.code == 200) {
+                                if (res?.code == 200) {
                                   setState(() {
                                     _isLoading = false;
                                   });
                                   Navigator.pushNamed(
-                                      context, '/disease_screen');
+                                      context, '/bottom_navbar');
                                 }
                               },
                             );

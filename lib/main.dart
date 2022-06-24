@@ -7,7 +7,6 @@ import 'package:pharmly/screens/forgot_password_verification.dart';
 import 'package:pharmly/screens/login_screen.dart';
 import 'package:pharmly/screens/new_password_screen.dart';
 import 'package:pharmly/screens/otp_verification_screen.dart';
-
 import 'package:pharmly/screens/home_screen.dart';
 import 'package:pharmly/screens/profile_screen.dart';
 import 'package:pharmly/screens/signup_screen.dart';
@@ -42,9 +41,6 @@ class MyApp extends StatelessWidget {
         '/forgot_password_verification': (context) =>
             const ForgotPasswordVeficationScreen(),
         '/add_new_address': (context) => const AddAddressScreen(),
-        '/bottom_navbar': (context) => BottomNavBar(),
-        '/home_screen': (context) => const HomeScreen(),
-        '/profile_screen': (context) => const ProfileScreen(),
       },
     );
   }
