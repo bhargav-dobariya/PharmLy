@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:pharmly/models/product_model.dart';
-import 'package:pharmly/models/view_category.dart' as ViewCategory;
 import 'package:pharmly/networking/api_service.dart';
 import 'package:pharmly/resources/app_color.dart';
 import 'package:pharmly/widgets/product.dart';
 
 class ProductsScreen extends StatefulWidget {
-  final ViewCategory.Datum categorySnap;
-  const ProductsScreen({Key? key, required this.categorySnap})
+  final String id;
+  final String name;
+  // final ViewCategory.Datum categorySnap;
+  const ProductsScreen({Key? key, required this.id, required this.name})
       : super(key: key);
 
   @override
@@ -17,8 +18,7 @@ class ProductsScreen extends StatefulWidget {
 class _ProductsScreenState extends State<ProductsScreen> {
   late Future<ProductModel?> productDetails;
   getProduct() {
-    productDetails =
-        ApiService().getProductDetails(categoryId: widget.categorySnap.id);
+    productDetails = ApiService().getProductDetails(categoryId: widget.id);
   }
 
   @override
@@ -32,7 +32,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          widget.categorySnap.categoryName!,
+          widget.name,
           style: TextStyle(color: AppColor.colorWhite),
         ),
         centerTitle: true,

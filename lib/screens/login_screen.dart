@@ -202,6 +202,9 @@ class LoginScreenState extends State<LoginScreen> {
                                   "Your Password is Wrong please try again or Click on forgot password");
                         }
                         if (res?.code == 200) {
+                          setState(() {
+                            _isLoading = false;
+                          });
                           PreferenceHelper.setAccessToken(res?.data!.token);
                           PreferenceHelper.setUserId(res?.data!.userId);
 

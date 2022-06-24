@@ -9,7 +9,7 @@ class Category extends StatefulWidget {
   // final String imageUrl;
   // final String categoryTitle;
   final ViewCategory.Datum snap;
-  const Category({Key? key,required this.snap}) : super(key: key);
+  const Category({Key? key, required this.snap}) : super(key: key);
 
   @override
   _CategoryState createState() => _CategoryState();
@@ -19,12 +19,18 @@ class _CategoryState extends State<Category> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
-        if(widget.snap.categoryName =="Diseases"){
-          Navigator.push(context, MaterialPageRoute(builder: (context)=>const DiseaseScreen()));
-        }
-        else{
-          Navigator.push(context, MaterialPageRoute(builder: (context)=>ProductsScreen(categorySnap: widget.snap,)));
+      onTap: () {
+        if (widget.snap.categoryName == "Diseases") {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => DiseaseScreen()));
+        } else {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => ProductsScreen(
+                        id: widget.snap.id!,
+                        name: widget.snap.categoryName!,
+                      )));
         }
       },
       child: Center(
@@ -34,16 +40,22 @@ class _CategoryState extends State<Category> {
           children: [
             Expanded(
               child: Container(
-                padding: EdgeInsets.all(10),
-                margin: EdgeInsets.only(bottom: 5),
+                padding: const EdgeInsets.all(10),
+                margin: const EdgeInsets.only(bottom: 5),
                 decoration: BoxDecoration(
-                  border: Border.all(color: AppColor.colorGrey.withAlpha(50)),
-                  borderRadius: BorderRadius.all(Radius.circular(5))
+                    border: Border.all(color: AppColor.colorGrey.withAlpha(50)),
+                    borderRadius: const BorderRadius.all(Radius.circular(5))),
+                child: Image.network(
+                  widget.snap.categoryImage!,
+                  fit: BoxFit.cover,
                 ),
-                child: Image.network(widget.snap.categoryImage!,fit: BoxFit.cover,),
               ),
             ),
-            Text(widget.snap.categoryName!,style: TextStyle(fontSize: 10,color: AppColor.colorBlack),textAlign: TextAlign.center,)
+            Text(
+              widget.snap.categoryName!,
+              style: TextStyle(fontSize: 10, color: AppColor.colorBlack),
+              textAlign: TextAlign.center,
+            )
           ],
         ),
       ),

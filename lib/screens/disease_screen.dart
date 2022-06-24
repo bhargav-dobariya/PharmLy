@@ -105,8 +105,9 @@ class _DiseaseScreenState extends State<DiseaseScreen> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) =>
-                              ProductsScreen(categorySnap: widget.snap)));
+                          builder: (context) => ProductsScreen(
+                              id: widget.snap!.id!,
+                              name: widget.snap!.diseaseName!)));
                 },
                 child: SizedBox(
                   height: 400,
