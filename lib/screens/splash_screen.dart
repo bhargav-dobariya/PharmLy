@@ -22,7 +22,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   Shader colorPharmly =
       LinearGradient(colors: [AppColor.colorBlue, AppColor.colorGreen])
-          .createShader(const Rect.fromLTWH(0, 0, 400, 200));
+          .createShader(const Rect.fromLTWH(0, 0, 400, 100));
 
   @override
   void initState() {
@@ -41,7 +41,7 @@ class _SplashScreenState extends State<SplashScreen> {
             () => Navigator.pushReplacement(context,
                 MaterialPageRoute(builder: (context) => BottomNavBar())))
         : Timer(
-            const Duration(seconds: 10),
+            const Duration(seconds: 7),
             () => Navigator.pushReplacement(context,
                 MaterialPageRoute(builder: (context) => const LoginScreen())));
   }

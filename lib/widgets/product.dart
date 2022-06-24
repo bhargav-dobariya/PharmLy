@@ -82,12 +82,7 @@ class _ProductState extends State<Product> {
               onTap: (){
                 addProductToCart().then((value) {
                   if(addToCart?.code!=200){
-                    if(addedToCart){
-                      Fluttertoast.showToast(msg: AppString.txtAlreadyAddedToCart);
-                    }
-                    else{
-                      Fluttertoast.showToast(msg: AppString.txtSomeErrorOccurred);
-                    }
+                    Fluttertoast.showToast(msg: AppString.txtAlreadyAddedToCart);
                   }
                   else{
                     print("Pressed?");

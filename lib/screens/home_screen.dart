@@ -23,6 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
   late StreamSubscription subscription;
   late Future<ViewCategory?> viewCategory;
 
+  ///Api call for viewing categories
   getCategory() {
     viewCategory = ApiService().viewCategories();
   }
@@ -53,7 +54,6 @@ class _HomeScreenState extends State<HomeScreen> {
             return <Widget>[
               SliverAppBar(
                   backgroundColor: AppColor.colorWhite,
-                  // expandedHeight: 20,
                   flexibleSpace: FlexibleSpaceBar(
                     background: Column(children: [
                       Container(

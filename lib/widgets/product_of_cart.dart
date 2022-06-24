@@ -74,8 +74,8 @@ class _ProductInCartState extends State<ProductInCart> {
                               Fluttertoast.showToast(msg: AppString.txtSomeErrorOccurred);
                             }
                             else{
+                              widget.snap;
                               Navigator.pop(context);
-                              setState(() {});
                               Fluttertoast.showToast(msg: AppString.txtItemDeleted);
                             }
                           });
