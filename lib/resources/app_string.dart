@@ -3,7 +3,6 @@ class AppString {
   static String allYouNeedis = "All You Need";
   static String txtIsStayHome = "Is Stay At Home.";
   static String txtBeYourOwnDoctor = "Be Your Own Doctor!";
-
   static String txtlastname = "Last name";
   static String txtWelcome = "Welcome!";
   static String connectivityTask = "Connectivity Animation Task";
@@ -18,6 +17,7 @@ class AppString {
   static String txtSubmit = "Submit";
   static String txtYes = "Yes";
   static String txtNo = "No";
+  static String txtQty = "Qty";
 
   static String txtDontHaveAnAccount = "Don't have an account?";
   static String txtSignUp = "Sign Up";
@@ -40,6 +40,7 @@ class AppString {
   static String txtOR = "OR";
   static String txtContinue = "continue";
   static String txtVerify = "Verify";
+
   static String txtResendOtp = "Resend OTP";
 
   static String txtPassworddontmatch = "Password don't match";
@@ -179,4 +180,7 @@ class AppString {
   static String txtExitConfirmation = "Exit from the app";
   static String txtExitConfirmationBody =
       "Do you want to exit the application?";
+  static String txtLoginFirstError = "Error of login first error.";
+  static String txtAddressSelectionConfirmationBody =
+      "Are you sure you don't want to place the order?";
 }

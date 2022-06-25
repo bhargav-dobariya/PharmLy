@@ -8,7 +8,7 @@ import 'package:pharmly/resources/app_string.dart';
 
 class ProductInCart extends StatefulWidget {
   final GetCartModel.ProductDatum snap;
-  const ProductInCart({Key? key,required this.snap}) : super(key: key);
+  const ProductInCart({Key? key, required this.snap}) : super(key: key);
 
   @override
   _ProductInCartState createState() => _ProductInCartState();
@@ -17,79 +17,122 @@ class ProductInCart extends StatefulWidget {
 class _ProductInCartState extends State<ProductInCart> {
   late DeleteFromCartModel? deleteCartItem;
 
-  Future deleteItems()async{
-    deleteCartItem=await ApiService().deleteItem(productId: widget.snap.product!.id);
+  Future deleteItems() async {
+    deleteCartItem =
+        await ApiService().deleteItem(productId: widget.snap.product!.id);
   }
 
   @override
   Widget build(BuildContext context) {
-    var deviceHeight=MediaQuery.of(context).size.height;
-    var deviceWidth=MediaQuery.of(context).size.width;
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: 10,horizontal: 15),
-      height: deviceHeight/4,
-      width: deviceWidth,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Image.network(widget.snap.product!.productImage!,fit: BoxFit.cover,),
-          Expanded(
-            child: Container(
-              alignment: Alignment.center,
-              height: double.infinity,
-              width: 120,
-              margin: EdgeInsets.only(left: 10),
-              child: RichText(
-                text: TextSpan(
-                  children: [
-                    TextSpan(text: widget.snap.product!.title!,style: TextStyle(fontSize: 20,color: AppColor.colorBlack)),
-                    TextSpan(text: "\n ${widget.snap.product!.companyName!}",style: TextStyle(fontSize: 15,color: AppColor.colorGrey)),
-                    TextSpan(text: "\nRs. ${widget.snap.product!.price!}/-",style: TextStyle(fontSize: 20,color: AppColor.colorBlack)),
-                  ]
-                )
-              ),
-            ),
-          ),
-          IconButton(
-            icon: Icon(Icons.delete_sharp),
-            color: AppColor.colorGrey,
-            onPressed: () {
-              showDialog(
-                context: context,
-                builder: (BuildContext context){
-                  return AlertDialog(
-                    title: Text(AppString.txtDeleteConfirmation),
-                    content: SingleChildScrollView(
-                      child: ListBody(
-                        children: [
-                          Text(AppString.txtDeleteConfirmationBody)
-                        ],
+    var deviceHeight = MediaQuery.of(context).size.height;
+    var deviceWidth = MediaQuery.of(context).size.width;
+    return Stack(
+      children: [
+        Container(
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+          height: deviceHeight / 4,
+          width: deviceWidth,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              widget.snap.product!.productImage != null
+                  ? Image.network(
+                      widget.snap.product!.productImage!,
+                      fit: BoxFit.cover,
+                    )
+                  : SizedBox(
+                      height: 150,
+                      width: 150,
+                      child: Image.asset(
+                        'assets/images/carousel4.jpg',
+                        fit: BoxFit.cover,
                       ),
                     ),
-                    actions: [
-                      TextButton(
-                        onPressed: (){
-                          deleteItems().then((value){
-                            if(deleteCartItem?.code!=200){
-                              Fluttertoast.showToast(msg: AppString.txtSomeErrorOccurred);
-                            }
-                            else{
-                              widget.snap;
-                              Navigator.pop(context);
-                              Fluttertoast.showToast(msg: AppString.txtItemDeleted);
-                            }
-                          });
-                        },
-                        child: Text(AppString.txtDelete,style: TextStyle(color: AppColor.colorRed),)
-                      )
-                    ],
-                  );
-                }
-              );
-            },
-          )
-        ],
-      ),
+              Expanded(
+                child: Container(
+                  alignment: Alignment.center,
+                  height: double.infinity,
+                  width: 120,
+                  margin: const EdgeInsets.only(left: 10),
+                  child: RichText(
+                      text: TextSpan(children: [
+                    TextSpan(
+                        text: widget.snap.product!.title!,
+                        style: TextStyle(
+                            fontSize: 20, color: AppColor.colorBlack)),
+                    TextSpan(
+                        text: "\n ${widget.snap.product!.companyName!}",
+                        style:
+                            TextStyle(fontSize: 15, color: AppColor.colorGrey)),
+                    TextSpan(
+                        text: "\nRs. ${widget.snap.product!.price!}/-",
+                        style: TextStyle(
+                            fontSize: 20, color: AppColor.colorBlack)),
+                  ])),
+                ),
+              ),
+              IconButton(
+                icon: const Icon(Icons.delete_sharp),
+                color: AppColor.colorGrey,
+                onPressed: () {
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text(AppString.txtDeleteConfirmation),
+                          content: SingleChildScrollView(
+                            child: ListBody(
+                              children: [
+                                Text(AppString.txtDeleteConfirmationBody)
+                              ],
+                            ),
+                          ),
+                          actions: [
+                            TextButton(
+                                onPressed: () {
+                                  deleteItems().then((value) {
+                                    if (deleteCartItem?.code != 200) {
+                                      Fluttertoast.showToast(
+                                          msg: AppString.txtSomeErrorOccurred);
+                                    } else {
+                                      Navigator.pop(context);
+                                      Fluttertoast.showToast(
+                                          msg: AppString.txtItemDeleted);
+                                    }
+                                  });
+                                },
+                                child: Text(
+                                  AppString.txtDelete,
+                                  style: TextStyle(color: AppColor.colorRed),
+                                ))
+                          ],
+                        );
+                      });
+                },
+              )
+            ],
+          ),
+        ),
+        Positioned(
+          top: 2,
+          right: 10,
+          child: Container(
+            height: 30,
+            width: 50,
+            alignment: Alignment.center,
+            child: Text(
+              "${AppString.txtQty} ${widget.snap.quantity ?? 0}",
+              style: TextStyle(
+                  color: AppColor.colorTheme,
+                  fontSize: 13,
+                  fontWeight: FontWeight.bold),
+            ),
+            decoration: BoxDecoration(
+                border: Border.all(color: AppColor.colorTheme, width: 2),
+                borderRadius: const BorderRadius.all(Radius.circular(5))),
+          ),
+        )
+      ],
     );
   }
 }

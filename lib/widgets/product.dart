@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pharmly/models/add_product_to_cart.dart';
@@ -118,7 +116,7 @@ class _ProductState extends State<Product> {
                     print("Pressed?");
                     setState(() {
                       Fluttertoast.showToast(msg: AppString.txtAddedToCart);
-                      addedToCart = !addedToCart;
+                      addedToCart = true;
                     });
                   }
                 });

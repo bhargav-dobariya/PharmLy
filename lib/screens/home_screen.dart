@@ -6,6 +6,7 @@ import 'package:pharmly/models/view_category.dart';
 import 'package:pharmly/networking/api_service.dart';
 import 'package:pharmly/resources/app_color.dart';
 import 'package:pharmly/resources/app_string.dart';
+import 'package:pharmly/screens/cart_screen.dart';
 
 import 'package:pharmly/widgets/category.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
@@ -88,9 +89,18 @@ class _HomeScreenState extends State<HomeScreen> {
                                 padding: EdgeInsets.only(
                                     left: MediaQuery.of(context).size.width /
                                         2.20),
-                                child: Icon(Icons.shopping_cart_sharp,
-                                    size: 20,
-                                    color: AppColor.colorBlack.withAlpha(90)))
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const CartScreen()));
+                                  },
+                                  child: Icon(Icons.shopping_cart_sharp,
+                                      size: 20,
+                                      color: AppColor.colorBlack.withAlpha(90)),
+                                ))
                           ],
                         ),
                       ),
@@ -174,6 +184,13 @@ class _HomeScreenState extends State<HomeScreen> {
                     future: viewCategory,
                     builder: (context, snapShot) {
                       if (snapShot.hasData) {
+                        if (snapShot.data!.code == 401) {
+                          return Text(
+                            AppString.txtLoginFirstError,
+                            style: TextStyle(
+                                color: AppColor.colorRed, fontSize: 20),
+                          );
+                        }
                         return GridView.builder(
                             padding: EdgeInsets.symmetric(
                                 horizontal:

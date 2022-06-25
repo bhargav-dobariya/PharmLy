@@ -11,7 +11,6 @@ import 'package:pharmly/networking/api_service.dart';
 import 'package:pharmly/resources/app_color.dart';
 import 'package:pharmly/resources/app_string.dart';
 import 'package:pharmly/screens/login_screen.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../methods/shared_prefs_methods.dart';
 
@@ -63,16 +62,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
         firstName: newFirstName,
         lastName: newLastName,
         contactNo: newContactNo);
+    Fluttertoast.showToast(msg: "Details Updated");
   }
 
-  Future deleteAccount()async{
-    removeUser=await ApiService().deleteUser();
+  Future deleteAccount() async {
+    removeUser = await ApiService().deleteUser();
   }
 
   void userLoggedIn() async {
     PreferenceHelper.prefs.setBool(AppString.txtIsLoggedIn, false);
   }
-
 
   @override
   void initState() {
@@ -330,40 +329,56 @@ class _ProfileScreenState extends State<ProfileScreen> {
               GestureDetector(
                 onTap: () {
                   if (ConnectivityResult.none != true) {
-                    deleteAccount().then((value){
-                      if(removeUser?.code!=200){
-                        Fluttertoast.showToast(msg: AppString.txtSomeErrorOccurred);
-                      }
-                      else{
-                        AlertDialog(
-                          title: Text(AppString.txtDeleteUserConfirmation.toUpperCase(),style: TextStyle(color: AppColor.colorRed,fontSize: 20),),
-                          content: Text(AppString.txtDeleteUserConfirmationBody),
-                          actions: [
-                            TextButton(
-                                onPressed: (){
-                                  Fluttertoast.showToast(msg: AppString.txtAccountDeleted);
-                                  ApiService().logOutUser(email: emailText).then((res) async {
-                                    if (res?.code == 200) {
-                                      Navigator.pushAndRemoveUntil(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) => const LoginScreen()),(Route<dynamic> route) => false);
-                                    } else {
-                                      print(res?.code);
-                                    }
-                                  });
-                                },
-                                child: Text(AppString.txtYesDelete,style: TextStyle(color: AppColor.colorRed),)
-                            )
-                          ],
-                        );
+                    deleteAccount().then((value) {
+                      if (removeUser?.code != 200) {
+                        Fluttertoast.showToast(
+                            msg: AppString.txtSomeErrorOccurred);
+                      } else {
+                        showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                                  title: Text(
+                                    AppString.txtDeleteUserConfirmation
+                                        .toUpperCase(),
+                                    style: TextStyle(
+                                        color: AppColor.colorRed, fontSize: 20),
+                                  ),
+                                  content: Text(
+                                      AppString.txtDeleteUserConfirmationBody),
+                                  actions: [
+                                    TextButton(
+                                        onPressed: () {
+                                          Fluttertoast.showToast(
+                                              msg: AppString.txtAccountDeleted);
+                                          ApiService()
+                                              .logOutUser(email: emailText)
+                                              .then((res) async {
+                                            if (res?.code == 200) {
+                                              Navigator.pushAndRemoveUntil(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          const LoginScreen()),
+                                                  (Route<dynamic> route) =>
+                                                      false);
+                                            } else {
+                                              print(res?.code);
+                                            }
+                                          });
+                                        },
+                                        child: Text(
+                                          AppString.txtYesDelete,
+                                          style: TextStyle(
+                                              color: AppColor.colorRed),
+                                        ))
+                                  ],
+                                ));
                       }
                     });
                   } else {
                     Fluttertoast.showToast(
                         msg: AppString.txtInternetIsRequired);
                   }
-
                 },
                 child: Container(
                   alignment: Alignment.center,

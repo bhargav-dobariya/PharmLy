@@ -1,3 +1,7 @@
+// To parse this JSON data, do
+//
+//     final getCartModel = getCartModelFromJson(jsonString);
+
 import 'dart:convert';
 
 GetCartModel getCartModelFromJson(String str) => GetCartModel.fromJson(json.decode(str));
@@ -54,16 +58,20 @@ class Data {
 
 class ProductDatum {
   ProductDatum({
+    this.quantity,
     this.product,
   });
 
+  int? quantity;
   Product? product;
 
   factory ProductDatum.fromJson(Map<String, dynamic> json) => ProductDatum(
+    quantity: json["quantity"],
     product: Product.fromJson(json["Product"]),
   );
 
   Map<String, dynamic> toJson() => {
+    "quantity": quantity,
     "Product": product?.toJson(),
   };
 }

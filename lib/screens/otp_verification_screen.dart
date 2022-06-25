@@ -39,46 +39,14 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
       body: SingleChildScrollView(
         child: Stack(
           children: [
-            _logoUi(),
+            _bgUi(),
             Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Container(
-                  margin: EdgeInsets.only(top: _deviceHeight * 0.2),
-                  child: Image.asset(
-                    "assets/images/Logo3.png",
-                    height: _deviceHeight * 0.2,
-                  ),
-                ),
-                Container(
-                    margin: EdgeInsets.only(
-                        top: _deviceHeight * 0.05,
-                        bottom: _deviceHeight * 0.07),
-                    child: Text(
-                      AppString.txtEnterYourOtpHere,
-                      style: TextStyle(
-                          color: AppColor.lightBlueColor,
-                          fontSize: _deviceHeight * 0.028,
-                          fontWeight: FontWeight.w600),
-                    )),
-                OTPTextField(
-                  controller: otpController,
-                  length: 6,
-                  width: MediaQuery.of(context).size.width,
-                  textFieldAlignment: MainAxisAlignment.spaceAround,
-                  fieldWidth: 45,
-                  fieldStyle: FieldStyle.box,
-                  outlineBorderRadius: 15,
-                  style: const TextStyle(fontSize: 17),
-                  onChanged: (pin) {
-                    print("Changed: " + pin);
-                  },
-                  onCompleted: (pin) {
-                    setState(() {
-                      _pin = pin.toString();
-                    });
-                  },
-                ),
+                _logoUi(),
+                _textHeading(),
+                _otpField(context),
+                //submit button
                 GestureDetector(
                   onTap: () async {
                     final result = await Connectivity().checkConnectivity();
@@ -114,7 +82,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                             const BorderRadius.all(Radius.circular(50))),
                     alignment: Alignment.center,
                     child: Text(
-                      AppString.txtVerify,
+                      AppString.txtSubmit,
                       style: TextStyle(
                         fontSize: 19,
                         color: AppColor.whitecolor,
@@ -123,6 +91,8 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                     ),
                   ),
                 ),
+
+                //resend OTP butoon
                 GestureDetector(
                   onTap: () async {
                     final result = await Connectivity().checkConnectivity();
@@ -173,7 +143,51 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
     );
   }
 
-  SizedBox _logoUi() {
+  OTPTextField _otpField(BuildContext context) {
+    return OTPTextField(
+      controller: otpController,
+      length: 6,
+      width: MediaQuery.of(context).size.width,
+      textFieldAlignment: MainAxisAlignment.spaceAround,
+      fieldWidth: 45,
+      fieldStyle: FieldStyle.box,
+      outlineBorderRadius: 15,
+      style: const TextStyle(fontSize: 17),
+      onChanged: (pin) {
+        print("Changed: " + pin);
+      },
+      onCompleted: (pin) {
+        setState(() {
+          _pin = pin.toString();
+        });
+      },
+    );
+  }
+
+  Container _textHeading() {
+    return Container(
+        margin: EdgeInsets.only(
+            top: _deviceHeight * 0.05, bottom: _deviceHeight * 0.07),
+        child: Text(
+          AppString.txtEnterYourOtpHere,
+          style: TextStyle(
+              color: AppColor.lightBlueColor,
+              fontSize: _deviceHeight * 0.028,
+              fontWeight: FontWeight.w600),
+        ));
+  }
+
+  Container _logoUi() {
+    return Container(
+      margin: EdgeInsets.only(top: _deviceHeight * 0.2),
+      child: Image.asset(
+        "assets/images/Logo3.png",
+        height: _deviceHeight * 0.2,
+      ),
+    );
+  }
+
+  SizedBox _bgUi() {
     return SizedBox(
       height: _deviceHeight,
       width: _deviceWidth,
