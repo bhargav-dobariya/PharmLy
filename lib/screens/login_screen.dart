@@ -1,6 +1,5 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pharmly/networking/api_service.dart';
 import 'package:pharmly/resources/app_color.dart';
 import 'package:pharmly/resources/app_string.dart';
@@ -19,7 +18,7 @@ class LoginScreen extends StatefulWidget {
 
 class LoginScreenState extends State<LoginScreen> {
   bool _isLoading = false;
-  bool _isVisible = false;
+
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passworController = TextEditingController();
@@ -77,7 +76,7 @@ class LoginScreenState extends State<LoginScreen> {
 
           //verify button if user not verified
           Visibility(
-            visible: _isVisible,
+            visible: ApiService.isNotVerified,
             child: Container(
               margin: EdgeInsets.only(
                   left: _deviceWidth * 0.5, top: _deviceHeight * 0.23),
@@ -189,18 +188,7 @@ class LoginScreenState extends State<LoginScreen> {
                             password: _passworController.text)
                         .then(
                       (res) {
-                        if (res?.code == 401) {
-                          Fluttertoast.showToast(
-                              msg:
-                                  "first verify your self by tapping verify button");
-                          setState(() {
-                            _isVisible = true;
-                            _isLoading = false;
-                          });
-                          Fluttertoast.showToast(
-                              msg:
-                                  "Your Password is Wrong please try again or Click on forgot password");
-                        } else if (res?.code == 200) {
+                        if (res?.code == 200) {
                           setState(() {
                             _isLoading = false;
                           });
@@ -212,24 +200,9 @@ class LoginScreenState extends State<LoginScreen> {
 
                           Navigator.pushReplacementNamed(
                               context, '/bottom_navbar');
-                        } else if (res?.code == 406) {
-                          setState(() {
-                            _isLoading = false;
-                          });
-                          Fluttertoast.showToast(
-                              msg:
-                                  "Your Password is Wrong please try again or Click on forgot password");
-                        } else if (res?.code != 200) {
+                        } else {
                           _emailController.clear();
                           _passworController.clear();
-                          setState(() {
-                            _isLoading = false;
-                          });
-                          Fluttertoast.showToast(
-                              msg: AppString
-                                  .txtPleaseEnterCorrectEmailAndPassword);
-                        } else {
-                          print("else called");
                           setState(() {
                             _isLoading = false;
                           });

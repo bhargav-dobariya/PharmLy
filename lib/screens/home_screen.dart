@@ -190,7 +190,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             itemCount: snapShot.data?.data?.length,
                             itemBuilder: (ctx, index) {
                               return Category(
-                                  snap: snapShot.data!.data![index]);
+                                snap: snapShot.data!.data![index],
+                              );
                             });
                       }
                       return const Center(child: CircularProgressIndicator());

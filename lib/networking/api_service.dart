@@ -41,25 +41,21 @@ class ApiService {
   static const String _forgotPassword =
       ApiUtils.baseUrl + ApiUtils.forgotPassword;
   static const categoryUrl = ApiUtils.baseUrl + ApiUtils.category;
-  static const String getUserUrl = ApiUtils.baseUrl +
-      ApiUtils.users; //take id from shared preferences
-  var userId=PreferenceHelper.getUserAccessId();
-
+  static const String getUserUrl =
+      ApiUtils.baseUrl + ApiUtils.users; //take id from shared preferences
   var userId = PreferenceHelper.getUserAccessId();
+
   //user registration url
   static const String allDisease = ApiUtils.baseUrl + ApiUtils.allDisease;
-  static const logOutUrl=ApiUtils.baseUrl+ApiUtils.logout;
-  static const getProductUrl=ApiUtils.baseUrl + ApiUtils.allProduct;
-  static const getAddressesUrl=ApiUtils.baseUrl + ApiUtils.addresses;
-  static const cartUrl=ApiUtils.baseUrl + ApiUtils.cart;
-  static const addOrderUrl=ApiUtils.baseUrl + ApiUtils.placedorder;
-  static const deleteUserUrl=ApiUtils.baseUrl + ApiUtils.users;
-
   static const logOutUrl = ApiUtils.baseUrl + ApiUtils.logout;
   static const getProductUrl = ApiUtils.baseUrl + ApiUtils.allProduct;
   static const getAddressesUrl = ApiUtils.baseUrl + ApiUtils.addresses;
   static const cartUrl = ApiUtils.baseUrl + ApiUtils.cart;
+  static const addOrderUrl = ApiUtils.baseUrl + ApiUtils.placedorder;
+  static const deleteUserUrl = ApiUtils.baseUrl + ApiUtils.users;
   static const productDiseaseUrl = ApiUtils.baseUrl + ApiUtils.diseaseProduct;
+  static late bool isNotVerified = false;
+  var toastLength = Toast.LENGTH_LONG;
 
   //user registration url
   Future<SignUpModel> userRegistration(
@@ -83,6 +79,16 @@ class ApiService {
       print(response.statusCode);
 
       Map<String, dynamic> mapResponse = json.decode(response.body);
+      if (response.statusCode == 409) {
+        Fluttertoast.showToast(
+            toastLength: toastLength,
+            msg:
+                "Your Mail Id Is Already Used For This Account Please Try Login From This Mail Id");
+      } else if (response.statusCode == 500) {
+        Fluttertoast.showToast(
+            toastLength: toastLength,
+            msg: "some Internal Error Happens, Please Try After Sometime");
+      }
       return SignUpModel.fromJson(mapResponse);
     } catch (e) {
       return SignUpModel();
@@ -101,10 +107,26 @@ class ApiService {
           await http.post(Uri.parse(_userLoginUrl), body: body);
       Map<String, dynamic> mapResponse = json.decode(response.body);
       print("Login APi Res:${response.statusCode}");
-      // if (response.statusCode == 406) {
-      //   Fluttertoast.showToast(
-      //       msg: "You entered wrong password,Please try to add right password");
-      // }
+      if (response.statusCode == 406) {
+        Fluttertoast.showToast(
+            toastLength: toastLength,
+            msg:
+                "User Not Found From This Mail Id First Try To Register Yourself");
+      } else if (response.statusCode == 406) {
+        Fluttertoast.showToast(
+            toastLength: toastLength,
+            msg: "Your Password Is Worng,You Can Tap On Forgot Password");
+      } else if (response.statusCode == 401) {
+        isNotVerified = true;
+        Fluttertoast.showToast(
+            toastLength: toastLength,
+            msg:
+                "You're Not Verified User, Tap On Verify Button And Verify Yourself ");
+      } else if (response.statusCode == 500) {
+        Fluttertoast.showToast(
+            toastLength: toastLength,
+            msg: "Some Internal Error Happens, Please Try After Sometime");
+      }
       return LoginModel.fromJson(mapResponse);
     } catch (e) {
       return LoginModel();
@@ -209,38 +231,34 @@ class ApiService {
     try {
       Map<String, String> header = {ApiUtils.authorization: userToken};
       http.Response response = await http.get(
-        Uri.parse(getProductUrl + categoryId!),
+        Uri.parse(productDiseaseUrl + categoryId!),
         headers: header,
       );
       print("Product details:${response.statusCode}");
-      if (response.statusCode == 200) {
-        Map<String, dynamic> mapResponse = json.decode(response.body);
-        return DiseaseProduct.fromJson(mapResponse);
-      }
+      Map<String, dynamic> mapResponse = json.decode(response.body);
+      return DiseaseProduct.fromJson(mapResponse);
     } catch (e) {
       print(e.toString());
       return DiseaseProduct();
     }
-    return null;
   }
 
 //get userDetails api
-  Future<UserProfile?> getUserDetails() async{
-    try{
-      Map<String,String> header = {
-        ApiUtils.authorization : userToken
-      };
-      final response = await http.get(Uri.parse(getUserUrl + userId),headers: header);
+  Future<UserProfile?> getUserDetails() async {
+    try {
+      Map<String, String> header = {ApiUtils.authorization: userToken};
+      final response =
+          await http.get(Uri.parse(getUserUrl + userId), headers: header);
       print("User details:${response.statusCode}");
       if (response.statusCode == 200) {
-        Map<String,dynamic> mapResponse = json.decode(response.body);
+        Map<String, dynamic> mapResponse = json.decode(response.body);
         return UserProfile.fromJson(mapResponse);
       }
-    }
-    catch(e){
+    } catch (e) {
       // print(e.toString());
       return UserProfile();
     }
+    return null;
   }
 
 //update user api
@@ -255,13 +273,12 @@ class ApiService {
       ApiUtils.contactNo: contactNo,
     };
 
-    try{
-      Map<String,String> header = {
-        ApiUtils.authorization : userToken
-      };
-      http.Response response=await http.put(Uri.parse(getUserUrl + userId),headers:header,body: body);
+    try {
+      Map<String, String> header = {ApiUtils.authorization: userToken};
+      http.Response response = await http.put(Uri.parse(getUserUrl + userId),
+          headers: header, body: body);
       print("Update details:${response.statusCode}");
-      if(response.statusCode==200){
+      if (response.statusCode == 200) {
         Fluttertoast.showToast(msg: AppString.txtUpdatedDetails);
         return UpdateProfile.fromJson(jsonDecode(response.body));
       }
@@ -272,30 +289,26 @@ class ApiService {
     return null;
   }
 
-
-  Future<DeleteUserModel?> deleteUser()async{
-    try{
-      Map<String,String> header = {
-        ApiUtils.authorization : userToken
-      };
-      http.Response response=await http.delete(Uri.parse(deleteUserUrl + userId),headers: header);
+  Future<DeleteUserModel?> deleteUser() async {
+    try {
+      Map<String, String> header = {ApiUtils.authorization: userToken};
+      http.Response response =
+          await http.delete(Uri.parse(deleteUserUrl + userId), headers: header);
       print("Delete user: ${response.statusCode}");
-      if(response.statusCode==200){
+      if (response.statusCode == 200) {
         return DeleteUserModel.fromJson(jsonDecode(response.body));
       }
-    }catch(e){
+    } catch (e) {
       print(e.toString());
       return DeleteUserModel();
     }
+    return null;
   }
 
-
-  Future<ViewCategory?> viewCategories()async{
-    try{
-      Map<String,String> header = {
-        ApiUtils.authorization : userToken
-      };
-      final response = await http.get(Uri.parse(categoryUrl),headers: header);
+  Future<ViewCategory?> viewCategories() async {
+    try {
+      Map<String, String> header = {ApiUtils.authorization: userToken};
+      final response = await http.get(Uri.parse(categoryUrl), headers: header);
       print(userToken);
       print("View categories:${response.statusCode}");
       if (response.statusCode == 200) {
@@ -311,141 +324,135 @@ class ApiService {
     return null;
   }
 
-  Future<LogOutUser?> logOutUser({String? email})async{
-    try{
-      Map<String,String> header = {
-        ApiUtils.authorization : userToken
-      };
+  Future<LogOutUser?> logOutUser({String? email}) async {
+    try {
+      Map<String, String> header = {ApiUtils.authorization: userToken};
       Map<String, dynamic> body = {
         ApiUtils.email: email,
       };
-      http.Response response=await http.post(Uri.parse(logOutUrl),body: body,headers: header);
+      http.Response response =
+          await http.post(Uri.parse(logOutUrl), body: body, headers: header);
       print("Log out:${response.statusCode}");
-      if(response.statusCode==200){
+      if (response.statusCode == 200) {
         Map<String, dynamic> mapResponse = json.decode(response.body);
         Fluttertoast.showToast(msg: AppString.txtSignedOut);
         return LogOutUser.fromJson(mapResponse);
       }
-    }catch(e) {
+    } catch (e) {
       print(e.toString());
       return LogOutUser();
     }
+    return null;
   }
 
-
-  Future<ProductModel?> getProductDetails({String? categoryId})async{
-    try{
-      Map<String,String> header = {
-        ApiUtils.authorization : userToken
-      };
-      http.Response response=await http.get(Uri.parse(getProductUrl + categoryId!),headers: header,);
+  Future<ProductModel?> getProductDetails({String? categoryId}) async {
+    try {
+      Map<String, String> header = {ApiUtils.authorization: userToken};
+      http.Response response = await http.get(
+        Uri.parse(getProductUrl + categoryId!),
+        headers: header,
+      );
       print("Product details:${response.statusCode}");
       if (response.statusCode == 200) {
-        Map<String,dynamic> mapResponse = json.decode(response.body);
+        Map<String, dynamic> mapResponse = json.decode(response.body);
         return ProductModel.fromJson(mapResponse);
       }
-    }catch(e){
+    } catch (e) {
       print(e.toString());
       return ProductModel();
     }
+    return null;
   }
 
-
-  Future<GetAddressesModel?> getAddresses()async{
-    try{
-      Map<String,String> header={
-        ApiUtils.authorization : userToken
-      };
-      final http.Response response=await http.get(Uri.parse(getAddressesUrl),headers: header);
+  Future<GetAddressesModel?> getAddresses() async {
+    try {
+      Map<String, String> header = {ApiUtils.authorization: userToken};
+      final http.Response response =
+          await http.get(Uri.parse(getAddressesUrl), headers: header);
       print("Addresses: ${response.statusCode}");
-      if(response.statusCode==200){
-        Map<String,dynamic> mapResponse = json.decode(response.body);
+      if (response.statusCode == 200) {
+        Map<String, dynamic> mapResponse = json.decode(response.body);
         return GetAddressesModel.fromJson(mapResponse);
       }
-    }catch(e){
+    } catch (e) {
       print(e.toString());
       GetAddressesModel();
     }
+    return null;
   }
 
-
-  Future<AddProductToCartModel?> postProductToCart({String? productId})async{
-    try{
-      Map<String,String> header={
-        ApiUtils.authorization : userToken
-      };
-      Map<String,dynamic> body={
+  Future<AddProductToCartModel?> postProductToCart({String? productId}) async {
+    try {
+      Map<String, String> header = {ApiUtils.authorization: userToken};
+      Map<String, dynamic> body = {
         ApiUtils.productId: productId,
       };
-      http.Response response=await http.post(Uri.parse(cartUrl + productId!),headers:header,body: body);
+      http.Response response = await http.post(Uri.parse(cartUrl + productId!),
+          headers: header, body: body);
       print("Add to cart: ${response.statusCode}");
-      if(response.statusCode==200){
+      if (response.statusCode == 200) {
         return AddProductToCartModel.fromJson(jsonDecode(response.body));
       }
-    }catch(e){
+    } catch (e) {
       print(e.toString());
       return AddProductToCartModel();
     }
+    return null;
   }
 
-
-  Future<GetCartModel?> getCart()async{
-    try{
-      Map<String,String> header={
-        ApiUtils.authorization : userToken
-      };
-      http.Response response=await http.get(Uri.parse(cartUrl),headers: header);
+  Future<GetCartModel?> getCart() async {
+    try {
+      Map<String, String> header = {ApiUtils.authorization: userToken};
+      http.Response response =
+          await http.get(Uri.parse(cartUrl), headers: header);
       print("Get cart: ${response.statusCode}");
-      if(response.statusCode==200){
-        Map<String,dynamic> mapResponse = json.decode(response.body);
+      if (response.statusCode == 200) {
+        Map<String, dynamic> mapResponse = json.decode(response.body);
         return GetCartModel.fromJson(mapResponse);
       }
-    }catch(e){
+    } catch (e) {
       print(e.toString());
       return GetCartModel();
     }
+    return null;
   }
 
-
-  Future<DeleteFromCartModel?> deleteItem({String? productId})async{
-    try{
-      Map<String,String> header={
-        ApiUtils.authorization : userToken
-      };
-      Map<String,dynamic> body={
+  Future<DeleteFromCartModel?> deleteItem({String? productId}) async {
+    try {
+      Map<String, String> header = {ApiUtils.authorization: userToken};
+      Map<String, dynamic> body = {
         ApiUtils.productId: productId,
       };
-      http.Response response=await http.delete(Uri.parse(cartUrl + productId!),headers:header,body: body);
+      http.Response response = await http
+          .delete(Uri.parse(cartUrl + productId!), headers: header, body: body);
       print("Delete from cart: ${response.statusCode}");
-      if(response.statusCode==200){
+      if (response.statusCode == 200) {
         return DeleteFromCartModel.fromJson(jsonDecode(response.body));
       }
-    }catch(e){
+    } catch (e) {
       print(e.toString());
       return DeleteFromCartModel();
     }
+    return null;
   }
 
-
-  Future<AddOrderModel?> addOrder({String? cartId,String? addressId})async{
-    try{
-      Map<String,String> header={
-        ApiUtils.authorization : userToken
-      };
-      Map<String,dynamic> body={
+  Future<AddOrderModel?> addOrder({String? cartId, String? addressId}) async {
+    try {
+      Map<String, String> header = {ApiUtils.authorization: userToken};
+      Map<String, dynamic> body = {
         ApiUtils.cartId: cartId,
         ApiUtils.addressId: addressId
       };
-      http.Response response=await http.post(Uri.parse(addOrderUrl),headers:header,body: body);
+      http.Response response =
+          await http.post(Uri.parse(addOrderUrl), headers: header, body: body);
       print("Place cart:: ${response.statusCode}");
-      if(response.statusCode==200){
+      if (response.statusCode == 200) {
         return AddOrderModel.fromJson(jsonDecode(response.body));
       }
-    }catch(e){
+    } catch (e) {
       print(e.toString());
       return AddOrderModel();
     }
+    return null;
   }
-
 }
-  

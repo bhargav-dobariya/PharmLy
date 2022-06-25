@@ -1,5 +1,6 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pharmly/resources/app_color.dart';
 import 'package:pharmly/resources/app_string.dart';
 import 'package:pharmly/utils/validator.dart';
@@ -208,7 +209,9 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                                   setState(() {
                                     _isLoading = false;
                                   });
-                                  Navigator.pushNamed(
+                                  Fluttertoast.showToast(
+                                      msg: "Address successfully added");
+                                  Navigator.pushReplacementNamed(
                                       context, '/bottom_navbar');
                                 }
                               },

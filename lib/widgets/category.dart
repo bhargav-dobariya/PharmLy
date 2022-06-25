@@ -9,7 +9,10 @@ class Category extends StatefulWidget {
   // final String imageUrl;
   // final String categoryTitle;
   final ViewCategory.Datum snap;
-  const Category({Key? key, required this.snap}) : super(key: key);
+  const Category({
+    Key? key,
+    required this.snap,
+  }) : super(key: key);
 
   @override
   _CategoryState createState() => _CategoryState();

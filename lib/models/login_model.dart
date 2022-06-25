@@ -21,15 +21,15 @@ class LoginModel {
   bool? success;
 
   factory LoginModel.fromJson(Map<String, dynamic> json) => LoginModel(
-        code: json["code"] ?? null,
+        code: json["code"],
         data: json["data"] == null ? null : Data.fromJson(json["data"]),
-        success: json["success"] ?? null,
+        success: json["success"],
       );
 
   Map<String, dynamic> toJson() => {
-        "code": code ?? null,
+        "code": code,
         "data": data == null ? null : data!.toJson(),
-        "success": success ?? null,
+        "success": success,
       };
 }
 
@@ -43,12 +43,12 @@ class Data {
   String? userId;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
-        token: json["token"] ?? null,
-        userId: json["userId"] ?? null,
+        token: json["token"],
+        userId: json["userId"],
       );
 
   Map<String, dynamic> toJson() => {
-        "token": token ?? null,
-        "userId": userId ?? null,
+        "token": token,
+        "userId": userId,
       };
 }

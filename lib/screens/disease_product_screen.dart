@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:pharmly/models/disease_product.dart';
 import 'package:pharmly/networking/api_service.dart';
 import 'package:pharmly/resources/app_color.dart';
 import 'package:pharmly/widgets/disease_product.dart';
 
+import '../models/disease_product.dart' as DiseaseProduct;
+
 class DiseaseProductsScreen extends StatefulWidget {
   final String id;
   final String name;
+
+  final DiseaseProduct.Datum? snap;
   // final ViewCategory.Datum categorySnap;
-  const DiseaseProductsScreen({Key? key, required this.id, required this.name})
+  const DiseaseProductsScreen(
+      {Key? key, required this.id, this.snap, required this.name})
       : super(key: key);
 
   @override
@@ -16,7 +20,7 @@ class DiseaseProductsScreen extends StatefulWidget {
 }
 
 class _DiseaseProductsScreenState extends State<DiseaseProductsScreen> {
-  late Future<DiseaseProduct?> diseaseProductDetails;
+  late Future<DiseaseProduct.DiseaseProduct?> diseaseProductDetails;
 
   getDiseaseProduct() {
     diseaseProductDetails =
@@ -40,7 +44,7 @@ class _DiseaseProductsScreenState extends State<DiseaseProductsScreen> {
         centerTitle: true,
         backgroundColor: AppColor.colorTheme,
       ),
-      body: FutureBuilder<DiseaseProduct?>(
+      body: FutureBuilder<DiseaseProduct.DiseaseProduct?>(
           future: diseaseProductDetails,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
@@ -57,24 +61,6 @@ class _DiseaseProductsScreenState extends State<DiseaseProductsScreen> {
             }
             return const Center(child: CircularProgressIndicator());
           }),
-      // body: GridView.count(
-      //   crossAxisCount: 2,
-      //   padding: EdgeInsets.symmetric(vertical: 5),
-      //   childAspectRatio: 0.6,
-      //   children: [
-      //     Product(),
-      //     Product(),
-      //     Product(),
-      //     Product(),
-      //     Product(),
-      //     Product(),
-      //     Product(),
-      //     Product(),
-      //     Product(),
-      //     Product(),
-      //     Product(),
-      //   ],
-      // ),
     );
   }
 }
