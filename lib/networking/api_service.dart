@@ -236,6 +236,11 @@ class ApiService {
       );
       print("Product details:${response.statusCode}");
       Map<String, dynamic> mapResponse = json.decode(response.body);
+      if (response.statusCode != 200) {
+        Fluttertoast.showToast(
+            toastLength: toastLength,
+            msg: "Currently No Drug Available for This Diease");
+      }
       return DiseaseProduct.fromJson(mapResponse);
     } catch (e) {
       print(e.toString());
