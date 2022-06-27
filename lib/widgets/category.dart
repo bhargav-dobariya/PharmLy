@@ -24,8 +24,12 @@ class _CategoryState extends State<Category> {
     return GestureDetector(
       onTap: () {
         if (widget.snap.categoryName == "Diseases") {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => DiseaseScreen()));
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => DiseaseScreen(
+                        id: widget.snap.id!,
+                      )));
         } else {
           Navigator.push(
               context,

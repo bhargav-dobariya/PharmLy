@@ -8,7 +8,9 @@ import 'package:pharmly/resources/app_string.dart';
 
 class ProductInCart extends StatefulWidget {
   final GetCartModel.ProductDatum snap;
-  const ProductInCart({Key? key, required this.snap}) : super(key: key);
+  final Function? callBack;
+  const ProductInCart({Key? key, required this.snap, required this.callBack})
+      : super(key: key);
 
   @override
   _ProductInCartState createState() => _ProductInCartState();
@@ -98,6 +100,7 @@ class _ProductInCartState extends State<ProductInCart> {
                                       Navigator.pop(context);
                                       Fluttertoast.showToast(
                                           msg: AppString.txtItemDeleted);
+                                      widget.callBack!();
                                     }
                                   });
                                 },

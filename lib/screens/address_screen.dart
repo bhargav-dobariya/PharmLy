@@ -43,7 +43,7 @@ class _AddressScreenState extends State<AddressScreen> {
             children: [
               GestureDetector(
                 onTap: () {
-                  Navigator.pushReplacementNamed(context, "/add_new_address");
+                  Navigator.pushNamed(context, "/add_new_address");
                 },
                 child: Container(
                   padding: EdgeInsets.symmetric(

@@ -6,14 +6,14 @@ import 'package:pharmly/screens/home_screen.dart';
 import 'package:pharmly/screens/profile_screen.dart';
 
 class BottomNavBar extends StatefulWidget {
-  BottomNavBar({Key? key}) : super(key: key);
+  const BottomNavBar({Key? key}) : super(key: key);
 
   @override
   State<BottomNavBar> createState() => BottomNavBarState();
 }
 
 class BottomNavBarState extends State<BottomNavBar> {
-  int currentIndex=0;
+  int currentIndex = 0;
   // late int passedIndex = widget.selectedIndex;
   // var _pref;
   // var currentUser = '';
@@ -30,16 +30,24 @@ class BottomNavBarState extends State<BottomNavBar> {
   screenOptions(currentIndex) {
     switch (currentIndex) {
       case 0:
-        return HomeScreen();  ///Home screen
+        return const HomeScreen();
+
+      ///Home screen
       case 1:
-        return CartScreen();  ///Cart screen
+        return const CartScreen();
+
+      ///Cart screen
       case 2:
-        return AddressScreen(); ///Address screen
+        return const AddressScreen();
+
+      ///Address screen
       case 3:
-        return ProfileScreen(); ///Profile screen
+        return const ProfileScreen();
+
+      ///Profile screen
 
       default:
-        return HomeScreen();
+        return const HomeScreen();
     }
   }
 
@@ -49,13 +57,11 @@ class BottomNavBarState extends State<BottomNavBar> {
       body: screenOptions(currentIndex),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.only(
+            borderRadius: const BorderRadius.only(
                 topRight: Radius.circular(30), topLeft: Radius.circular(30)),
-            boxShadow: [
-              BoxShadow(color: AppColor.colorGrey, blurRadius: 10)
-            ]),
+            boxShadow: [BoxShadow(color: AppColor.colorGrey, blurRadius: 10)]),
         child: ClipRRect(
-          borderRadius: BorderRadius.only(
+          borderRadius: const BorderRadius.only(
               topRight: Radius.circular(30), topLeft: Radius.circular(30)),
           child: BottomNavigationBar(
             type: BottomNavigationBarType.fixed,
@@ -63,8 +69,8 @@ class BottomNavBarState extends State<BottomNavBar> {
             showUnselectedLabels: false,
             selectedItemColor: AppColor.colorTheme,
             unselectedItemColor: AppColor.colorGrey,
-            selectedLabelStyle: TextStyle(fontWeight: FontWeight.bold),
-            items: [
+            selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
+            items: const [
               BottomNavigationBarItem(
                   icon: Icon(Icons.home_rounded), label: "Home"),
               BottomNavigationBarItem(

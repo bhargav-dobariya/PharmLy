@@ -44,9 +44,10 @@ class ApiService {
   static const String getUserUrl =
       ApiUtils.baseUrl + ApiUtils.users; //take id from shared preferences
   var userId = PreferenceHelper.getUserAccessId();
+  static const String allDisease = ApiUtils.baseUrl + ApiUtils.allDisease;
 
   //user registration url
-  static const String allDisease = ApiUtils.baseUrl + ApiUtils.allDisease;
+
   static const logOutUrl = ApiUtils.baseUrl + ApiUtils.logout;
   static const getProductUrl = ApiUtils.baseUrl + ApiUtils.allProduct;
   static const getAddressesUrl = ApiUtils.baseUrl + ApiUtils.addresses;
@@ -134,11 +135,11 @@ class ApiService {
   }
 
 //disease api
-  Future<DiseaseModel> getAllDisease() async {
+  Future<DiseaseModel> getAllDisease(String id) async {
     Map<String, String> header = {ApiUtils.authorization: userToken};
     try {
       http.Response response = await http.get(
-        Uri.parse(allDisease + 'a19b6c7e-5006-41d4-9d9f-8ac82a4a6175'),
+        Uri.parse(allDisease + id),
         headers: header,
       );
       Map<String, dynamic> mapResponse = json.decode(response.body);

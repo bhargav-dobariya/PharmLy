@@ -17,9 +17,29 @@ class _CartScreenState extends State<CartScreen> {
   String? cartId;
   String? orderBill;
   late Future<GetCartModel?> getCartData;
+  bool isApiCalling = false;
+bool isFirstTime = true;
   getCartDetails(){
-    getCartData=ApiService().getCart();
-  }
+ if(!isFirstTime) {
+   setState(() {
+     isApiCalling = true;
+   });
+ }
+ else{
+   isApiCalling = true;
+ }
+  getCartData=ApiService().getCart();
+
+ if(!isFirstTime) {
+   setState(() {
+     isApiCalling = false;
+   });
+ }
+ else{
+   isApiCalling = false;
+ }
+ isFirstTime = false;
+}
 
   @override
   void initState() {
@@ -50,7 +70,7 @@ class _CartScreenState extends State<CartScreen> {
                     if(snapshot.data!.data!.productData!.length!=0){
                       return ListView.separated(
                           itemBuilder: (context,index){
-                            return ProductInCart(snap: snapshot.data!.data!.productData![index],);
+                            return ProductInCart(snap: snapshot.data!.data!.productData![index],callBack: getCartDetails,);
                           },
                           separatorBuilder: (context,index){
                             return Divider(

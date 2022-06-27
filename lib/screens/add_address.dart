@@ -209,10 +209,10 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                                   setState(() {
                                     _isLoading = false;
                                   });
-                                  Fluttertoast.showToast(
-                                      msg: "Address successfully added");
                                   Navigator.pushReplacementNamed(
                                       context, '/bottom_navbar');
+                                      Fluttertoast.showToast(
+                                      msg: "Address successfully added");
                                 }
                               },
                             );

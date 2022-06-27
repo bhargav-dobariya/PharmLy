@@ -8,8 +8,10 @@ import 'package:pharmly/screens/disease_product_screen.dart';
 import '../models/all_desease_model.dart' as DiseaseModel;
 
 class DiseaseScreen extends StatefulWidget {
-  const DiseaseScreen({
+  String id;
+  DiseaseScreen({
     Key? key,
+    required this.id,
   }) : super(
           key: key,
         );
@@ -26,7 +28,7 @@ class _DiseaseScreenState extends State<DiseaseScreen> {
   late Future<DiseaseModel.DiseaseModel> allDiseaseData;
 
   getData() async {
-    allDiseaseData = ApiService().getAllDisease();
+    allDiseaseData = ApiService().getAllDisease(widget.id);
   }
 
   // late final List<String> items;
