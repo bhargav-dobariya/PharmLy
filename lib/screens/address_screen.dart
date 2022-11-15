@@ -46,10 +46,8 @@ class _AddressScreenState extends State<AddressScreen> {
                   Navigator.pushNamed(context, "/add_new_address");
                 },
                 child: Container(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: MediaQuery.of(context).size.width / 26.13),
-                  margin: EdgeInsets.only(
-                      bottom: MediaQuery.of(context).size.height / 13),
+                  padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width / 26.13),
+                  margin: EdgeInsets.only(bottom: MediaQuery.of(context).size.height / 13),
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height / 11,
                   alignment: Alignment.center,
@@ -67,8 +65,7 @@ class _AddressScreenState extends State<AddressScreen> {
                           padding: const EdgeInsets.only(left: 15),
                           child: Text(
                             AppString.txtAddANewAddress,
-                            style: TextStyle(
-                                fontSize: 15, color: AppColor.colorTheme),
+                            style: TextStyle(fontSize: 15, color: AppColor.colorTheme),
                           ),
                         )
                       ],
@@ -76,12 +73,7 @@ class _AddressScreenState extends State<AddressScreen> {
                   ),
                   decoration: BoxDecoration(
                       color: AppColor.colorWhite,
-                      boxShadow: [
-                        BoxShadow(
-                            color: AppColor.colorBlack12,
-                            blurRadius: 2,
-                            spreadRadius: 2)
-                      ]),
+                      boxShadow: [BoxShadow(color: AppColor.colorBlack12, blurRadius: 2, spreadRadius: 2)]),
                 ),
               ),
               FutureBuilder<GetAddressesModel?>(
@@ -98,10 +90,7 @@ class _AddressScreenState extends State<AddressScreen> {
                               width: MediaQuery.of(context).size.width,
                               height: MediaQuery.of(context).size.height / 6,
                               margin: const EdgeInsets.only(bottom: 10),
-                              padding: EdgeInsets.symmetric(
-                                  horizontal:
-                                      MediaQuery.of(context).size.width /
-                                          26.13),
+                              padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width / 26.13),
                               child: Text(
                                 "${snapshot.data!.data![index].address!}, ${snapshot.data!.data![index].area!}, ${snapshot.data!.data![index].city!}, ${snapshot.data!.data![index].pincode!}",
                                 style: TextStyle(
@@ -112,12 +101,7 @@ class _AddressScreenState extends State<AddressScreen> {
                               ),
                               decoration: BoxDecoration(
                                   color: AppColor.colorWhite,
-                                  boxShadow: [
-                                    BoxShadow(
-                                        color: AppColor.colorBlack12,
-                                        blurRadius: 2,
-                                        spreadRadius: 2)
-                                  ]),
+                                  boxShadow: [BoxShadow(color: AppColor.colorBlack12, blurRadius: 2, spreadRadius: 2)]),
                             );
                           },
                         ),
